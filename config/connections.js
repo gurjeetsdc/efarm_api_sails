@@ -58,11 +58,11 @@ module.exports.connections = {
   ***************************************************************************/
   someMongodbServer: {
     adapter: 'sails-mongo',
-    host: 'localhost',
-    port: 27017,
-    user: '', //optional
-    password: '', //optional
-    database: 'sails_api' //optional
+    host: 'ds155130.mlab.com',
+    port: 55130,
+    user: 'admin', //optional
+    password: 'admin', //optional
+    database: 'efarm_sails' //optional
   },
 
   /***************************************************************************
