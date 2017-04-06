@@ -1,0 +1,28 @@
+API Document:
+
+-----------------------------------------------------------
+1) Register Client:
+
+Post: http://localhost:1337/clients/register
+parameters:
+email: <your email>
+
+
+------------------------------------------------------------
+2) Reiseter user:
+
+Post: http://localhost:1337/users/register
+Paremeters:
+	username : <your username>
+	password : <your password>
+	email    : <your email>	
+
+---------------------------------------------------------------
+3) Request Token
+
+http://localhost:1337/oauth/token
+parameters:
+	grant_type : password
+	client_id  : <received client id>
+	username   : <your username>
+	password   : <your password>
