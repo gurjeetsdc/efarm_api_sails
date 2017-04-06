@@ -14,6 +14,6 @@ module.exports.security = {
 
     },
     server: {
-        url: 'http://localhost:1337'
+        url: 'https://efarmapi.herokuapp.com'
     }
 };
