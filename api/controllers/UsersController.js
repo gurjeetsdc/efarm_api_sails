@@ -13,6 +13,6 @@ module.exports = {
         API(Registration.verifyUser,req,res);
     },
     current: function(req,res){
-            API(Registration.currentUser,req,res);
+        API(Registration.currentUser,req,res);
     }
 };

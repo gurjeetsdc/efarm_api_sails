@@ -133,7 +133,7 @@ API = function (action, req, res) {
     context = req.context || {};
 
     //Setup User Identity and Authorization data for ease of access
-    context.identity = req.identity;
+    context.identity      = req.identity;
     context.authorization = req.authorization;
 
     data = req.params.all();

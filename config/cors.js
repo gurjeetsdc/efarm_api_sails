@@ -47,7 +47,8 @@ module.exports.cors = {
   *                                                                          *
   ***************************************************************************/
 
-  origin: '*',
+  origin: 'http://localhost:4200, http://efarmadmin.herokuapp.com/',
+
 
   /***************************************************************************
   *                                                                          *
@@ -73,6 +74,7 @@ module.exports.cors = {
   *                                                                          *
   ***************************************************************************/
 
-  headers: 'content-type,authorization'
+  // headers: 'content-type,authorization'
+
 
 };
