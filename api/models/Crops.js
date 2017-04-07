@@ -8,7 +8,30 @@
 module.exports = {
 
   attributes: {
-  	
+  		
+  		name: {
+            type: 'string'
+        },     
+
+        description: {
+            type: 'string'
+        },
+
+        offer_price: {
+            type: 'string'
+        },
+
+        quantity: {
+            type: 'string'
+        },
+
+        date_registered: {
+            type: 'date'
+        },
+
+        date_verified: {
+            type : 'date'
+        },
   // 	 	name: { type: String, required: true},
 		// description: { type: String},
 		// variety: { type: String, required: true},
