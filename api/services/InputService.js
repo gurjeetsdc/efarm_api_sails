@@ -11,78 +11,12 @@ var Promise = require('bluebird'),
 
 module.exports = {
 
-    saveCrop: function (data, context) {
-        var date = new Date();
-        return API.Model(Crops).create(data)
-        .then(function (crop) {
-            var Report;
-            if(crop){
-                Report = {"sucess": {
-                            "Code": 200,
-                            "Message": "OK"
-                            }}
-            }else{
-                Report = {"error": {
-                            "Code": 301,
-                            "Message": "Faild"
-                            }}
-            }
-
-            return {
-                    "Status": true,
-                    "Data": crop,
-                     Report
-                };
-
-        });
-    },
-    listCrops: function (data, context) {
-        
-        return Crops.find({"isDeleted":false})
-        .then(function (crops) {
-            var Report;
-                Report = {"sucess": {
-                            "Code": 200,
-                            "Message": "OK"
-                            }}
-            return {
-                    "Status": true,
-                    "Data": crops,
-                     Report
-                };
-
-        });
-    },
-    updateCrop: function (data, context) {
+     deleteInput: function (data, context) {
        
-//console.log(data);
-        return API.Model(Crops).update(data.id,data)
-        .then(function (crop) {
+     return API.Model(Inputs).update(data.id,data)
+        .then(function (inputs) {
             var Report;
-            if(crop){
-                Report = {"sucess": {
-                            "Code": 200,
-                            "Message": "OK"
-                            }}
-            }else{
-                Report = {"error": {
-                            "Code": 301,
-                            "Message": "Faild"
-                            }}
-            }
-            return {
-                    "Status": true,
-                    "Data": crop,
-                     Report
-                };
-        });
-    },
-    deleteCrop: function (data, context) {
-       
-     return API.Model(Crops).update(data.id,data)
-        .then(function (crop) {
-            var Report;
-            if(crop){
+            if(inputs){
                 Report = {"sucess": {
                             "Code": 200,
                             "Message": "Deleted"
@@ -99,55 +33,7 @@ module.exports = {
                 };
         });
     },
-    changeStatusCrop: function (data, context) {
-       
-     return API.Model(Crops).update(data.id,data)
-        .then(function (crop) {
-            var Report;
-            if(crop){
-                Report = {"sucess": {
-                            "Code": 200,
-                            "Message": "StatusUpdated"
-                            }}
-            }else{
-                Report = {"error": {
-                            "Code": 301,
-                            "Message": "Faild"
-                            }}
-            }
-            return {
-                    "Status": true,
-                     Report
-                };
-        });
-    },
-    getCrop: function (data, context) {
-
-        return API.Model(Crops).findOne(data.id)
-        .then(function (crop) {
-            var Report;
-            
-            if(crop){
-                Report = {"sucess": {
-                            "Code": 200,
-                            "Message": "OK"
-                            }}
-            }else{
-                Report = {"error": {
-                            "Code": 301,
-                            "Message": "Faild"
-                            }}
-            }
-            return {
-                    "Status": true,
-                    "Data": crop,
-                     Report
-                };
-        });
-    },
-  
-
-
+    
 
 
  

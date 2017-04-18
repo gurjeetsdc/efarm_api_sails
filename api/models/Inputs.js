@@ -26,77 +26,21 @@ module.exports = {
             type: 'string'
         },
 
-        offer_price: {
+        units: {
             type: 'integer'
         },
 
-        offer_price_unit: {
-            type: 'string'
+        price: {
+            type: 'string',
+          
         },
 
         quantity: {
-            type: 'integer',
-            required: true
-        },
-
-        quatity_unit: {
-            type: 'string'
-        },
-
-        service_fee: {
             type: 'integer'
         },
 
-        service_fee_type: {
-            type: 'string'
-        },
-
-        discount_type: {
-            type: 'string'
-        },
-
-        discount_value: {
-            type: 'integer'
-        },
-        
-        currency_cd: {
-            type: 'string',
-        },
-        
-        timezone: {
-            type: 'string'
-        },
-        
-        address_line1: {
+        tearm_and_conditions: {
             type: 'text'
-        },
-
-        address_line2: {
-            type: 'text'
-        },
-
-        city: {
-            type: 'string'
-        },
-
-        state: {
-            type: 'string'
-        },
-
-        postal_code: {
-            type: 'string'
-        },
-
-        country: {
-            type: 'string'
-        },
-
-        lat: {
-            type: 'string'
-        },
-
-        lng: {
-            type: 'string'
         },
         status: {
 			type: 'string',

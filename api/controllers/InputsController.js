@@ -6,6 +6,9 @@
  */
 
 module.exports = {
-	
-};
 
+	delete: function(req,res){
+	  API(InputService.deleteInput,req,res);
+    }
+
+};
