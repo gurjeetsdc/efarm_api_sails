@@ -3,7 +3,7 @@ module.exports.security = {
         version : '2.0',
         token : {
             length: 32,
-            expiration: 3600
+            expiration: 36000
         }
     },
     admin: {
