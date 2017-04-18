@@ -92,6 +92,11 @@ Model.prototype = {
         return promisify(this.model.create)(attributes);
     },
 
+    find: function () {
+        return promisify(this.model.find);
+    },
+
+
     findOne: function (criteria) {
         return promisify(this.model.findOne)(criteria);
     },
@@ -100,12 +105,9 @@ Model.prototype = {
         return promisify(this.model.findOrCreate)(criteria, attributes);
     },
 
-
-
     update: function (criteria, attributes) {
         return promisify(this.model.update)(criteria, attributes);
     },
-
 
 
     destroy: function (criteria) {
