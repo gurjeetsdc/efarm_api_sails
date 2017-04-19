@@ -19,7 +19,7 @@ module.exports = {
         },
 
         category:{
-        	model:""
+        	model:"Category"
         },
 
         company:{
@@ -28,38 +28,39 @@ module.exports = {
 
         model:{
         	type:'string'
-        }
+        },
 
         model_year:
         {
         	type:'integer'
-        }
+        },
 
         engine_power:
         {
         	type:'integer'
-        }
+        },
 
         usage:
         {
-        	type:'string'
+        	type:'text'
         },
         purchase_status:
         {
         	type:'string',
         	enum: ['rent', 'sell']
-        }
-
-        description: {
-            type: 'string'
         },
 
-        termcondition:{
-        	type:'string'
-        }
+        description: {
+            type: 'text'
+        },
+
+        term_condition:{
+        	type:'text'
+        },
 
         isDeleted:{
-            type:'boolean'
+            type:'boolean',
+            defaultsTo: false
         },
         createdAt: { type: 'Date', default: Date.now,autoCreatedAt: true},
         modifiedAt: { type: 'Date', default: Date.now, autoUpdatedAt: true},
