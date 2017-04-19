@@ -15,21 +15,21 @@ module.exports = {
        
      return API.Model(Inputs).update(data.id,data)
         .then(function (inputs) {
-            var Report;
+            var report;
             if(inputs){
-                Report = {"sucess": {
+                report = {"sucess": {
                             "Code": 200,
                             "Message": "Deleted"
                             }}
             }else{
-                Report = {"error": {
+                report = {"error": {
                             "Code": 301,
                             "Message": "Faild"
                             }}
             }
             return {
                     "Status": true,
-                     Report
+                     report
                 };
         });
     },

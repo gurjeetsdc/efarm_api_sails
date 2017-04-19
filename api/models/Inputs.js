@@ -13,14 +13,15 @@ module.exports = {
 	      model:'users'
 	    },
 
+        manufacturer_id:{
+          model:'users'
+        },
+
   		name: {
             type: 'string',
             required: true
         },     
 
-        description: {
-            type: 'text',
-        },
 
         variety: {
             type: 'string'
@@ -44,16 +45,16 @@ module.exports = {
         },
         status: {
 			type: 'string',
-			enum: ['Active', 'Deactive']
+			enum: ['Active', 'Deactive'],
+            defaultsTo: 'Active',
 		},
 		isDeleted: {
-			type: 'boolean'
+			type: 'boolean',
+            defaultsTo: false,
 		},
         createdAt: { type: 'Date', default: Date.now,autoCreatedAt: true},
 		modifiedAt: { type: 'Date', default: Date.now, autoUpdatedAt: true},
 
-
-
-  }
+    }
 };
 
