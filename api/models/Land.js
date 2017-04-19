@@ -25,9 +25,4 @@ module.exports = {
             type:'boolean'
         },
 	}
-  	beforeFind: function(values, cb) {
-        values.isDeleted = false;
-        cb();
-    }
 };
-
