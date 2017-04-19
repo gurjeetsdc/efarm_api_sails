@@ -9,7 +9,7 @@ email: <your email>
 
 
 ------------------------------------------------------------
-2) Reiseter user:
+2) Register user:
 
 Post: https://efarmapi.herokuapp.com/users/register
 Paremeters:
