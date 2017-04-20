@@ -38,7 +38,7 @@ module.exports = {
     },
     listCrops: function (data, context) {
         
-        return Crops.find({"isDeleted":false})
+        return Crops.find({"isDeleted":false}).populate('user_id')
         .then(function (crops) {
             var Report;
                 Report = {"sucess": {
