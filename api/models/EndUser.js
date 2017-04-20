@@ -47,11 +47,26 @@ module.exports = {
             type: 'string',
             required: true
         },
-
+        password:{
+            type: 'string',
+            required:true,
+            columnName: 'encrypted_password',
+            minLength: 8
+        },
+        
         isDeleted : {
         	type: 'Boolean',
         	defaultsTo: false
-        }
+        },
+        beforeCreate: function(enduser, next)
+        {
+            if (enduser.hasOwnProperty('password')) {
+                enduser.password = bcrypt.hashSync(enduser.password, bcrypt.genSaltSync(10));
+                next(false, enduser);
+            } else {
+            next(null, enduser);
+            }
+        },
   	}
 };
 
