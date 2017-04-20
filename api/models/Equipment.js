@@ -42,7 +42,7 @@ module.exports = {
 
         usage:
         {
-        	type:'string'
+        	type:'text'
         },
         purchase_status:
         {
@@ -51,18 +51,17 @@ module.exports = {
         },
 
         description: {
-            type: 'string'
+            type: 'text'
         },
 
-        termcondition:{
-        	type:'string'
+        term_condition:{
+        	type:'text'
         },
 
         isDeleted:{
             type:'boolean',
             defaultsTo: false
         }
-        
   }
 };
 

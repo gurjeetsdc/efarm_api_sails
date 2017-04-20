@@ -14,7 +14,7 @@ module.exports = {
 	    },
 
         manufacturer_id:{
-          model:'users'
+          type:'string'
         },
 
   		name: {
