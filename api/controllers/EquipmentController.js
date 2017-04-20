@@ -7,15 +7,15 @@
 
 module.exports = {
 
-	  add: function(req,res){
+	add: function(req,res){
       var equipment = req.body;
       console.log(equipment);
 
     },
-      edit: function(req,res){
+    edit: function(req,res){
        var update_equipment = req.body;
        console.log(update_equipment); 
-      },
+    },
     
 	
 };

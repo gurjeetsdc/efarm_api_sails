@@ -59,10 +59,10 @@ module.exports = {
         },
 
         isDeleted:{
-            type:'boolean'
-        },
-        createdAt: { type: 'Date', default: Date.now,autoCreatedAt: true},
-        modifiedAt: { type: 'Date', default: Date.now, autoUpdatedAt: true},
+            type:'boolean',
+            defaultsTo: false
+        }
+        
   }
 };
 
