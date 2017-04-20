@@ -7,8 +7,9 @@
 
 
 module.exports = {
-
-  attributes: {
+    autoCreatedAt: true,
+    autoUpdatedAt: true,
+    attributes: {
   		
   		user_id:{
 	      model:'users'
@@ -19,76 +20,84 @@ module.exports = {
             required: true
         },     
 
-        description: {
-            type: 'text',
+        category: {
+            type: 'string'
         },
 
         variety: {
             type: 'string'
         },
 
-        offer_price: {
+
+        price: {
             type: 'integer'
         },
 
-        offer_price_unit: {
+        grade: {
             type: 'string'
         },
 
-        quantity: {
-            type: 'integer',
-            required: true
-        },
-
-        quatity_unit: {
+        color: {
             type: 'string'
         },
 
-        service_fee: {
-            type: 'integer'
-        },
-
-        service_fee_type: {
+        size: {
             type: 'string'
         },
 
-        discount_type: {
+        other_speciality: {
             type: 'string'
         },
 
-        discount_value: {
-            type: 'integer'
-        },
-        
-        currency_cd: {
-            type: 'string',
-        },
-        
-        timezone: {
-            type: 'string'
-        },
-        
-        address_line1: {
-            type: 'text'
-        },
-
-        address_line2: {
-            type: 'text'
-        },
-
-        city: {
+        availibility: {
             type: 'string'
         },
 
-        state: {
+        packaging: {
             type: 'string'
         },
 
-        postal_code: {
+        supply_ablity: {
             type: 'string'
         },
 
-        country: {
+        destination_shipping: {
+            type: 'string'
+        },
+
+        pack_size: {
+            type: 'string'
+        },
+
+        quantity_per_pack: {
+            type: 'string'
+        },
+
+        label: {
+            type: 'string'
+        },
+
+        payment_method: {
+            type: 'string'
+        },
+
+        moq: {
+            type: 'string'
+        },
+
+        average_lead_time: {
+            type: 'string'
+        },
+
+        additional_info: {
+            type: 'string'
+        },
+
+        terms: {
+            type: 'string'
+        },
+
+        image: {
             type: 'string'
         },
 
@@ -100,48 +109,61 @@ module.exports = {
             type: 'string'
         },
         status: {
-			type: 'string',
-			enum: ['Active', 'Deactive']
-		},
-		isDeleted: {
-			type: 'boolean'
-		},
-        createdAt: { type: 'Date', default: Date.now,autoCreatedAt: true},
-		modifiedAt: { type: 'Date', default: Date.now, autoUpdatedAt: true},
+            type: 'string',
+            enum: ['Active', 'Deactive']
+        },
+        isDeleted: {
+            type: 'boolean',
+            defaultsTo:false
+        }
 
+        // service_fee: {
+        //     type: 'integer'
+        // },
 
-  // 	 	name: { type: String, required: true},
-		// description: { type: String},
-		// variety: { type: String, required: true},
-		// offer_price: { type: Number, required: true, default: 0},
-		// offer_price_unit: { type: Number, required: true, default: 0},
-		// quantity: { type: Number, required: true, default: 0},
-		// quatity_unit: { type: String, required: true},
-		// service_fee: { type: Number},
-		// service_fee_type: { type: Number},
-		// discount_type: { type: String},
-		// discount_value: { type: Number},
-		// currency_cd: { type: String},
-		// timezone: { type: String},
-		// address_line1: { type: String},
-		// address_line2: { type: String},
-		// city: { type: String},
-		// state: { type: String},
-		// postal_code: { type: String},
-		// country: { type: String},
-		// lat: { type: Number},
-		// lng: { type: Number},
-		// images: { type: Array},
-		// status: { type: Boolean, default: false},
-		// is_verified: { type: Boolean, default: false},
-		// ready_on: { type: Date},
-		// expired: { type: Date},
-		// created: { type: Date, default: Date.now},
-		// created_by: { type: Date},
-		// modified: { type: Date, default: Date.now},
-		// modified_by: { type: String},   
-  //  	userId: { type: String,required: true },
+        // service_fee_type: {
+        //     type: 'string'
+        // },
 
+        // discount_type: {
+        //     type: 'string'
+        // },
+
+        // discount_value: {
+        //     type: 'integer'
+        // },
+        
+        // currency_cd: {
+        //     type: 'string',
+        // },
+        
+        // timezone: {
+        //     type: 'string'
+        // },
+        
+        // address_line1: {
+        //     type: 'text'
+        // },
+
+        // address_line2: {
+        //     type: 'text'
+        // },
+
+        // city: {
+        //     type: 'string'
+        // },
+
+        // state: {
+        //     type: 'string'
+        // },
+
+        // postal_code: {
+        //     type: 'string'
+        // },
+
+        // country: {
+        //     type: 'string'
+        // },
   }
 };
 

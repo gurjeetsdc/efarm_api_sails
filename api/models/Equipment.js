@@ -19,7 +19,7 @@ module.exports = {
         },
 
         category:{
-        	model:""
+        	model:"Category"
         },
 
         company:{
@@ -28,17 +28,17 @@ module.exports = {
 
         model:{
         	type:'string'
-        }
+        },
 
         model_year:
         {
         	type:'integer'
-        }
+        },
 
         engine_power:
         {
         	type:'integer'
-        }
+        },
 
         usage:
         {
@@ -48,7 +48,7 @@ module.exports = {
         {
         	type:'string',
         	enum: ['rent', 'sell']
-        }
+        },
 
         description: {
             type: 'string'
@@ -56,7 +56,7 @@ module.exports = {
 
         termcondition:{
         	type:'string'
-        }
+        },
 
         isDeleted:{
             type:'boolean'

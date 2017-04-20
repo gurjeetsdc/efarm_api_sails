@@ -1,8 +1,6 @@
 /**
-  * #DESC:  In this class/files crops related functions
-  * #Request param: Crops add form data values
-  * #Return : Boolen and sucess message
-  * #Author: Rohitk.kumar
+  * #DESC:  In this class/files EndUser related functions
+  * #Author: Manpreet Singh
   */
 
 var Promise = require('bluebird'),
@@ -11,25 +9,25 @@ var Promise = require('bluebird'),
 
 module.exports = {
 
-     deleteInput: function (data, context) {
+     deleteUser: function (data, context) {
        
-     return API.Model(Inputs).update(data.id,data)
-        .then(function (inputs) {
-            var report;
-            if(inputs){
-                report = {"sucess": {
+     return API.Model(EndUser).update(data.id,data)
+        .then(function (user) {
+            var Repor;
+            if(user){
+                Report = {"sucess": {
                             "Code": 200,
                             "Message": "Deleted"
                             }}
             }else{
-                report = {"error": {
+                Report = {"error": {
                             "Code": 301,
                             "Message": "Faild"
                             }}
             }
             return {
                     "Status": true,
-                     report
+                     Report
                 };
         });
     },
