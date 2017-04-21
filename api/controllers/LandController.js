@@ -11,5 +11,9 @@ module.exports = {
       console.log(land);
 
     },
+     delete: function(req,res){
+    	// action generated when delete api hit
+	  API(LandServices.deleteLand,req,res);
+    }  
 };
 
