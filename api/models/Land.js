@@ -20,27 +20,32 @@ module.exports = {
 
     purchase_status:{
       type:'string',
-      enum: ['rent', 'sell']
+      enum: ['rent', 'sell'],
+      defaultsTo: 'rent'
       },
-
     location:{
-      type:'string'
+      type:'string',
+      required: true
       },
 
     description: {
-      type:'text'
+      type:'text',
+      required: true
       },
 
     area:{
-      type:'string'
+      type:'string',
+      required: true
       },
 
     khasra_no:{
-      type:'integer'
+      type:'integer',
+      required: true
       },
 
     expected_price:{
-      type:'integer'
+      type:'integer',
+      required: true
       },
 
     term_condition:{
