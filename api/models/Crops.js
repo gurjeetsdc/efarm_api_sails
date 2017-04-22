@@ -35,8 +35,7 @@ module.exports = {
         },
 
         grade: {
-            type: 'string',
-            required: true
+            type: 'string'
         },
 
         color: {
