@@ -21,7 +21,8 @@ module.exports = {
         },     
 
         category: {
-            type: 'string'
+            type: 'string',
+            required:true
         },
 
         variety: {
@@ -78,12 +79,13 @@ module.exports = {
         },
 
         quantity_per_pack: {
-            type: 'string',
+            type: 'integer',
             required: true
         },
 
         label: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
 
         payment_method: {
