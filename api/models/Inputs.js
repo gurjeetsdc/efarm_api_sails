@@ -9,27 +9,24 @@ module.exports = {
 
   attributes: {
   		
-  		user_id:{
+  		user:{
 	      model:'users'
 	    },
 
-        manufacturer_id:{
-          type:'string'
+        manufacturer:{
+         model:'manufacturer'
         },
 
   		name: {
             type: 'string',
             required: true
         },     
-
-
         variety: {
             type: 'string',
             required: true
         },
-
         units: {
-            type: 'integer',
+            type: 'string',
             required: true
         },
 
@@ -42,7 +39,11 @@ module.exports = {
             type: 'integer',
             required: true
         },
-
+        purchase_status:
+        {
+            type:'string',
+            enum: ['rent', 'sell']
+        },
         tearm_and_conditions: {
             type: 'text'
         },
