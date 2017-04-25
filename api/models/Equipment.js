@@ -6,8 +6,9 @@
  */
 
 module.exports = {
-
-  attributes: {
+    autoCreatedAt: true,
+    autoUpdatedAt: true,
+    attributes: {
 
 
         user_id:{
@@ -62,6 +63,6 @@ module.exports = {
             type:'boolean',
             defaultsTo: false
         }
-  }
+    }
 };
 

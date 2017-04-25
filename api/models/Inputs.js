@@ -24,20 +24,23 @@ module.exports = {
 
 
         variety: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
 
         units: {
-            type: 'integer'
+            type: 'integer',
+            required: true
         },
 
         price: {
             type: 'string',
-          
+            required: true
         },
 
         quantity: {
-            type: 'integer'
+            type: 'integer',
+            required: true
         },
 
         tearm_and_conditions: {

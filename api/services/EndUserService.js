@@ -23,8 +23,6 @@ emailGeneratedCode = function (options) { //email generated code
     message += '<br/>';
     message += 'Please visit the verification link to complete the registration process.';
     message += '<br/><br/>';
-    message += 'Account with ' + options.type + " : " + options.id;
-    message += '<br/><br/>';
     message += '<a href="';
     message += url;
     message += '">Verification Link</a>';
@@ -33,10 +31,10 @@ emailGeneratedCode = function (options) { //email generated code
     transport.sendMail({
         from: sails.config.appSMTP.auth.user,
         to: email,
-        subject: 'Canadian Tire App Account Registration',
+        subject: 'eFarmX registration',
         html: message
     }, function (err, info) {
-        console.log("Email Response:", info,err);
+
     });
 
     return {

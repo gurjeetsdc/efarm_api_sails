@@ -21,7 +21,8 @@ module.exports = {
         },     
 
         category: {
-            type: 'string'
+            type: 'string',
+            required:true
         },
 
         variety: {
@@ -30,7 +31,8 @@ module.exports = {
 
 
         price: {
-            type: 'integer'
+            type: 'integer',
+            required: true
         },
 
         grade: {
@@ -38,11 +40,13 @@ module.exports = {
         },
 
         color: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
 
         size: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
 
         other_speciality: {
@@ -50,47 +54,58 @@ module.exports = {
         },
 
         availibility: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
 
         packaging: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
 
         supply_ablity: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
 
         destination_shipping: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
 
         pack_size: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
 
         quantity_per_pack: {
-            type: 'string'
+            type: 'integer',
+            required: true
         },
 
         label: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
 
         payment_method: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
 
         moq: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
 
         average_lead_time: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
 
         additional_info: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
 
         terms: {
