@@ -11,8 +11,9 @@ module.exports = {
     autoUpdatedAt: true,
     attributes: {
   		
-  		user_id:{
-	      model:'users'
+  		user:{
+	      model:'users',
+          required:true
 	    },
 
   		name: {
@@ -21,7 +22,7 @@ module.exports = {
         },     
 
         category: {
-            type: 'string',
+            model: 'Category',
             required:true
         },
 
@@ -99,7 +100,7 @@ module.exports = {
         },
 
         average_lead_time: {
-            type: 'string',
+            type: 'integer',
             required: true
         },
 
