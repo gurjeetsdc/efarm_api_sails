@@ -6,7 +6,8 @@
  */
 
 module.exports = {
-
+    autoCreatedAt: true,
+    autoUpdatedAt: true,
   attributes: {
   		
   		user:{
@@ -55,10 +56,7 @@ module.exports = {
 		isDeleted: {
 			type: 'boolean',
             defaultsTo: false,
-		},
-        createdAt: { type: 'Date', default: Date.now,autoCreatedAt: true},
-		modifiedAt: { type: 'Date', default: Date.now, autoUpdatedAt: true},
-
+		}
     }
 };
 
