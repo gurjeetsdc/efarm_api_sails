@@ -11,9 +11,8 @@ module.exports = {
     autoUpdatedAt: true,
     attributes: {
   		
-  		user:{
-	      model:'users',
-          required:true
+  		seller:{
+	      model:'users'
 	    },
 
   		name: {
@@ -50,10 +49,6 @@ module.exports = {
             required: true
         },
 
-        other_speciality: {
-            type: 'string'
-        },
-
         availibility: {
             type: 'string',
             required: true
@@ -69,11 +64,6 @@ module.exports = {
             required: true
         },
 
-        destination_shipping: {
-            type: 'string',
-            required: true
-        },
-
         pack_size: {
             type: 'string',
             required: true
@@ -84,17 +74,18 @@ module.exports = {
             required: true
         },
 
+        unit : {
+            type: 'string',
+            enum: ['Kg', 'Tonnes','Quintal'],
+            required: true
+        },
+
         label: {
             type: 'string',
             required: true
         },
 
         payment_method: {
-            type: 'string',
-            required: true
-        },
-
-        moq: {
             type: 'string',
             required: true
         },
