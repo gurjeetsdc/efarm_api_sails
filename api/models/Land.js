@@ -22,8 +22,8 @@ module.exports = {
 
     purchase_status:{
       type:'string',
-      enum: ['rent', 'sell'],
-      defaultsTo: 'rent'
+      enum: ['Lease', 'Sell'],
+      defaultsTo: 'Lease'
       },
     location:{
       type:'string',
