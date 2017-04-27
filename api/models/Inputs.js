@@ -18,6 +18,10 @@ module.exports = {
          model:'manufacturer'
         },
 
+        category:{
+         model:'category'
+        },
+
   		name: {
             type: 'string',
             required: true
@@ -37,8 +41,7 @@ module.exports = {
         },
 
         quantity: {
-            type: 'integer',
-            required: true
+            type: 'integer'
         },
         purchase_status:
         {
