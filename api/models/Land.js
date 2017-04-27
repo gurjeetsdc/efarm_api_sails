@@ -18,12 +18,6 @@ module.exports = {
   	name: {
       type:'string',
       required: true
-      },     
-
-    purchase_status:{
-      type:'string',
-      enum: ['Lease', 'Sell'],
-      defaultsTo: 'Lease'
       },
     location:{
       type:'string',
