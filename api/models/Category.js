@@ -13,9 +13,15 @@ module.exports = {
             required: true,
             unique:true
         },     
-
         description: {
             type: 'text',
+        },
+        type: {
+          type: 'string',
+        },
+        is_deleted: {
+            type: 'Boolean',
+            defaultsTo: false
         }
   }
 };
