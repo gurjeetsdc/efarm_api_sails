@@ -1,0 +1,28 @@
+API Document:
+
+-----------------------------------------------------------
+1) Register Client:
+
+Post: https://efarmapi.herokuapp.com/clients/register
+parameters:
+email: <your email>
+
+
+------------------------------------------------------------
+2) Register user:
+
+Post: https://efarmapi.herokuapp.com/users/register
+Paremeters:
+	username : <your username>
+	password : <your password>
+	email    : <your email>	
+
+---------------------------------------------------------------
+3) Request Token
+
+https://efarmapi.herokuapp.com/oauth/token
+parameters:
+	grant_type : password
+	client_id  : <received client id>
+	username   : <your username>
+	password   : <your password>

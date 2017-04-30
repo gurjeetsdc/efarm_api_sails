@@ -1,2 +1,3 @@
-# efarm_api_sails
-Sails Api framework. 
+# Efarm API
+
+a [Sails](http://sailsjs.org) application
