@@ -7,6 +7,8 @@
 
 module.exports = {
 
+    autoCreatedAt: true,
+    autoUpdatedAt: true,
   attributes: 
   	{
     user_id:{
@@ -16,12 +18,6 @@ module.exports = {
   	name: {
       type:'string',
       required: true
-      },     
-
-    purchase_status:{
-      type:'string',
-      enum: ['rent', 'sell'],
-      defaultsTo: 'rent'
       },
     location:{
       type:'string',
@@ -55,8 +51,6 @@ module.exports = {
     isDeleted:{
       type:'boolean',
       defaultsTo: false
-      },
-      createdAt: { type: 'Date', default: Date.now,autoCreatedAt: true},
-      modifiedAt: { type: 'Date', default: Date.now, autoUpdatedAt: true},
+      }
 	}
 };

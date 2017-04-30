@@ -6,20 +6,34 @@
  */
 
 module.exports = {
-
-  attributes: {
+    autoCreatedAt: true,
+    autoUpdatedAt: true,
+    attributes: {
 
 
         user_id:{
-          model:'users'
-        },
-  		name: {
             type: 'string',
             required: true
         },
 
+        user:{
+            model:'users'
+            /*required: true*/
+        },
+
         category:{
-        	model:"Category"
+            model:"Category",
+            required: true
+        },
+
+        category_id:{
+            type:'string',
+            required: true
+        }, 
+
+  		name: {
+            type: 'string',
+            required: true
         },
 
         company:{
@@ -62,6 +76,6 @@ module.exports = {
             type:'boolean',
             defaultsTo: false
         }
-  }
+    }
 };
 

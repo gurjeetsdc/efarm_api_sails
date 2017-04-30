@@ -6,30 +6,32 @@
  */
 
 module.exports = {
-
+    autoCreatedAt: true,
+    autoUpdatedAt: true,
   attributes: {
   		
-  		user_id:{
+  		user:{
 	      model:'users'
 	    },
 
-        manufacturer_id:{
-          type:'string'
+        manufacturer:{
+         model:'manufacturer'
+        },
+
+        category:{
+         model:'category'
         },
 
   		name: {
             type: 'string',
             required: true
         },     
-
-
         variety: {
             type: 'string',
             required: true
         },
-
         units: {
-            type: 'integer',
+            type: 'string',
             required: true
         },
 
@@ -39,10 +41,13 @@ module.exports = {
         },
 
         quantity: {
-            type: 'integer',
-            required: true
+            type: 'integer'
         },
-
+        purchase_status:
+        {
+            type:'string',
+            enum: ['rent', 'sell']
+        },
         tearm_and_conditions: {
             type: 'text'
         },
@@ -54,10 +59,7 @@ module.exports = {
 		isDeleted: {
 			type: 'boolean',
             defaultsTo: false,
-		},
-        createdAt: { type: 'Date', default: Date.now,autoCreatedAt: true},
-		modifiedAt: { type: 'Date', default: Date.now, autoUpdatedAt: true},
-
+		}
     }
 };
 

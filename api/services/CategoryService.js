@@ -3,22 +3,21 @@
   * #Request param: Crops add form data values
   * #Return : Boolen and sucess message
   * #Author: Rohitk.kumar
-  */
+*/
 
 var Promise = require('bluebird'),
     promisify = Promise.promisify;
 
 module.exports = {
 
-    deleteCategory: function (data, context) {
-       
+    delete: function (data, context) {
       return API.Model(Category).update(data.id,data)
         .then(function (categories) {
             var result;
             if(categories){
               result =  {"sucess": {
                         "Code": 200,
-                        "Message": "Cagtegory deleted successfully."
+                        "Message": "Category deleted successfully."
                       }}
             } else {
               result =  {"error": {

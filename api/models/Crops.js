@@ -11,7 +11,7 @@ module.exports = {
     autoUpdatedAt: true,
     attributes: {
   		
-  		user_id:{
+  		seller:{
 	      model:'users'
 	    },
 
@@ -21,7 +21,8 @@ module.exports = {
         },     
 
         category: {
-            type: 'string'
+            model: 'Category',
+            required:true
         },
 
         variety: {
@@ -35,8 +36,7 @@ module.exports = {
         },
 
         grade: {
-            type: 'string',
-            required: true
+            type: 'string'
         },
 
         color: {
@@ -47,10 +47,6 @@ module.exports = {
         size: {
             type: 'string',
             required: true
-        },
-
-        other_speciality: {
-            type: 'string'
         },
 
         availibility: {
@@ -68,23 +64,25 @@ module.exports = {
             required: true
         },
 
-        destination_shipping: {
-            type: 'string',
-            required: true
-        },
-
         pack_size: {
             type: 'string',
             required: true
         },
 
         quantity_per_pack: {
+            type: 'integer',
+            required: true
+        },
+
+        unit : {
             type: 'string',
+            enum: ['Kg', 'Tonnes','Quintal'],
             required: true
         },
 
         label: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
 
         payment_method: {
@@ -92,13 +90,8 @@ module.exports = {
             required: true
         },
 
-        moq: {
-            type: 'string',
-            required: true
-        },
-
         average_lead_time: {
-            type: 'string',
+            type: 'integer',
             required: true
         },
 
