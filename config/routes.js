@@ -36,7 +36,9 @@ module.exports.routes = {
     view: 'homepage'
   },*/
 
-  'get /category/getcategory/:categorytype': 'CategoryController.getCategoryList'
+  'get /category/list/:categorytype': 'CategoryController.getCategoryList',
+  '/equipment/list': 'EquipmentController.getAllEquipments',
+  'post /equipment/upload' : 'EquipmentController.uploadImages'
 
   /***************************************************************************
   *                                                                          *
