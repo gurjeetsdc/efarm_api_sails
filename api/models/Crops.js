@@ -29,74 +29,65 @@ module.exports = {
             type: 'string'
         },
 
+        quantity: {
+            type: 'integer',
+            required: true
+        },
 
-        price: {
+        quantity_unit: {
+            type: 'string',
+            enum: ['Kg', 'Quintal','Tonnes'],
+            required: true
+        },
+
+        price : {
             type: 'integer',
             required: true
         },
 
         grade: {
-            type: 'string'
-        },
-
-        color: {
             type: 'string',
-            required: true
+             enum: ['A+', 'A', 'B', 'C', 'D'],
         },
 
-        size: {
+        availibile_from: {
+            type: 'json'
+        },
+
+        available_period: {
+            type: 'integer'
+        },
+
+        available_unit: {
             type: 'string',
+            enum: ['Days', 'Month','Year'],
             required: true
         },
 
-        availibility: {
+        supply_ability: {
             type: 'string',
+            enum: ['Yes', 'No'],
             required: true
         },
 
-        packaging: {
+        supply_area: {
             type: 'string',
-            required: true
+            enum: ['withinstate', 'anywhere']
         },
 
-        supply_ablity: {
-            type: 'string',
-            required: true
-        },
-
-        pack_size: {
-            type: 'string',
-            required: true
-        },
-
-        quantity_per_pack: {
-            type: 'integer',
-            required: true
-        },
-
-        unit : {
-            type: 'string',
-            enum: ['Kg', 'Tonnes','Quintal'],
-            required: true
-        },
-
-        label: {
-            type: 'string',
-            required: true
+        supply_range: {
+            type: 'integer'
         },
 
         payment_method: {
             type: 'string',
+            enum: ['COD', 'Cheque', 'Net Banking'],
             required: true
         },
 
-        average_lead_time: {
-            type: 'integer',
-            required: true
-        },
-
-        additional_info: {
+        verified: {
             type: 'string',
+            enum: ['Yes', 'No'],
             required: true
         },
 
@@ -124,26 +115,6 @@ module.exports = {
             defaultsTo:false
         }
 
-        // service_fee: {
-        //     type: 'integer'
-        // },
-
-        // service_fee_type: {
-        //     type: 'string'
-        // },
-
-        // discount_type: {
-        //     type: 'string'
-        // },
-
-        // discount_value: {
-        //     type: 'integer'
-        // },
-        
-        // currency_cd: {
-        //     type: 'string',
-        // },
-        
         // timezone: {
         //     type: 'string'
         // },
