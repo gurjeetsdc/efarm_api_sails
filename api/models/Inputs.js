@@ -6,54 +6,60 @@
  */
 
 module.exports = {
-
+    autoCreatedAt: true,
+    autoUpdatedAt: true,
   attributes: {
   		
-  		user_id:{
+  		user:{
 	      model:'users'
 	    },
+
+        manufacturer:{
+         model:'manufacturer'
+        },
+
+        category:{
+         model:'category'
+        },
 
   		name: {
             type: 'string',
             required: true
         },     
-
-        description: {
-            type: 'text',
-        },
-
         variety: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
-
         units: {
-            type: 'integer'
+            type: 'string',
+            required: true
         },
 
         price: {
             type: 'string',
-          
+            required: true
         },
 
         quantity: {
             type: 'integer'
         },
-
+        purchase_status:
+        {
+            type:'string',
+            enum: ['rent', 'sell']
+        },
         tearm_and_conditions: {
             type: 'text'
         },
         status: {
 			type: 'string',
-			enum: ['Active', 'Deactive']
+			enum: ['Active', 'Deactive'],
+            defaultsTo: 'Active',
 		},
 		isDeleted: {
-			type: 'boolean'
-		},
-        createdAt: { type: 'Date', default: Date.now,autoCreatedAt: true},
-		modifiedAt: { type: 'Date', default: Date.now, autoUpdatedAt: true},
-
-
-
-  }
+			type: 'boolean',
+            defaultsTo: false,
+		}
+    }
 };
 

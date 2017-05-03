@@ -6,12 +6,11 @@
   */
 
 var Promise = require('bluebird'),
-    promisify = Promise.promisify
-    ;
+    promisify = Promise.promisify;
 
 module.exports = {
 
-    saveCrop: function (data, context) {
+    save: function (data, context) {
         var date = new Date();
         return API.Model(Crops).create(data)
         .then(function (crop) {
@@ -36,9 +35,9 @@ module.exports = {
 
         });
     },
-    listCrops: function (data, context) {
+    list: function (data, context) {
         
-        return Crops.find({"isDeleted":false})
+        return Crops.find({"isDeleted":false}).populate('user').populate('category')
         .then(function (crops) {
             var Report;
                 Report = {"sucess": {
@@ -53,9 +52,8 @@ module.exports = {
 
         });
     },
-    updateCrop: function (data, context) {
+    update: function (data, context) {
        
-//console.log(data);
         return API.Model(Crops).update(data.id,data)
         .then(function (crop) {
             var Report;
@@ -77,7 +75,7 @@ module.exports = {
                 };
         });
     },
-    deleteCrop: function (data, context) {
+    delete: function (data, context) {
        
      return API.Model(Crops).update(data.id,data)
         .then(function (crop) {
@@ -99,7 +97,7 @@ module.exports = {
                 };
         });
     },
-    changeStatusCrop: function (data, context) {
+    changeStatus: function (data, context) {
        
      return API.Model(Crops).update(data.id,data)
         .then(function (crop) {
@@ -121,7 +119,7 @@ module.exports = {
                 };
         });
     },
-    getCrop: function (data, context) {
+    get: function (data, context) {
 
         return API.Model(Crops).findOne(data.id)
         .then(function (crop) {

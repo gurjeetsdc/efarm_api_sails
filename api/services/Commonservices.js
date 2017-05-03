@@ -3,17 +3,14 @@ var Promise = require('bluebird'),
 
 module.exports = {
 
-	records: function(data , context)
+	records: function(data , context)// action to perform find all type in category  
 	{
-		//console.log(data);
 		var type = 	data.type;
 		var status;
-		//console.log(type);
-	 return Category.find({category_type:type})
+	 return Category.find({category_type:type}) // find the type in category model
 	        .then(function (record) {
 	        	var report;
-	        	//console.log(record.length);
-            if(record.length != 0){
+            if(record.length != 0){// check the length of record
                 report = {"sucess": {
                             "Code": 200,
                             "Message": "OK"
@@ -33,15 +30,7 @@ module.exports = {
                     "Data": record,
                      report
                 };
-	        	/*if(err)
-	        	{
-	        		console.log(err);
-	        	}*/
-//	console.log(record);
-                /*return {
-                    success: true,
-                    data: record,
-                	};*/
+	        	
                 
 		});
 

@@ -7,51 +7,58 @@
 
 module.exports = {
 
+    autoCreatedAt: true,
+    autoUpdatedAt: true,
   attributes: 
   	{
-    user_id:{
+    user:{
       model:'users'
-      },
+    },
 
-  	name: {
-      type:'string',
-      required: true
-      },     
-
-    purchase_status:{
-      type:'string',
-      enum: ['rent', 'sell']
-      },
+    category:{
+      model:'category'
+    },
 
     location:{
-      type:'string'
-      },
+      type:'string',
+      required: true
+    },
+
+    avail_date: {
+      type:'json',
+    },
+
+    periods:{
+      type:'string',
+    },
 
     description: {
-      type:'text'
-      },
+      type:'text',
+      required: true
+    },
 
     area:{
-      type:'string'
-      },
+      type:'string',
+      required: true
+    },
 
     khasra_no:{
-      type:'integer'
-      },
+      type:'integer',
+      required: true
+    },
 
     expected_price:{
-      type:'integer'
-      },
+      type:'integer',
+      required: true
+    },
 
     term_condition:{
       type:'text'
-      },
+    },
 
     isDeleted:{
       type:'boolean',
       defaultsTo: false
-      },
-      createdAt: { type: 'Date', default: Date.now,autoCreatedAt: true},
-      modifiedAt: { type: 'Date', default: Date.now, autoUpdatedAt: true},
+    }
 	}
 };
