@@ -15,6 +15,12 @@ module.exports = {
 
         description: {
             type: 'text',
+        },
+        category_type: {
+            type: 'string',
+        },
+        variety:{
+        	type:'array'
         }
   	}
 };

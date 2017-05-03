@@ -60,7 +60,7 @@ exchangePasswordHandler = function(client, username, password, scope, next) {
     if (!client) return next(null, false); //passport-oauth2-client-password needs to be configured
     //Validate the user
     Users.authenticate(username, password).then(function (user) {
-        if (!user) return next(null, false);
+        //if (!user) return next(null, false);
         return Tokens.generateToken({
             client_id: client.client_id,
             user_id: user.id
@@ -71,6 +71,8 @@ exchangePasswordHandler = function(client, username, password, scope, next) {
         });
     });
 };
+
+
 
 /**
  * Exchange the refresh token for an access token.
@@ -114,8 +116,11 @@ module.exports = {
 
     //OAuth Token Services
     sendToken: function (data, context, req, res) {
-        if (req.method != 'POST') throw 'Unsupported method';
 
+        //console.log(req.body);
+
+        if (req.method != 'POST') throw 'Unsupported method';
+            
         return validateAndSendToken(req, res).catch(function (err) {
             tokenErrorMessage(err, req, res);
         });

@@ -9,5 +9,6 @@ module.exports = {
 	delete: function(req,res){
 	  API(CategoryService.deleteCategory,req,res);
     }
+
 };
 
