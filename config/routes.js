@@ -40,6 +40,7 @@ module.exports.routes = {
   '/equipment/list': 'EquipmentController.getAllEquipments',
   'post /equipment/upload' : 'EquipmentController.uploadImages'
 
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

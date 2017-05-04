@@ -5,6 +5,7 @@
   "description": "Efarmx Api",
   "keywords": [],
   "dependencies": {
+    "aws-sdk": "^2.2.19",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.5.0",
     "formidable": "^1.1.1",
@@ -18,9 +19,11 @@
     "passport-oauth2-public-client": "^0.1.0",
     "rand-token": "^0.3.0",
     "rc": "1.0.1",
+    "s3": "^4.4.0",
     "sails": "~0.12.13",
     "sails-disk": "~0.10.9",
-    "sails-mongo": "^0.12.2"
+    "sails-mongo": "^0.12.2",
+    "skipper-s3": "^0.5.9"
   },
   "scripts": {
     "debug": "node debug app.js",

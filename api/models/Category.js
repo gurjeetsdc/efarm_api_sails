@@ -6,7 +6,8 @@
  */
 
 module.exports = {
-
+  autoCreatedAt: true,
+  autoUpdatedAt: true,
   attributes: {
   		name: {
             type: 'string',
@@ -19,7 +20,7 @@ module.exports = {
         type: {
           type: 'string',
         },
-        is_deleted: {
+        isDeleted: {
             type: 'Boolean',
             defaultsTo: false
         }

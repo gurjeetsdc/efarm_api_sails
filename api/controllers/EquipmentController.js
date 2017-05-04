@@ -3,6 +3,7 @@ const osTmpdir = require('os-tmpdir');
 var formidable = require('formidable');
 var AWS = require('aws-sdk');
 
+var path = require('path');
 /**
  * EquipmentController
  *
@@ -90,28 +91,85 @@ module.exports = {
     },
 
     uploadImages: function(req, res) {
-    	console.log("test data for req",req.session);
+    	console.log("here before file ")
+        //var form = new formidable.IncomingForm();
+    	//form.keepExtensions = true;     //keep file extension
+    	var uploadDir = (path.resolve(__dirname+"/../../doc/upload/equipments/"));  //set upload directory
+    	// console.log(form.uploadDir)
+    	// form.keepExtensions = true;     //keep file extension
+    	// console.log(req.file('abc'));
+    	var dateTime = new Date().toISOString().replace(/T/,'').replace(/\..+/, '').split(" ");
+    	req.file('abc').upload({
+		  dirname: uploadDir
+		},function (err, uploadedFiles) {
+			console.log(err,uploadedFiles[0].fd)
+			// return
+		  	if (err){
+		   		return res.negotiate(err);
+		   	} else {
+	   		    var client = s3.createClient({
+				  	s3Options: {
+					    accessKeyId: "AKIAJPWHNV77ST4GC7WQ",
+					    secretAccessKey: "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"
+					},
+				});
+			    // var client = s3.createClient(options);
 
-        var form = new formidable.IncomingForm();
-    	form.keepExtensions = true;     //keep file extension
-    	form.uploadDir = (__dirname+"/../../doc/upload/equipments/");  //set upload directory
-    	form.keepExtensions = true;     //keep file extension
-    	form.parse(req, function(err, fields, files) {
+			    var params = {
+			      localFile: uploadedFiles[0].fd,
 
-			var dateTime = new Date().toISOString().replace(/T/,'').replace(/\..+/, '').split(" ");
+			      s3Params: {
+			        Bucket: "farmx-data",
+			        Key: "images/"+ dateTime +uploadedFiles[0].fd,
+			        ACL: 'public-read',
+			        // other options supported by putObject, except Body and ContentLength.
+			        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+			      },
+			    };
 
-			console.log("datae",dateTime);
+			    var uploader = client.uploadFile(params);
+			      uploader.on('error', function(err) {
+			        console.error("unable to upload:", err.stack);
+			        res.json({'code': 400, 'error':err.stack});
+			      });
+			      uploader.on('progress', function() {
+			        console.log("progress", uploader.progressMd5Amount,
+			                  uploader.progressAmount, uploader.progressTotal);
+			        var return_data = {}
+			        return_data.progressMd5Amount = uploader.progressMd5Amount
+			        return_data.progressAmount    = uploader.progressAmount
+			        return_data.progressTotal     = uploader.progressTotal
+			      });
+			      uploader.on('end', function() {
+			        
+			        uploader.url = s3.getPublicUrlHttp(params.s3Params.Bucket, params.s3Params.Key);
+			        console.log("done uploading URL: "+uploader.url);
+
+			      });
+				// return res.json({
+				//     message: uploadedFiles.length + ' file(s) uploaded successfully!'
+				// });
+			}
+		});
+    	// return;
+    	// form.parse(req, function(err, fields, files) {
+		//console.log("request is ",req);
+			// console.log("datae",err, files, fields);
+			// var dateTime = new Date().toISOString().replace(/T/,'').replace(/\..+/, '').split(" ");
+
 
 	    	// UPLOADING IMAGE TO S3 BUCKET
 
-	    	/*var awsS3Client = new AWS.S3();
-	    	var options = {
-		      	s3Client: awsS3Client,
-	    	};
-	    	
-	    	var client = s3.createClient(options);
+	  //   	var awsS3Client = new AWS.S3();
+	  //   	var options = {
+		 //      	s3Client: awsS3Client,
+	  //   	};
+	  //   	console.log("options are",options);
 
-	    	var params = {
+	  //   	var client = s3.createClient(options);
+			// console.log("client is ",client);
+	    	
+	    	/*var params = {
 	      		localFile: files.file.path,
 		      	s3Params: {
 			        Bucket: "farmx-data",
@@ -123,6 +181,8 @@ module.exports = {
 	    	};
 
 	    	var uploader = client.uploadFile(params);
+	      	
+	      	console.log("Uploader is ",uploader);
 	      	uploader.on('error', function(err) {
 		        console.error("unable to upload:", err.stack);
 		        res.json({'code': 400, 'error':err.stack});
@@ -148,7 +208,7 @@ module.exports = {
 	        	img.IsCover = false;
 	        	var invn_id = fields.invn_id;              
 	        
-	        	/*Equipment.update({_id:invn_id},{$push:{"Images": img}},{},function(err, numAffected){
+	        	Equipment.update({_id:invn_id},{$push:{"Images": img}},{},function(err, numAffected){
 	          	
 		          	if (err) {
 		            	res.json(err);
@@ -161,9 +221,33 @@ module.exports = {
 		              		}
 		            	})
 		          	}
-	        	});*/
-	      	//});
-    	});
-   	}
-};
+	        	});
+	      	//});*/
+    	// });
+   	},
+//};
 
+uploadImage: function (req, res) {
+	console.log("control is here",req);
+    req.file('file').upload({
+      	adapter: require('skipper-s3'),
+      	key: 'AKIAJPWHNV77ST4GC7WQ',
+      	secret: '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',
+      	bucket: 'farmx-data'
+      	
+    }, function (err, filesUploaded) {
+    	if (err){
+    		console.log("files error",err);
+    		return res.negotiate(err);
+    	} else { 
+      		console.log("files uploaded",res);
+      		return res.ok({
+
+        		files: filesUploaded,
+        		textParams: req.params.all()
+      		});
+      	}
+    });
+  }
+
+};
