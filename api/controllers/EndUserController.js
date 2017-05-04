@@ -8,7 +8,7 @@
 module.exports = {
 
 	add: function(req,res){
-		API(EndUserService.save,req,res);
+		API(UserService.save,req,res);
 	}
 	
 };

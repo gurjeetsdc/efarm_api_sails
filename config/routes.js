@@ -54,6 +54,8 @@ module.exports.routes = {
   'post /equipment/upload' : 'EquipmentController.uploadImages',
 
   //User Routes
-  'POST /user/add': 'EndUserController.add'
+  //'get /user : UsersController.getAllUsers',
+  'post /user' : 'UsersController.register',
+  'POST /user/add': 'UsersController.add',
 
 };

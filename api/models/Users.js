@@ -9,10 +9,19 @@ var promisify = require('bluebird').promisify;
 var bcrypt    = require('bcrypt-nodejs');
 
 module.exports = {
-
+    autoCreatedAt: true,
+    autoUpdatedAt: true,
 
     attributes: {
-
+        firstName: {
+            type: 'string',
+            required: true
+        },
+        
+        lastName: {
+            type: 'string',
+            required: true
+        },     
 
         username: {
             type: 'string',
@@ -26,6 +35,39 @@ module.exports = {
             required: true
         },
 
+        mobile: {
+            type: 'integer',
+            required: true
+        },
+
+        city: {
+            type: 'string',
+            required: true
+        },
+
+        pincode: {
+            type: 'integer',
+            required: true
+        },
+
+        state: {
+            type: 'string',
+            required: true
+        },
+
+        district: {
+            type: 'string',
+            required: true
+        },
+
+        lat: {
+            type: 'float'
+        },
+
+        lng: {
+            type: 'float'
+        },
+
         password: {
             type: 'string',
             required: true,
@@ -33,24 +75,19 @@ module.exports = {
             minLength: 8
         },
 
-        first_name: {
-            type: 'string'
-        },
-
-        last_name: {
-            type: 'string'
-        },
-
-        location: {
-            type: 'string'
-        },
-
-        date_registered: {
-            type: 'date'
-        },
-
         date_verified: {
             type : 'date'
+        },
+
+        roles: {
+            type: 'string',
+            enum: ['SA', 'A','U'],
+            required: true
+        },
+
+        isDeleted : {
+            type: 'Boolean',
+            defaultsTo: false
         },
 
         comparePassword: function(password) {

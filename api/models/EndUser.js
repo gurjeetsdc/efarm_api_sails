@@ -55,7 +55,6 @@ module.exports = {
             columnName: 'encryptedPassword',
             minLength: 8
         },
-        
         isDeleted : {
         	type: 'Boolean',
         	defaultsTo: false

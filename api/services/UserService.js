@@ -54,6 +54,7 @@ generatePassword = function () { // action are perform to generate random passwo
 module.exports = {
     emailGeneratedCode: emailGeneratedCode, //emailgeneratecode()
     generatePassword: generatePassword,   //generatepassword()
+    
     save: function (data, context) {  
         var date = new Date();
         data["password"] = generatePassword();
@@ -62,7 +63,7 @@ module.exports = {
             return emailGeneratedCode({
                 email: data.email,
                 password: data.password,
-                verifyURL: sails.config.security.server.url + "/endusers/verify/" + data.email + "?code=" + data.password,
+                verifyURL: sails.config.security.server.url + "/users/verify/" + data.email + "?code=" + data.password,
             });
 
         });

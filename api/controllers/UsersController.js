@@ -6,6 +6,9 @@
  */
 
 module.exports = {
+    index: function(req,res){
+        API(Registration.registerUser,req,res);
+    },
     register: function(req,res){
         API(Registration.registerUser,req,res);
     },
@@ -14,5 +17,8 @@ module.exports = {
     },
     current: function(req,res){
         API(Registration.currentUser,req,res);
+    },
+    add: function(req,res){
+        API(UserService.save,req,res);
     }
 };
