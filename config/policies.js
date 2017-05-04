@@ -41,7 +41,12 @@ module.exports.policies = {
     '*' : 'OAuthValidateAccessToken',
     'register' : true,
     'verify/:email' : true
+  },
+  SwaggerController: {
+    '*' : 'OAuthValidateAccessToken',
+    'doc' : true,
   }
+
   /***************************************************************************
   *                                                                          *
   * Here's an example of mapping some policies to run before a controller    *

@@ -43,12 +43,115 @@ module.exports.routes = {
   * If a request to a URL doesn't match any of the custom routes above, it   *
   * is matched against Sails route blueprints. See `config/blueprints.js`    *
   * for configuration options and examples.                                  *
+  * Author : Romykundal                                                                *
   *                                                                          *
   ***************************************************************************/
+  
 
-/******************* Custom routes here *****************************************/
+  //'POST /enduser/add': 'EndUserController.add',
+  'post /oauth/token': {
+        controller: 'OAuthController',
+        action: 'token',
+        skipAssets: 'true',
+        //swagger path object
+        swagger: {
+            methods: ['POST'],
+            summary: ' Authenticate User ',
+            description: 'Authenticate User Description',
+            /*produces: [
+                'application/json'
+            ],*/
+            tags: [
+                'Authenticate'
+            ],
+            responses: {
+                '200': {
+                    description: 'Authenticate User',
+                    schema: 'Users', // api/model/EndUser.js,
+                    type: 'array'
+                }
+            },
+            parameters: ['username','password','client_id','grant_type']
 
-  'POST /enduser/add': 'EndUserController.add',
+        }
+    },
+   'post /enduser/add': {
+        controller: 'EndUserController',
+        action: 'add',
+        skipAssets: 'true',
+        //swagger path object
+        swagger: {
+            methods: ['POST'],
+            summary: ' Add USer ',
+            description: 'Add User Description',
+            /*produces: [
+                'application/json'
+            ],*/
+            tags: [
+                'EndUser'
+            ],
+            responses: {
+                '200': {
+                    description: 'Add User',
+                    schema: 'EndUser', // api/model/EndUser.js,
+                    type: 'array'
+                }
+            },
+            parameters: []
 
+        }
+    },
+    'get /enduser': {
+        controller: 'EndUserController',
+        action: 'find',
+        skipAssets: 'true',
+        //swagger path object
+        swagger: {
+            methods: ['GET'],
+            summary: ' Get User ',
+            description: 'GEt user listing',
+            produces: [
+                'application/json'
+            ],
+            tags: [
+                'EndUser'
+            ],
+            responses: {
+                '200': {
+                    description: 'List of User',
+                    schema: 'EndUser', // api/model/EndUser.js,
+                    type: 'array'
+                }
+            },
+            parameters: []
 
+        }
+    },
+    'get /enduser/:id': {
+        controller: 'EndUserController',
+        action: 'find',
+        skipAssets: 'true',
+        //swagger path object
+        swagger: {
+            methods: ['GET'],
+            summary: ' Get User ',
+            description: 'GEt user listing',
+            /*produces: [
+                'application/json'
+            ],*/
+            tags: [
+                'EndUser'
+            ],
+            responses: {
+                '200': {
+                    description: 'List of User',
+                    schema: 'EndUser', // api/model/EndUser.js,
+                    type: 'array'
+                }
+            },
+            parameters: []
+
+        }
+    },
+  
 };
