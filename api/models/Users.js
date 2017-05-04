@@ -13,7 +13,7 @@ module.exports = {
     autoUpdatedAt: true,
 
     attributes: {
-        firstName: {
+        /*firstName: {
             type: 'string',
             required: true
         },
@@ -21,7 +21,7 @@ module.exports = {
         lastName: {
             type: 'string',
             required: true
-        },     
+        }, */    
 
         username: {
             type: 'string',
@@ -35,7 +35,7 @@ module.exports = {
             required: true
         },
 
-        mobile: {
+        /*mobile: {
             type: 'integer',
             required: true
         },
@@ -67,7 +67,7 @@ module.exports = {
         lng: {
             type: 'float'
         },
-
+*/
         password: {
             type: 'string',
             required: true,
@@ -75,14 +75,15 @@ module.exports = {
             minLength: 8
         },
 
-        date_verified: {
+       /* date_verified: {
             type : 'date'
         },
 
+*/
         roles: {
             type: 'string',
             enum: ['SA', 'A','U'],
-            required: true
+            // required: true
         },
 
         isDeleted : {

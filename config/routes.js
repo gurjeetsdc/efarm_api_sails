@@ -46,6 +46,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+
   //Category Routes
   'get /category/list/:categorytype': 'CategoryController.getCategoryList',
   
@@ -54,8 +55,9 @@ module.exports.routes = {
   'post /equipment/upload' : 'EquipmentController.uploadImages',
 
   //User Routes
-  //'get /user : UsersController.getAllUsers',
-  'post /user' : 'UsersController.register',
-  'POST /user/add': 'UsersController.add',
+  'get /user' : 'UsersController.getAllUsers',
+  'get /user/:id' :{ model: 'users', blueprint: 'find'},
+  'post /user' : 'UsersController.index',
+  'POST /user/add': 'UsersController.add'
 
 };
