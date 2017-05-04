@@ -49,6 +49,5 @@ module.exports.routes = {
 /******************* Custom routes here *****************************************/
 
   'POST /enduser/add': 'EndUserController.add',
-
-
+  'GET /users': 'UsersController.getAllUsers',
 };
