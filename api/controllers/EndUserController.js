@@ -8,12 +8,8 @@
 module.exports = {
 
 	add: function(req,res){
-		API(EndUserService.saveUser,req,res);
-	},
-
-	delete: function(req,res){
-	  API(EndUserService.deleteUser,req,res);
-    }
+		API(EndUserService.save,req,res);
+	}
 	
 };
 

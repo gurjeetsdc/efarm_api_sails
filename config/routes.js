@@ -36,11 +36,6 @@ module.exports.routes = {
     view: 'homepage'
   },*/
 
-  'get /category/list/:categorytype': 'CategoryController.getCategoryList',
-  '/equipment/list': 'EquipmentController.getAllEquipments',
-  'post /equipment/upload' : 'EquipmentController.uploadImages'
-
-
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
@@ -50,5 +45,15 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
+
+  //Category Routes
+  'get /category/list/:categorytype': 'CategoryController.getCategoryList',
+  
+  //Equipments Routes
+  '/equipment/list': 'EquipmentController.getAllEquipments',
+  'post /equipment/upload' : 'EquipmentController.uploadImages',
+
+  //User Routes
+  'POST /user/add': 'EndUserController.add'
 
 };

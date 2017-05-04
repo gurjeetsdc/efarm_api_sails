@@ -4,16 +4,17 @@
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
+var bcrypt    = require('bcrypt-nodejs');
 
 module.exports = {
     autoCreatedAt: true,
     autoUpdatedAt: true,
     attributes: {
-  		first_name: {
+  		firstName: {
             type: 'string',
             required: true
         },
-        last_name: {
+        lastName: {
             type: 'string',
             required: true
         },     
@@ -24,7 +25,7 @@ module.exports = {
             required: true
         },
 
-        phone: {
+        mobile: {
             type: 'integer',
             required: true
         },
@@ -51,7 +52,7 @@ module.exports = {
         password:{
             type: 'string',
             required:true,
-            columnName: 'encrypted_password',
+            columnName: 'encryptedPassword',
             minLength: 8
         },
         
@@ -59,15 +60,15 @@ module.exports = {
         	type: 'Boolean',
         	defaultsTo: false
         },
-        beforeCreate: function(enduser, next)
-        {
-            if (enduser.hasOwnProperty('password')) {
-                enduser.password = bcrypt.hashSync(enduser.password, bcrypt.genSaltSync(10));
-                next(false, enduser);
-            } else {
-            next(null, enduser);
-            }
-        },
-  	}
+    },
+    beforeCreate: function(enduser, next)
+    {
+        if (enduser.hasOwnProperty('password')) {
+            enduser.password = bcrypt.hashSync(enduser.password, bcrypt.genSaltSync(10));
+            next(false, enduser);
+        } else {
+        next(null, enduser);
+        }
+    }
 };
 

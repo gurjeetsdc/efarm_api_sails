@@ -6,9 +6,9 @@
  */
 
 module.exports = {
-  autoCreatedAt: true,
-  autoUpdatedAt: true,
-  attributes: {
+    autoCreatedAt: true,
+    autoUpdatedAt: true,
+    attributes: {
   		name: {
             type: 'string',
             required: true,

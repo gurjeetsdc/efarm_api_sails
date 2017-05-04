@@ -5,28 +5,27 @@
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 var transport = nodemailer.createTransport(smtpTransport({
-host: sails.config.appSMTP.host,
-port: sails.config.appSMTP.port,
-debug: sails.config.appSMTP.debug,
-auth: {
-        user: sails.config.appSMTP.auth.user, //access using /congig/appSMTP.js
-        pass: sails.config.appSMTP.auth.pass
-      }
-
-    }));
+                    host: sails.config.appSMTP.host,
+                    port: sails.config.appSMTP.port,
+                    debug: sails.config.appSMTP.debug,
+                    auth: {
+                            user: sails.config.appSMTP.auth.user, //access using /congig/appSMTP.js
+                            pass: sails.config.appSMTP.auth.pass
+                          }
+                }));
 
 emailGeneratedCode = function (options) { //email generated code 
     var url = options.verifyURL,
-        email = options.email;
+        email = options.email,
+        password = options.password;
 
     message = 'Hello!';
     message += '<br/>';
-    message += 'Please visit the verification link to complete the registration process.';
+    message += 'Your account has been created please login with following credentials.';
     message += '<br/><br/>';
-    message += '<a href="';
-    message += url;
-    message += '">Verification Link</a>';
+    message += 'Email Id : ' + email;
     message += '<br/>';
+    message += 'Password : ' + password;
 
     transport.sendMail({
         from: sails.config.appSMTP.auth.user,
@@ -41,6 +40,7 @@ emailGeneratedCode = function (options) { //email generated code
         url: url
     }
 };
+
 generatePassword = function () { // action are perform to generate random password for user 
     var length = 8,
         charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?",
@@ -50,66 +50,22 @@ generatePassword = function () { // action are perform to generate random passwo
     }
     return retVal;
 };
+
 module.exports = {
-  emailGeneratedCode: emailGeneratedCode, //emailgeneratecode()
+    emailGeneratedCode: emailGeneratedCode, //emailgeneratecode()
     generatePassword: generatePassword,   //generatepassword()
-    saveUser: function (data, context) {  
+    save: function (data, context) {  
         var date = new Date();
         data["password"] = generatePassword();
         return API.Model(EndUser).create(data)
         .then(function (enduser) {
-          return emailGeneratedCode({
+            return emailGeneratedCode({
                 email: data.email,
                 password: data.password,
-                verifyURL: sails.config.security.server.url + "/endusers/verify/" + data.email + "password=" + data.password,
+                verifyURL: sails.config.security.server.url + "/endusers/verify/" + data.email + "?code=" + data.password,
             });
-          console.log(emailGeneratedCode);
-            var report;
-            if(enduser){
-                report = {"sucess": {
-                            "Code": 200,
-                            "Message": "OK"
-                            }}
-            }else{
-                report = {"error": {
-                            "Code": 301,
-                            "Message": "Faild"
-                            }}
-            }
-
-            return {
-                    "Status": true,
-                    "Data": enduser,
-                     report
-                };
 
         });
-    },
+    }
 
-     deleteUser: function (data, context) {
-       
-     return API.Model(EndUser).update(data.id,data)
-        .then(function (user) {
-            var Repor;
-            if(user){
-                Report = {"sucess": {
-                            "Code": 200,
-                            "Message": "Deleted"
-                            }}
-            }else{
-                Report = {"error": {
-                            "Code": 301,
-                            "Message": "Faild"
-                            }}
-            }
-            return {
-                    "Status": true,
-                     Report
-                };
-        });
-    },
-    
-
-
- 
 }; // End Crops service class

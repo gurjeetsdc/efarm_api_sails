@@ -13,9 +13,12 @@ module.exports = {
             type: 'string',
             required: true
         },     
-
         description: {
             type: 'text',
+        },
+        isDeleted: {
+            type: 'Boolean',
+            defaultsTo: false
         }
   	}
 };
