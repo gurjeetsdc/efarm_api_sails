@@ -70,7 +70,7 @@ module.exports.routes = {
                     type: 'array'
                 }
             },
-            parameters: ['username','password','client_id','grant_type']
+            parameters: ['email','password','client_id','grant_type']
 
         }
     },
