@@ -7,6 +7,7 @@
 
 module.exports = {
     index: function(req,res){
+        console.log("console is hrer");
         API(Registration.registerUser,req,res);
     },
 

@@ -2,13 +2,26 @@
   "name": "efarmx-Api",
   "private": true,
   "version": "0.0.0",
-  "description": "Efarmx Api",
+  "description": "Efarmx sails js fram work Api",
   "keywords": [],
   "dependencies": {
     "aws-sdk": "^2.2.19",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.5.0",
     "formidable": "^1.1.1",
+    "ejs": "2.3.4",
+    "grunt": "1.0.1",
+    "grunt-contrib-clean": "1.0.0",
+    "grunt-contrib-coffee": "1.0.0",
+    "grunt-contrib-concat": "1.0.1",
+    "grunt-contrib-copy": "1.0.0",
+    "grunt-contrib-cssmin": "1.0.1",
+    "grunt-contrib-jst": "1.0.0",
+    "grunt-contrib-less": "1.3.0",
+    "grunt-contrib-uglify": "1.0.1",
+    "grunt-contrib-watch": "1.0.0",
+    "grunt-sails-linker": "~0.10.1",
+    "grunt-sync": "0.5.2",
     "include-all": "^1.0.0",
     "nodemailer": "^3.1.8",
     "nodemailer-smtp-transport": "2.7.4",
@@ -23,7 +36,8 @@
     "sails": "~0.12.13",
     "sails-disk": "~0.10.9",
     "sails-mongo": "^0.12.2",
-    "skipper-s3": "^0.5.9"
+    "skipper-s3": "^0.5.9",
+    "sails-swagger": "^0.5.1"
   },
   "scripts": {
     "debug": "node debug app.js",
@@ -34,6 +48,9 @@
     "type": "git",
     "url": ""
   },
-  "author": "gurjeets",
-  "license": ""
+  "author": "Efarmx team ( N G R M )",
+  "license": "",
+  "devDependencies": {
+    "swagger-ui": "^2.2.10"
+  }
 }

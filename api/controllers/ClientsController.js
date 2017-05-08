@@ -6,6 +6,9 @@
  */
 
 module.exports = {
+    index: function(req,res){
+        API(Registration.registerClient,req,res);
+    },
     register: function(req,res){
         API(Registration.registerClient,req,res);
     },

@@ -13,51 +13,49 @@ module.exports = {
     autoUpdatedAt: true,
 
     attributes: {
-        /*firstName: {
+        firstName: {
             type: 'string',
-            required: true
+            maxLength: 100
+            //required: true
         },
         
         lastName: {
             type: 'string',
-            required: true
-        }, */    
-
-        username: {
-            type: 'string',
-            unique: true,
-            required: true
-        },
+            maxLength: 100
+            //required: true
+        },     
 
         email: {
             type: 'email',
             unique: true,
+            maxLength: 100,
             required: true
         },
 
-        /*mobile: {
+        mobile: {
             type: 'integer',
-            required: true
+            maxLength: 18
+            //required: true
         },
 
         city: {
             type: 'string',
-            required: true
+            //required: true
         },
 
         pincode: {
             type: 'integer',
-            required: true
+            //required: true
         },
 
         state: {
             type: 'string',
-            required: true
+            //required: true
         },
 
         district: {
             type: 'string',
-            required: true
+            //required: true
         },
 
         lat: {
@@ -67,22 +65,22 @@ module.exports = {
         lng: {
             type: 'float'
         },
-*/
+
         password: {
             type: 'string',
             required: true,
-            columnName: 'encrypted_password',
+            columnName: 'encryptedPassword',
             minLength: 8
         },
 
-       /* date_verified: {
+        date_verified: {
             type : 'date'
         },
 
-*/
         roles: {
             type: 'string',
             enum: ['SA', 'A','U'],
+            defaultsTo: 'U'
             // required: true
         },
 
@@ -106,6 +104,7 @@ module.exports = {
     },
 
     beforeCreate: function(user, next) {
+        console.log("beforecreate",user);
         if (user.hasOwnProperty('password')) {
             user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
             next(false, user);
@@ -125,8 +124,8 @@ module.exports = {
         }
     },
 
-    authenticate: function (username, password) {
-        return API.Model(Users).findOne({username: username}).then(function(user){
+    authenticate: function (email, password) {
+        return API.Model(Users).findOne({email: email}).then(function(user){
             return (user && user.date_verified && user.comparePassword(password))? user : null;
         });
     }

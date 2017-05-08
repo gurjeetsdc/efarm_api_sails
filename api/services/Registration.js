@@ -1,41 +1,38 @@
 var Promise = require('bluebird'),
-    promisify = Promise.promisify,
-    mailer = require('nodemailer'),
-    emailGeneratedCode,
-    transporter;
+    promisify = Promise.promisify;
+var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 
+var transport = nodemailer.createTransport(smtpTransport({
+                host: sails.config.appSMTP.host,
+                port: sails.config.appSMTP.port,
+                debug: sails.config.appSMTP.debug,
+                auth: {
+                        user: sails.config.appSMTP.auth.user, //access using /congig/appSMTP.js
+                        pass: sails.config.appSMTP.auth.pass
+                    }
+            }));
 
-transporter = mailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: sails.config.security.admin.email.address,
-        pass: sails.config.security.admin.email.password
-    }
-});
-
-emailGeneratedCode = function (options) {
+emailGeneratedCode = function (options) { //email generated code 
     var url = options.verifyURL,
-        email = options.email;
-
+        email = options.email,
+        password = options.password;
 
     message = 'Hello!';
     message += '<br/>';
-    message += 'Please visit the verification link to complete the registration process.';
+    message += 'Your account has been created please login with following credentials.';
     message += '<br/><br/>';
-    message += 'Account with ' + options.type + " : " + options.id;
-    message += '<br/><br/>';
-    message += '<a href="';
-    message += url;
-    message += '">Verification Link</a>';
+    message += 'Email Id : ' + email;
     message += '<br/>';
+    message += 'Password : ' + password;
 
-    transporter.sendMail({
-        from: sails.config.security.admin.email.address,
+    transport.sendMail({
+        from: sails.config.appSMTP.auth.user,
         to: email,
-        subject: 'Canadian Tire App Account Registration',
+        subject: 'eFarmX registration',
         html: message
     }, function (err, info) {
-        console.log("Email Response:", info);
+        console.log("errro is ",err, info);
     });
 
     return {
@@ -43,21 +40,43 @@ emailGeneratedCode = function (options) {
     }
 };
 
+generatePassword = function () { // action are perform to generate random password for user 
+    var length = 8,
+    charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?",
+    retVal = "";
+    
+    for (var i = 0, n = charset.length; i < length; ++i) {
+        retVal += charset.charAt(Math.floor(Math.random() * n));
+    }
+    return retVal;
+};
+
 module.exports = {
+    
     emailGeneratedCode: emailGeneratedCode,
     currentUser: function(data,context){
       return context.identity;
     },
     registerUser: function (data, context) {
+        console.log("test",context);
         var date = new Date();
-        return API.Model(Users).create({
-            username: data.username,
-            email: data.email,
-            password: data.password,
-            date_registered: date
-        }).then(function (user) {
-            context.id = user.username;
-            context.type = 'Username';
+        if(data.roles == 'SA' || data.roles == 'A'){
+            data['roles'] = data.roles;
+        } else {
+            data['roles'] = 'U';
+            if(!data['password']){
+                data['password'] = generatePassword();
+            }
+            if((!data.first_name) || (!data.last_name) || (!data.phone) || (!data.email)){ 
+                return res.status(400).json({
+                    "error": "Fields required."
+                });
+            }
+        }
+        data['date_registered'] = date;
+        return API.Model(Users).create(data).then(function (user) {
+            context.id = user.email;
+            context.type = 'Email';
             return Tokens.generateToken({
                 user_id: user.id,
                 client_id: Tokens.generateTokenString()
@@ -66,14 +85,16 @@ module.exports = {
             return emailGeneratedCode({
                 id: context.id,
                 type: context.type,
-                verifyURL: sails.config.security.server.url + "/users/verify/" + data.email + "?code=" + token.code,
-                email: data.email
+                email: data.email,
+                password: data.password,
+                verifyURL: sails.config.security.server.url + "/user/verify/" + data.email + "?code=" + token.code
             });
         });
 
     },
 
     verifyUser: function (data, context) {
+       
         return Tokens.authenticate({
             code: data.code,
             type: 'verification',
@@ -84,7 +105,7 @@ module.exports = {
 
             API.Model(Users).update(
                 {
-                    username: info.identity.username
+                    email: info.identity.email
                 },
                 {
                     date_verified: date

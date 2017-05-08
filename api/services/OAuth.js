@@ -56,10 +56,10 @@ bearerVerifyHandler = function(token, next) {
  * from the token request for verification. If these values are validated, the
  * application issues an access token on behalf of the user who authorized the code.
  */
-exchangePasswordHandler = function(client, username, password, scope, next) {
+exchangePasswordHandler = function(client, email, password, scope, next) {
     if (!client) return next(null, false); //passport-oauth2-client-password needs to be configured
     //Validate the user
-    Users.authenticate(username, password).then(function (user) {
+    Users.authenticate(email, password).then(function (user) {
         if (!user) return next(null, false);
         return Tokens.generateToken({
             client_id: client.client_id,
@@ -117,6 +117,7 @@ module.exports = {
         if (req.method != 'POST') throw 'Unsupported method';
 
         return validateAndSendToken(req, res).catch(function (err) {
+            console.log("error is", err);
             tokenErrorMessage(err, req, res);
         });
     },
