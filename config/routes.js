@@ -43,156 +43,38 @@ module.exports.routes = {
   * If a request to a URL doesn't match any of the custom routes above, it   *
   * is matched against Sails route blueprints. See `config/blueprints.js`    *
   * for configuration options and examples.                                  *
-  * Author : Smartdata                                                                *
+  * Author : Smartdata                                                       *
   *                                                                          *
   ***************************************************************************/
   
-/*****************************************************************************************************/
+/*************** Front end User API Routes ****************/
 
-    'post /signup': {
+    'post /users/signup': {
         controller: 'UsersController',
         action: 'signup',
-        skipAssets: 'true',
-        //swagger path object
-        swagger: {
-            methods: ['POST'],
-            summary: ' Authenticate User ',
-            description: 'Authenticate User Description',
-            produces: [
-                'application/json'
-            ],
-            tags: [
-                'Authenticate'
-            ],
-            responses: {
-                '200': {
-                    description: 'Authenticate User',
-                    schema: 'Users', // api/model/EndUser.js,
-                    type: 'array'
-                }
-            },
-            parameters: ['username','password','client_id','grant_type']
-
-        }
+        model: 'users'
     },
-
-
 
 /***************************** Admin section Routes **************************************************/
 
-//Authorisation Routes
+    //Authorisation Routes
     'post /authorisation': {
         controller: 'OAuthController',
-        action: 'token',
-        skipAssets: 'true',
-        //swagger path object
-        swagger: {
-            methods: ['POST'],
-            summary: ' Authenticate User ',
-            description: 'Authenticate User Description',
-            produces: [
-                'application/json'
-            ],
-            tags: [
-                'Authenticate'
-            ],
-            responses: {
-                '200': {
-                    description: 'Authenticate User',
-                    schema: 'Users', // api/model/EndUser.js,
-                    type: 'array'
-                }
-            },
-            parameters: ['email','password','client_id','grant_type']
-
-        }
+        action: 'token'
     },
+  
+    //Equipments Routes
+    'get /equipment': 'EquipmentController.getAllEquipments',
+    'get /equipment/list': 'EquipmentController.getAllEquipments',
+  
+    'post /equipment/upload' : 'EquipmentController.uploadImages',
 
     //User Routes
-
-    'get /user': {
-        controller: 'UsersController',
-        action: 'getAllUsers',
-        skipAssets: 'true',
-        //swagger path object
-        swagger: {
-            methods: ['GET'],
-            summary: ' Get User ',
-            description: 'GEt User Listing',
-            produces: [
-                'application/json'
-            ],
-            tags: [
-                'User List'
-            ],
-            responses: {
-                '200': {
-                    description: 'List of Users',
-                    schema: 'Users', 
-                    type: 'array'
-                }
-            },
-            parameters: []
-
-        }
-    },
-
-    'post /user': {
-        controller: 'UsersController',
-        action: 'index',
-        skipAssets: 'true',
-        //swagger path object
-        swagger: {
-            methods: ['POST'],
-            summary: ' Add User ',
-            description: 'Add User Description',
-            produces: [
-                'application/json'
-            ],
-            tags: [
-                'User'
-            ],
-            responses: {
-                '200': {
-                    description: 'Add User',
-                    schema: 'Users',
-                    type: 'array'
-                }
-            },
-            parameters: []
-
-        }
-    },
-
-    'get /user/:id': {
-        controller: 'UsersController',
-        action: 'find',
-        skipAssets: 'true',
-        //swagger path object
-        swagger: {
-            methods: ['GET'],
-            summary: ' Get User ',
-            description: 'GEt user listing',
-            produces: [
-                'application/json'
-            ],
-            tags: [
-                'EndUser'
-            ],
-            responses: {
-                '200': {
-                    description: 'List of User',
-                    schema: 'User',
-                    type: 'array'
-                }
-            },
-            parameters: []
-
-        }
-    },
+    'get /user' : 'UsersController.getAllUsers', 
+    'get /user/:id' :{ model: 'users', blueprint: 'find'},
+    'post /user' : 'UsersController.index',
+    'POST /user/add': 'UsersController.add',
     'get /user/verify/:email' :'UsersController.verify/:email',
     
  
-
-  //'get /user/:id' :{ model: 'users', blueprint: 'find'},
 };
