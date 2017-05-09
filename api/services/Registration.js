@@ -104,29 +104,20 @@ module.exports = {
                 /*return res.status(400).json({
                     "error": "Fields required."
                 });*/
-                return {
-                           "success": false,
-                           "error": {
-                               "code": 404,
-                               "message": "Fields required"
-                           }
-                        };
+                return {"success": false, "error": {"code": 404,"message": "Fields required"} };
             }
         
         data['date_registered'] = date;
-
-        var val = Math.floor(100001 + Math.random() * 900001);
+        var OTP = Math.floor(100001 + Math.random() * 900001);
+        data['otp'] = OTP;
         /*console.log(val);
         console.log(data);*/
-
-
-
         return API.Model(Users).create(data).then(function (user) {
             
             return {
                      success: true,
+                     message: "Signed up",
                      data: user,
-                     OTP: val,
                     };
         });
 

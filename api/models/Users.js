@@ -97,6 +97,17 @@ module.exports = {
             enum: ['web', 'mobile'],
             defaultsTo: 'web'
         },
+        deviceType: {
+            type: 'string',
+            enum: ['IOS', 'ANDROID'],
+            defaultsTo: 'web'
+        },
+        deviceToken: {
+            type: 'string',
+        },
+        otp: {
+            type: 'integer',
+        },
         isDeleted : {
             type: 'Boolean',
             defaultsTo: false
