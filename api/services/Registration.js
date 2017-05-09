@@ -92,7 +92,45 @@ module.exports = {
         });
 
     },
+    signupUser: function (data, context) {
+       
+        var date = new Date();
+        
+            data['roles'] = 'U';
+            if(!data.password){
+                data['password'] = generatePassword();
+            }
+            if( (!data.email) ){ 
+                /*return res.status(400).json({
+                    "error": "Fields required."
+                });*/
+                return {
+                           "success": false,
+                           "error": {
+                               "code": 404,
+                               "message": "Fields required"
+                           }
+                        };
+            }
+        
+        data['date_registered'] = date;
 
+        var val = Math.floor(100001 + Math.random() * 900001);
+        /*console.log(val);
+        console.log(data);*/
+
+
+
+        return API.Model(Users).create(data).then(function (user) {
+            
+            return {
+                     success: true,
+                     data: user,
+                     OTP: val,
+                    };
+        });
+
+    },
     verifyUser: function (data, context) {
        
         return Tokens.authenticate({

@@ -3,6 +3,8 @@
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
+ * @CreatedBy   :: 
+ * @Last Updated By :: Rohit.kumar
  */
 
 var promisify = require('bluebird').promisify;
@@ -16,14 +18,22 @@ module.exports = {
         firstName: {
             type: 'string',
             maxLength: 100
-            //required: true
         },
         
         lastName: {
             type: 'string',
             maxLength: 100
-            //required: true
-        },     
+        },
+
+        fbId: {
+            type: 'string',
+            maxLength: 100
+        },
+
+        gId: {
+            type: 'string',
+            maxLength: 100
+        },
 
         email: {
             type: 'email',
@@ -34,28 +44,28 @@ module.exports = {
 
         mobile: {
             type: 'integer',
-            maxLength: 18
-            //required: true
+            maxLength: 18,
+            required: true
         },
 
         city: {
             type: 'string',
-            //required: true
         },
 
         pincode: {
             type: 'integer',
-            //required: true
         },
 
         state: {
             type: 'string',
-            //required: true
         },
 
         district: {
             type: 'string',
-            //required: true
+        },
+
+        country: {
+            type: 'string',
         },
 
         lat: {
@@ -81,9 +91,12 @@ module.exports = {
             type: 'string',
             enum: ['SA', 'A','U'],
             defaultsTo: 'U'
-            // required: true
         },
-
+        domain: {
+            type: 'string',
+            enum: ['web', 'mobile'],
+            defaultsTo: 'web'
+        },
         isDeleted : {
             type: 'Boolean',
             defaultsTo: false
@@ -104,7 +117,7 @@ module.exports = {
     },
 
     beforeCreate: function(user, next) {
-        console.log("beforecreate",user);
+        //console.log("beforecreate",user);
         if (user.hasOwnProperty('password')) {
             user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
             next(false, user);

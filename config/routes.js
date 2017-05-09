@@ -47,6 +47,39 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
   
+/*****************************************************************************************************/
+
+    'post /signup': {
+        controller: 'UsersController',
+        action: 'signup',
+        skipAssets: 'true',
+        //swagger path object
+        swagger: {
+            methods: ['POST'],
+            summary: ' Authenticate User ',
+            description: 'Authenticate User Description',
+            produces: [
+                'application/json'
+            ],
+            tags: [
+                'Authenticate'
+            ],
+            responses: {
+                '200': {
+                    description: 'Authenticate User',
+                    schema: 'Users', // api/model/EndUser.js,
+                    type: 'array'
+                }
+            },
+            parameters: ['username','password','client_id','grant_type']
+
+        }
+    },
+
+
+
+/***************************** Admin section Routes **************************************************/
+
 //Authorisation Routes
     'post /authorisation': {
         controller: 'OAuthController',

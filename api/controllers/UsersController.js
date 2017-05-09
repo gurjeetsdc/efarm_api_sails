@@ -15,6 +15,10 @@ module.exports = {
         API(Registration.registerUser,req,res);
     },
 
+    signup: function(req,res){
+      API(Registration.signupUser,req,res);
+    },
+
     'verify/:email': function(req,res){
         API(Registration.verifyUser,req,res);
     },
