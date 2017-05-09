@@ -35,7 +35,7 @@ module.exports = {
             maxLength: 100
         },
 
-        email: {
+        username: {
             type: 'email',
             unique: true,
             maxLength: 100,
@@ -148,8 +148,9 @@ module.exports = {
         }
     },
 
-    authenticate: function (email, password) {
-        return API.Model(Users).findOne({email: email}).then(function(user){
+    authenticate: function (username, password) {
+        console.log("jjjj",username,password);
+        return API.Model(Users).findOne({username: username}).then(function(user){
             return (user && user.date_verified && user.comparePassword(password))? user : null;
         });
     }

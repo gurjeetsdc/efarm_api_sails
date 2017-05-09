@@ -57,9 +57,9 @@ module.exports = {
     currentUser: function(data,context){
       return context.identity;
     },
-    registerUser: function (data, context) {
-        console.log("test",context);
+    registerUser: function (data,context,next) {
         var date = new Date();
+        
         if(data.roles == 'SA' || data.roles == 'A'){
             data['roles'] = data.roles;
         } else {
@@ -67,15 +67,12 @@ module.exports = {
             if(!data['password']){
                 data['password'] = generatePassword();
             }
-            if((!data.first_name) || (!data.last_name) || (!data.phone) || (!data.email)){ 
-                return res.status(400).json({
-                    "error": "Fields required."
-                });
-            }
         }
+
         data['date_registered'] = date;
+        console.log("console is in register service",data);
         return API.Model(Users).create(data).then(function (user) {
-            context.id = user.email;
+            context.id = user.username;
             context.type = 'Email';
             return Tokens.generateToken({
                 user_id: user.id,
@@ -85,9 +82,9 @@ module.exports = {
             return emailGeneratedCode({
                 id: context.id,
                 type: context.type,
-                email: data.email,
+                username: data.username,
                 password: data.password,
-                verifyURL: sails.config.security.server.url + "/user/verify/" + data.email + "?code=" + token.code
+                verifyURL: sails.config.security.server.url + "/user/verify/" + data.username + "?code=" + token.code
             });
         });
 
@@ -127,14 +124,14 @@ module.exports = {
         return Tokens.authenticate({
             code: data.code,
             type: 'verification',
-            email: data.email
+            username: data.username
         }).then(function (info) {
             var date = new Date();
             if (!info) return Promise.reject('Unauthorized');
 
             API.Model(Users).update(
                 {
-                    email: info.identity.email
+                    username: info.identity.username
                 },
                 {
                     date_verified: date
@@ -143,7 +140,7 @@ module.exports = {
 
             return {
                 verified: true,
-                email: info.identity.email
+                username: info.identity.username
             }
         });
     },
@@ -152,7 +149,7 @@ module.exports = {
         return API.Model(Clients).create({
             client_id: Tokens.generateTokenString(),
             client_secret: Tokens.generateTokenString(),
-            email: data.email
+            username: data.username
         }).then(function (client) {
             context.id = client.client_id;
             context.type = 'Client ID';
@@ -164,8 +161,8 @@ module.exports = {
             return emailGeneratedCode({
                 id: context.id,
                 type: context.type,
-                verifyURL: sails.config.security.server.url + "/clients/verify/" + data.email + "?code=" + token.code,
-                email: data.email
+                verifyURL: sails.config.security.server.url + "/clients/verify/" + data.username + "?code=" + token.code,
+                username: data.username
             });
         });
     },
@@ -175,7 +172,7 @@ module.exports = {
         return Tokens.authenticate({
             type: 'verification',
             code: data.code,
-            email: data.email
+            username: data.username
         }).then(function (info) {
             var date = new Date();
             if (!info) return Promise.reject('Unauthorized');
@@ -191,7 +188,7 @@ module.exports = {
 
             return {
                 verified: true,
-                email: info.identity.email
+                username: info.identity.username
             };
         });
     }
