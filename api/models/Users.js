@@ -39,13 +39,13 @@ module.exports = {
             type: 'email',
             unique: true,
             maxLength: 100,
-            required: true
+            //required: true
         },
 
         mobile: {
             type: 'integer',
             maxLength: 18,
-            required: true
+            //required: true
         },
 
         city: {
@@ -94,13 +94,11 @@ module.exports = {
         },
         domain: {
             type: 'string',
-            enum: ['web', 'mobile'],
-            defaultsTo: 'web'
+            enum: ['web', 'mobile']
         },
         deviceType: {
             type: 'string',
-            enum: ['IOS', 'ANDROID'],
-            defaultsTo: 'web'
+            enum: ['IOS', 'ANDROID']
         },
         deviceToken: {
             type: 'string',
@@ -149,9 +147,14 @@ module.exports = {
     },
 
     authenticate: function (username, password) {
-        console.log("jjjj",username,password);
         return API.Model(Users).findOne({username: username}).then(function(user){
-            return (user && user.date_verified && user.comparePassword(password))? user : null;
+            //console.log(user);
+            if(user.roles == "A" || user.roles == "SA"){
+                return (user && user.date_verified && user.comparePassword(password))? user : null;
+            }
+            else if(user.roles == "U"){
+                return (user && user.comparePassword(password))? user : null;
+            }
         });
     }
 

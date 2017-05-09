@@ -97,7 +97,7 @@ module.exports = {
             if(!data.password){
                 data['password'] = generatePassword();
             }
-            if( (!data.email) ){ 
+            if( (!data.username) ){ 
                 /*return res.status(400).json({
                     "error": "Fields required."
                 });*/
@@ -110,7 +110,7 @@ module.exports = {
         /*console.log(val);
         console.log(data);*/
         return API.Model(Users).create(data).then(function (user) {
-            
+    
             return {
                      success: true,
                      message: "Signed up",
