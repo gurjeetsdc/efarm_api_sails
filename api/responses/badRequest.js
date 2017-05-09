@@ -24,6 +24,14 @@ module.exports = function badRequest(data, options) {
 
   // Set status code
   res.status(400);
+  var response = {
+      success: false,
+      error: {
+        code: 400,
+        message: 'Bad Request'
+        
+      },
+  }
 
   // Log error to console
   if (data !== undefined) {

@@ -19,7 +19,7 @@ module.exports = function created (data, options) {
   var sails = req._sails;
 
   sails.log.silly('res.created() :: Sending 201 ("CREATED") response');
-
+  
   // Set status code
   res.status(201);
 
