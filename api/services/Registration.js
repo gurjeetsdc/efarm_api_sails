@@ -57,9 +57,16 @@ module.exports = {
     currentUser: function(data,context){
       return context.identity;
     },
-    registerUser: function (data,context,next) {
+    registerUser: function (data, context) {
         var date = new Date();
         
+        if((!data.first_name) || typeof data.first_name){ 
+            console.log("error is", data, context);
+            return context.status(400).json({
+                "error": "Fields required."
+            });
+        }
+
         if(data.roles == 'SA' || data.roles == 'A'){
             data['roles'] = data.roles;
         } else {

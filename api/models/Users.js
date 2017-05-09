@@ -125,8 +125,9 @@ module.exports = {
     },
 
     authenticate: function (username, password) {
-        console.log("jjjj",username,password);
-        return API.Model(Users).findOne({username: username}).then(function(user){
+        
+        return API.Model(Users).findOne({username: username.username}).then(function(user){
+            console.log("hklhl",user);
             return (user && user.date_verified && user.comparePassword(password))? user : null;
         });
     }
