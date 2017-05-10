@@ -59,8 +59,6 @@ module.exports = {
     },
     registerUser: function (data, context) {
          var date = new Date();
-
-
         
         if((!data.firstName) || typeof data.firstName){ 
             console.log("error is", data, context);
@@ -81,7 +79,8 @@ module.exports = {
         data['date_registered'] = date;
 
         console.log("console is in register service",data);
-        return API.Model(Users).create(data).then(function (user) {
+        return API.Model(Users).create(data).then(function (user) {       
+        
             context.id = user.username;
             context.type = 'Email';
             return Tokens.generateToken({
@@ -171,7 +170,5 @@ module.exports = {
                 username: info.identity.username
             };
         });
-    },
-
-    verifyEmail : function(data)
+    }    
 };

@@ -25,10 +25,10 @@ module.exports = {
     },
 
     getAllUsers: function(req, res, next) {
-        console.log('req.body********', req.body);
+        // console.log('req.body********', req.param('sdsd'));
 
-        var page   =  1 ;
-        var count  = 50;
+        var page   = req.param('page');
+        var count  = req.param('count');
         var skipNo = (page - 1) * count;
         var search = '';
         var query  = {};

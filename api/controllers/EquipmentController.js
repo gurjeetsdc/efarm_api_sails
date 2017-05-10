@@ -24,7 +24,79 @@ module.exports = {
 	  API(EquipmentServices.deleteEquip,req,res);
     },
 
-    getAllEquipments: function(req, res, next) {
+	getAllEquipments: function(req, res, next) {
+		// console.log('req.body********', req.param('sdsd'));
+
+		var page        = req.param('page');
+		var count       = req.param('count');
+		var skipNo      = (page - 1) * count;
+		var search      = req.param('search');
+		var query       = {};
+
+		var sortBy    	= 'createdAt';
+		var sortOrder 	= -1;	
+
+
+
+		query.isDeleted = 'false';
+
+		if (search) {
+		   query.$or = [
+		       {
+		            name: {
+		                'like': '%' + search + '%'
+		            }
+		        },
+		        {
+		            usage: {
+		                'like': '%' + search + '%'
+		            }
+		        },
+		        {
+		            modelyear: {
+		                'like': '%' + search + '%'
+		            }
+		        },
+		        {
+		            rentSell: {
+		                'like': '%' + search + '%'
+		            }
+		        }
+		        
+		   ]
+		}
+
+		Equipment.count(query).exec(function(err, total) {
+		   if (err) {
+		       return res.status(400).jsonx({
+		           success: false,
+		           error: err
+		       });
+		   } else {
+		       console.log("total*******", total);
+		       Equipment.find(query).populate('category').populate('user').sort({
+		           sortBy: sortOrder
+		       }).skip(skipNo).limit(count).exec(function(err, equipments) {
+		            if (err) {
+		                return res.status(400).jsonx({
+		                   success: false,
+		                   error: err
+		                });
+		            } else {
+		                return res.jsonx({
+		                    success: true,
+		                    data: {
+		                        equipments: equipments,
+		                        total: total
+		                    },
+		                });
+		            }
+		       })
+		   }
+		})
+	},
+
+    getAllEquipments1: function(req, res, next) {
         console.log('req.body********', req.body);
         var page = req.body.page || 1,
             count = req.body.count || 50;
