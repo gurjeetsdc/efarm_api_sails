@@ -62,4 +62,6 @@ module.exports.routes = {
   'get /user/:id' :{ model: 'users', blueprint: 'find'},
   'post /user' : 'UsersController.index',
 
+  //Crops Routes
+  'get /crops': 'CropsController.getAllCrops'
 };
