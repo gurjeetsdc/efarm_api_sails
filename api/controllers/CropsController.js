@@ -6,7 +6,7 @@
  */
 module.exports = {
 
-	add: function(req,res){
+  add: function(req,res){
     API(CropService.save,req,res);
   },
   listing: function(req,res){
@@ -73,7 +73,6 @@ module.exports = {
                error: err
            });
        } else {
-           console.log("total*******", total);
            Crops.find(query).populate('category').populate('seller').sort({
                sortBy: sortOrder
            }).skip(skipNo).limit(count).exec(function(err, crops) {
@@ -94,7 +93,5 @@ module.exports = {
            })
        }
     })
-  },
-
-	
+  }
 };
