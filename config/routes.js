@@ -48,6 +48,10 @@ module.exports.routes = {
   //Authorisation Routes
   'post /authorisation': 'OAuthController.token',
 
+  //Equipments Routes
+  'get /land': 'LandController.getAllLands',
+  'get /land/list': 'LandController.getAllLands',
+
   //Category Routes
   'get /category/list/:categorytype': 'CategoryController.getCategoryList',
   
