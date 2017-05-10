@@ -13,7 +13,7 @@ module.exports = {
     autoUpdatedAt: true,
 
     attributes: {
-        /*firstName: {
+        firstName: {
             type: 'string',
             required: true
         },
@@ -21,43 +21,38 @@ module.exports = {
         lastName: {
             type: 'string',
             required: true
-        }, */    
+        },     
 
         username: {
-            type: 'string',
-            unique: true,
-            required: true
-        },
-
-        email: {
             type: 'email',
             unique: true,
             required: true
         },
 
-        /*mobile: {
+        mobile: {
             type: 'integer',
-            required: true
+            maxLength: 18
+            //required: true
         },
 
         city: {
             type: 'string',
-            required: true
+            //required: true
         },
 
         pincode: {
             type: 'integer',
-            required: true
+            //required: true
         },
 
         state: {
             type: 'string',
-            required: true
+            //required: true
         },
 
         district: {
             type: 'string',
-            required: true
+            //required: true
         },
 
         lat: {
@@ -67,22 +62,22 @@ module.exports = {
         lng: {
             type: 'float'
         },
-*/
+
         password: {
             type: 'string',
             required: true,
-            columnName: 'encrypted_password',
+            columnName: 'encryptedPassword',
             minLength: 8
         },
 
-       /* date_verified: {
+        date_verified: {
             type : 'date'
         },
 
-*/
         roles: {
             type: 'string',
             enum: ['SA', 'A','U'],
+            defaultsTo: 'U'
             // required: true
         },
 
@@ -126,7 +121,11 @@ module.exports = {
     },
 
     authenticate: function (username, password) {
-        return API.Model(Users).findOne({username: username}).then(function(user){
+        var query = {};
+        query.username = username;
+        query.$or = [{roles:["SA","A"]}];
+  
+        return API.Model(Users).findOne(query).then(function(user){
             return (user && user.date_verified && user.comparePassword(password))? user : null;
         });
     }

@@ -2,7 +2,7 @@
   * #DESC:  In this class/files EndUser related functions
   * #Author: Rishabh Gupta
   */
-var nodemailer = require('nodemailer');
+/*var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 var transport = nodemailer.createTransport(smtpTransport({
                     host: sails.config.appSMTP.host,
@@ -69,4 +69,4 @@ module.exports = {
         });
     }
 
-}; // End Crops service class
+}; */// End Crops service class

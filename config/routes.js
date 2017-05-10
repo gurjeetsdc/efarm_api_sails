@@ -45,7 +45,8 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
-
+  //Authorisation Routes
+  'post /authorisation': 'OAuthController.token',
 
   //Category Routes
   'get /category/list/:categorytype': 'CategoryController.getCategoryList',
@@ -58,6 +59,5 @@ module.exports.routes = {
   'get /user' : 'UsersController.getAllUsers',
   'get /user/:id' :{ model: 'users', blueprint: 'find'},
   'post /user' : 'UsersController.index',
-  'POST /user/add': 'UsersController.add'
 
 };
