@@ -49,6 +49,9 @@ module.exports = {
       return context.identity;
     },
     registerUser: function (data, context) {
+        console.log('test regiter');
+        console.log(context);
+
         var date = new Date();
         return API.Model(Users).create({
             username: data.username,

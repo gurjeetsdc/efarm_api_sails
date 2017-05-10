@@ -51,11 +51,13 @@ module.exports.routes = {
   'get /category/list/:categorytype': 'CategoryController.getCategoryList',
   
   //Equipments Routes
-  '/equipment/list': 'EquipmentController.getAllEquipments',
+  'get /equipment': 'EquipmentController.getAllEquipments',
+  'get /equipment/list': 'EquipmentController.getAllEquipments',
+  
   'post /equipment/upload' : 'EquipmentController.uploadImages',
 
   //User Routes
-  'get /user' : 'UsersController.getAllUsers',
+  'get /user' : 'UsersController.getAllUsers', 
   'get /user/:id' :{ model: 'users', blueprint: 'find'},
   'post /user' : 'UsersController.index',
   'POST /user/add': 'UsersController.add'
