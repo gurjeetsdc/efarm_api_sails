@@ -35,6 +35,10 @@ module.exports = {
             //required: true
         },
 
+        address: {
+            type: 'string',
+        },
+
         city: {
             type: 'string',
             //required: true
