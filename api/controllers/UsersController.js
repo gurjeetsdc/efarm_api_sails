@@ -14,7 +14,7 @@ module.exports = {
         API(Registration.registerUser,req,res);
     },
 
-    'verify/:email': function(req,res){
+    'verify/:username': function(req,res){
         API(Registration.verifyUser,req,res);
     },
     current: function(req,res){
