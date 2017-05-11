@@ -27,33 +27,55 @@ module.exports = {
     getAllUsers: function(req, res, next) {
         // console.log('req.body********', req.param('sdsd'));
 
-        var page   = req.param('page');
-        var count  = req.param('count');
-        var skipNo = (page - 1) * count;
-        var search = '';
-        var query  = {};
+        var page        = req.param('page');
+        var count       = req.param('count');
+        var skipNo      = (page - 1) * count;
+        var search      = req.param('search');
+        var roles       = req.param('roles');
+        var query       = {};
 
         query.isDeleted = 'false';
+        if(roles) query.roles = roles;
 
         if (search) {
            query.$or = [
                {
-                    name: {
+                    firstName: {
                         'like': '%' + search + '%'
                     }
                 },
                 {
-                    usage: {
+                    lastName: {
                         'like': '%' + search + '%'
                     }
                 },
                 {
-                    modelyear: {
+                    email: {
                         'like': '%' + search + '%'
                     }
                 },
                 {
-                    rentSell: {
+                    username: {
+                        'like': '%' + search + '%'
+                    }
+                },
+                {
+                    address: {
+                        'like': '%' + search + '%'
+                    }
+                },
+                {
+                    city: {
+                        'like': '%' + search + '%'
+                    }
+                },
+                {
+                    district: {
+                        'like': '%' + search + '%'
+                    }
+                },
+                {
+                    state: {
                         'like': '%' + search + '%'
                     }
                 }
@@ -68,7 +90,6 @@ module.exports = {
                    error: err
                });
            } else {
-               console.log("total*******", total);
                Users.find(query).sort({
                    'createdAt': -1
                }).skip(skipNo).limit(count).exec(function(err, users) {

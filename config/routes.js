@@ -49,6 +49,10 @@ module.exports.routes = {
   'post /authorisation': 'OAuthController.token',
   'get /user/verify/:username' :'UsersController.verify/:username',
 
+  //Equipments Routes
+  'get /land': 'LandController.getAllLands',
+  'get /land/list': 'LandController.getAllLands',
+
   //Category Routes
   'get /category/list/:categorytype': 'CategoryController.getCategoryList',
   
@@ -60,6 +64,13 @@ module.exports.routes = {
   //User Routes
   'get /user' : 'UsersController.getAllUsers', 
   'get /user/:id' :{ model: 'users', blueprint: 'find'},
+  'put /user/:id' :{ model: 'users', blueprint: 'update' },
+  'delete /user/:id' :{ model: 'users', blueprint: 'destroy' },
   'post /user' : 'UsersController.index',
 
+  //Crops Routes
+  'get /crops': 'CropsController.getAllCrops',
+
+    //Inputs Routes
+  'get /inputs': 'InputsController.getAllInputs'
 };
