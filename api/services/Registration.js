@@ -2,7 +2,7 @@ var Promise = require('bluebird'),
     promisify = Promise.promisify;
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
-
+var bcrypt    = require('bcrypt-nodejs');
 
 var transport = nodemailer.createTransport(smtpTransport({
                 host: sails.config.appSMTP.host,
@@ -97,6 +97,61 @@ module.exports = {
             });
         });
 
+    },
+    signupUser: function (data, context) {
+       
+            data['roles'] = 'U';
+            if(!data.password){
+
+                data['password'] = generatePassword();
+
+            }
+                if( (!data.username) ){
+                    //return res.status(400).json({"error": "Fields required."});
+                  return {"success": false, "error": {"code": 404,"message": "Fields required"} };
+
+                }
+            return Users.findOne({username:data.username}).then(function (err, user) {
+                return {"success": false, "error": {"code": 301,"message": "This email/username already exist. please try with another email"} };                
+            });
+                var date = new Date();
+                data['date_registered'] = date;
+                data['date_verified'] = date;
+                var OTP = Math.floor(100001 + Math.random() * 900001);
+                data['otp'] = OTP;
+        
+       // console.log("sign up ");
+            return API.Model(Users).create(data).then(function (user) {
+
+                return {success: true, code:200, message: "Signed up", data: user};
+
+            });
+
+    },
+    signinUser: function (data, context) {
+        //console.log(data);
+        let username = data.username;
+         return Users.findOne({username:username}).then(function (user) {
+            //console.log(user);
+          if( user == undefined ){
+              return {"success": false, "error": {"code": 404,"message": "Username Wrong! Please try Again"} };
+          }
+            if( !bcrypt.compareSync(data.password, user.password) ){
+                return {"success": false, "error": {"code": 404,"message": "Password Is Wrong!"} };
+            }else{
+                return Tokens.generateToken({
+                    client_id: data.client_id,
+                    user_id: user.id
+                }).then(function (token) {
+                    //console.log(token);
+                    return {access_token:token.access_token, 
+                            refresh_token: token.refresh_token,
+                            expires_in: token.calc_expires_in(),
+                            token_type: "Bearer"};
+                });
+            }
+
+        });
     },
 
     verifyUser: function (data, context) {

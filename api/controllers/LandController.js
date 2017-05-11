@@ -17,7 +17,6 @@ module.exports = {
     },  
 
     getAllLands: function(req, res, next) {
-		// console.log('req.body********', req.param('sdsd'));
 
 		var page        = req.param('page');
 		var count       = req.param('count');
@@ -33,17 +32,17 @@ module.exports = {
 		if (search) {
 		   query.$or = [
 		       {
-		            name: {
+		            expected_price: {
 		                'like': '%' + search + '%'
 		            }
 		        },
 		        {
-		            usage: {
+		            khasra_no: {
 		                'like': '%' + search + '%'
 		            }
 		        },
 		        {
-		            modelyear: {
+		            location: {
 		                'like': '%' + search + '%'
 		            }
 		        },
@@ -63,7 +62,6 @@ module.exports = {
 		           error: err
 		       });
 		   } else {
-		       console.log("total*******", total);
 		       Land.find(query).populate('category').populate('user').sort({
 		           sortBy: sortOrder
 		       }).skip(skipNo).limit(count).exec(function(err, lands) {

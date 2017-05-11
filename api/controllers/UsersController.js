@@ -13,6 +13,24 @@ module.exports = {
     register: function(req,res){
         API(Registration.registerUser,req,res);
     },
+    /****
+    * @Desc : Method use for sign up user via mobile. its sign up API for mobile.
+    * @Params: post by mobile team
+    * @return  :  Success and data
+    * @Author: Rohitk.kumar
+    ***/
+    signup: function(req,res){
+      API(Registration.signupUser,req,res);
+    },
+     /****
+    * @Desc : Method use for sign in user via mobile. its sign in API for mobile.
+    * @Params: username password and device token
+    * @return  :  Success and data
+    * @Author: Rohitk.kumar
+    ***/
+    signin: function(req,res){
+      API(Registration.signinUser,req,res);
+    },
 
     'verify/:email': function(req,res){
         API(Registration.verifyUser,req,res);

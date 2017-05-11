@@ -132,6 +132,6 @@ module.exports = {
         return API.Model(Users).findOne(query).then(function(user){
             return (user && user.date_verified && user.comparePassword(password))? user : null;
         });
-    }
+    },
 
 };
