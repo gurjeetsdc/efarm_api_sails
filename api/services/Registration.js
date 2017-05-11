@@ -112,21 +112,29 @@ module.exports = {
                   return {"success": false, "error": {"code": 404,"message": "Fields required"} };
 
                 }
+            
             return Users.findOne({username:data.username}).then(function (err, user) {
-                return {"success": false, "error": {"code": 301,"message": "This email/username already exist. please try with another email"} };                
-            });
-                var date = new Date();
-                data['date_registered'] = date;
-                data['date_verified'] = date;
-                var OTP = Math.floor(100001 + Math.random() * 900001);
-                data['otp'] = OTP;
-        
-       // console.log("sign up ");
-            return API.Model(Users).create(data).then(function (user) {
 
-                return {success: true, code:200, message: "Signed up", data: user};
+                if( user != undefined ){
 
+                    return {"success": false, "error": {"code": 301,"message": "This email/username already exist. please try with another email"} };                
+
+                }else{
+                    var date = new Date();
+                    data['date_registered'] = date;
+                    data['date_verified'] = date;
+                    var OTP = Math.floor(100001 + Math.random() * 900001);
+                    data['otp'] = OTP;
+                    
+                   // console.log("sign up ");
+                        return API.Model(Users).create(data).then(function (user) {
+
+                            return {success: true, code:200, message: "Signed up", data: user};
+
+                        });
+                }
             });
+                
 
     },
     signinUser: function (data, context) {
