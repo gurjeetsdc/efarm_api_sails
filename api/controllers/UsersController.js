@@ -25,16 +25,19 @@ module.exports = {
     },
 
     getAllUsers: function(req, res, next) {
-        // console.log('req.body********', req.param('sdsd'));
 
+        var search      = req.param('search');
+        var sortBy      = req.param('sortBy');
+        var roles       = req.param('roles');
         var page        = req.param('page');
         var count       = req.param('count');
         var skipNo      = (page - 1) * count;
-        var search      = req.param('search');
-        var roles       = req.param('roles');
         var query       = {};
-
-        query.isDeleted = 'false';
+        if(sortBy) {
+            sortBy = sortBy.toString();
+        } else {
+            sortBy = 'createdAt desc';
+        }
         if(roles) query.roles = roles;
 
         if (search) {
@@ -90,9 +93,7 @@ module.exports = {
                    error: err
                });
            } else {
-               Users.find(query).sort({
-                   'createdAt': -1
-               }).skip(skipNo).limit(count).exec(function(err, users) {
+               Users.find(query).sort(sortBy).skip(skipNo).limit(count).exec(function(err, users) {
                     if (err) {
                         return res.status(400).jsonx({
                            success: false,
