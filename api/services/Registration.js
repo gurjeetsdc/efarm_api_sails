@@ -60,11 +60,14 @@ module.exports = {
     registerUser: function (data, context) {
          var date = new Date();
         
-        if((!data.firstName) || typeof data.firstName){ 
-            console.log("error is", data, context);
-            // return context.status(400).json({
-            //     "error": "Fields required."
-            // });
+        if((!data.firstName) || typeof data.firstName == undefined){ 
+            return {"status":402,"error":"Firstname is required"};
+        }
+        if((!data.lastName) || typeof data.lastName == undefined){ 
+            return {"status":402,"error":"Lastname is required"};
+        }
+        if((!data.username) || typeof data.username == undefined){ 
+            return {"status":402,"error":"Username is required"};
         }
 
         if(data.roles == 'SA' || data.roles == 'A'){
@@ -77,8 +80,6 @@ module.exports = {
         }
 
         data['date_registered'] = date;
-
-        console.log("console is in register service",data);
         return API.Model(Users).create(data).then(function (user) {       
         
             context.id = user.username;
@@ -100,6 +101,7 @@ module.exports = {
     },
 
     verifyUser: function (data, context) {
+        console.log("in verify user",data);
         return Tokens.authenticate({
             code: data.code,
             type: 'verification',

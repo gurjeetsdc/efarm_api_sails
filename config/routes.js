@@ -47,6 +47,7 @@ module.exports.routes = {
   ***************************************************************************/
   //Authorisation Routes
   'post /authorisation': 'OAuthController.token',
+  'get /user/verify/:username' :'UsersController.verify/:username',
 
   //Category Routes
   'get /category/list/:categorytype': 'CategoryController.getCategoryList',
@@ -54,7 +55,6 @@ module.exports.routes = {
   //Equipments Routes
   'get /equipment': 'EquipmentController.getAllEquipments',
   'get /equipment/list': 'EquipmentController.getAllEquipments',
-  
   'post /equipment/upload' : 'EquipmentController.uploadImages',
 
   //User Routes
