@@ -69,5 +69,8 @@ module.exports.routes = {
   'post /user' : 'UsersController.index',
 
   //Crops Routes
-  'get /crops': 'CropsController.getAllCrops'
+  'get /crops': 'CropsController.getAllCrops',
+
+    //Inputs Routes
+  'get /inputs': 'InputsController.getAllInputs'
 };
