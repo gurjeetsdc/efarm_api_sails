@@ -1,6 +1,6 @@
 var s3 = require('s3');
 const osTmpdir = require('os-tmpdir');
-var formidable = require('formidable');
+//var formidable = require('formidable');
 var AWS = require('aws-sdk');
 
 var path = require('path');
@@ -25,19 +25,16 @@ module.exports = {
     },
 
 	getAllEquipments: function(req, res, next) {
-		// console.log('req.body********', req.param('sdsd'));
-
+		
 		var page        = req.param('page');
 		var count       = req.param('count');
 		var skipNo      = (page - 1) * count;
 		var search      = req.param('search');
 		var query       = {};
 
-		var sortBy    	= 'createdAt';
-		var sortOrder 	= -1;	
-
-
-
+		var sortBy    	= req.param('sortBy');
+		sortBy = sortBy.toString();
+		
 		query.isDeleted = 'false';
 
 		if (search) {
@@ -74,9 +71,7 @@ module.exports = {
 		       });
 		   } else {
 		       console.log("total*******", total);
-		       Equipment.find(query).populate('category').populate('user').sort({
-		           sortBy: sortOrder
-		       }).skip(skipNo).limit(count).exec(function(err, equipments) {
+		       Equipment.find(query).populate('category').populate('user').sort(sortBy).skip(skipNo).limit(count).exec(function(err, equipments) {
 		            if (err) {
 		                return res.status(400).jsonx({
 		                   success: false,
@@ -95,94 +90,34 @@ module.exports = {
 		   }
 		})
 	},
-
-    getAllEquipments1: function(req, res, next) {
-        console.log('req.body********', req.body);
-        var page = req.body.page || 1,
-            count = req.body.count || 50;
-        var skipNo = (page - 1) * count;
-       	var search = req.body.query || "";
-        var query = {};
-
-        query.isDeleted = 'false';
-
-        if (search) {
-        	query.$or = [
-        		{
-	            	name: {
-	                    'like': '%' + search + '%'
-	                }
-	            },
-	            {
-	                usage: {
-	                    'like': '%' + search + '%'
-	                }
-	            }, 
-	            {
-	                modelyear: {
-	                    'like': '%' + search + '%'
-	                }
-	            }, 
-	            {
-	                rentSell: {
-	                    'like': '%' + search + '%'
-	                }
-	            } 
-	            
-            ]
-        }
-
-        Equipment.count(query).exec(function(err, total) {
-            if (err) {
-                return res.status(400).jsonx({
-                    success: false,
-                    error: err
-                });
-            } else {
-                console.log("total*******", total);
-                Equipment.find(query).sort({
-                    'createdAt': -1
-                }).skip(skipNo).limit(count).exec(function(err, equipments) {
-                    if (err) {
-                        return res.status(400).jsonx({
-                            success: false,
-                            error: err
-                        });
-                    } else {
-                        return res.jsonx({
-                            success: true,
-                            data: {
-                                equipments: equipments
-                            },
-                            total: total
-                        });
-                    }
-                })
-            }
-        })
-    },
+   
 
     uploadImages: function(req, res) {
-    	console.log("here before file ")
+    	osTmpdir();
+    	console.log("here before file ");
+
+
         //var form = new formidable.IncomingForm();
     	//form.keepExtensions = true;     //keep file extension
     	var uploadDir = (path.resolve(__dirname+"/../../doc/upload/equipments/"));  //set upload directory
-    	// console.log(form.uploadDir)
+    	//console.log(form.uploadDir)
+    	//console.log("tset",uploadDir);
     	// form.keepExtensions = true;     //keep file extension
     	// console.log(req.file('abc'));
     	var dateTime = new Date().toISOString().replace(/T/,'').replace(/\..+/, '').split(" ");
-    	req.file('abc').upload({
-		  dirname: uploadDir
+    	
+    	req.file('file').upload({
+		  	dirname: uploadDir
 		},function (err, uploadedFiles) {
-			console.log(err,uploadedFiles[0].fd)
-			// return
+		  	console.log("error is",err);
+		  	console.log("uploadedFiles is",uploadedFiles);
 		  	if (err){
 		   		return res.negotiate(err);
 		   	} else {
 	   		    var client = s3.createClient({
 				  	s3Options: {
-					    accessKeyId: "AKIAJPWHNV77ST4GC7WQ",
-					    secretAccessKey: "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"
+					    accessKeyId: "AKIAJ4NYJKROJJL34MJQ",
+					    secretAccessKey: "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"
 					},
 				});
 			    // var client = s3.createClient(options);

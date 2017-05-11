@@ -47,6 +47,7 @@ module.exports.routes = {
   ***************************************************************************/
   //Authorisation Routes
   'post /authorisation': 'OAuthController.token',
+  'get /user/verify/:username' :'UsersController.verify/:username',
 
   //Equipments Routes
   'get /land': 'LandController.getAllLands',
@@ -58,7 +59,6 @@ module.exports.routes = {
   //Equipments Routes
   'get /equipment': 'EquipmentController.getAllEquipments',
   'get /equipment/list': 'EquipmentController.getAllEquipments',
-  
   'post /equipment/upload' : 'EquipmentController.uploadImages',
 
   //User Routes
@@ -69,5 +69,8 @@ module.exports.routes = {
   'post /user' : 'UsersController.index',
 
   //Crops Routes
-  'get /crops': 'CropsController.getAllCrops'
+  'get /crops': 'CropsController.getAllCrops',
+
+    //Inputs Routes
+  'get /inputs': 'InputsController.getAllInputs'
 };

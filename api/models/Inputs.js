@@ -54,6 +54,31 @@ module.exports = {
             type: 'string'
         },
 
+        address: {
+            type: 'string',
+            required: true
+        },
+
+        city: {
+            type: 'string',
+            required: true
+        },
+
+        district: {
+            type: 'string',
+            required: true
+        },
+
+        state: {
+            type: 'string',
+            required: true
+        },
+        
+        pincode: {
+            type: 'integer',
+            required: true
+        },   
+
 		isDeleted: {
 			type: 'boolean',
             defaultsTo: false,
