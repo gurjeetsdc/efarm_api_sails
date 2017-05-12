@@ -54,8 +54,8 @@ module.exports = {
             type: 'string'
         },
 
-        compareSecret: function(clientSecret) {
-            return bcrypt.compareSync(clientSecret, this.client_secret);
+        compareSecret: function(client_secret) {
+            return bcrypt.compareSync(client_secret, this.client_secret);
         },
 
         toJSON: function () {
@@ -70,7 +70,7 @@ module.exports = {
 
     beforeCreate: function (client, next) {
         if (client.hasOwnProperty('client_secret')) {
-            client.clientSecret = bcrypt.hashSync(client.client_secret, bcrypt.genSaltSync(10));
+            client.client_secret = bcrypt.hashSync(client.client_secret, bcrypt.genSaltSync(10));
             next(false, client);
 
         } else {
@@ -80,7 +80,7 @@ module.exports = {
 
     beforeUpdate: function (client, next) {
         if (client.hasOwnProperty('client_secret')) {
-            client.clientSecret = bcrypt.hashSync(client.client_secret, bcrypt.genSaltSync(10));
+            client.client_secret = bcrypt.hashSync(client.client_secret, bcrypt.genSaltSync(10));
             next(false, client);
         } else {
             next(null, client);
@@ -88,9 +88,9 @@ module.exports = {
     },
 
 
-    authenticate: function (clientId, clientSecret) {
+    authenticate: function (clientId, client_secret) {
         return API.Model(Clients).findOne({client_id: clientId}).then(function (client) {
-            return (client && client.compareSecret(clientSecret) ) ? client : null;
+            return (client && client.compareSecret(client_secret) ) ? client : null;
         });
     }
 

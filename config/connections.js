@@ -65,14 +65,14 @@ module.exports.connections = {
     database: 'efarm_sails' //optional
   },
 
-  // mlabMongoServer: {
-  //   adapter: 'sails-mongo',
-  //   host: 'localhost',
-  //   port: 27017,
-  //   user: '', //optional
-  //   password: '', //optional
-  //   database: 'efarm_sails' //optional
-  // },
+  /*mlabMongoServer: {
+    adapter: 'sails-mongo',
+    host: 'localhost',
+    port: 27017,
+    user: '', //optional
+    password: '', //optional
+    database: 'efarm_sails' //optional
+  },*/
 
 
   /***************************************************************************
