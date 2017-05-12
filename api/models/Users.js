@@ -26,13 +26,13 @@ module.exports = {
         username: {
             type: 'email',
             unique: true,
-            required: true
+            required: 'Please enter valid email id.'
         },
 
         mobile: {
             type: 'integer',
-            maxLength: 18
-            //required: true
+            maxLength: 18,
+            required: true
         },
 
         address: {
