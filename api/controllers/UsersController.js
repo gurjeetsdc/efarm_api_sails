@@ -42,6 +42,10 @@ module.exports = {
         API(UserService.save,req,res);
     },
 
+    forgotPassword: function(req,res){
+        API(UserService.forgotPassword,req,res);
+    },
+
     getAllUsers: function(req, res, next) {
 
         var search      = req.param('search');

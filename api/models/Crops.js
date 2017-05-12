@@ -36,7 +36,7 @@ module.exports = {
 
         quantityUnit: {
             type: 'string',
-            enum: ['Kg', 'Quintal','Tonnes'],
+            enum: ['Kg', 'Quintal','Tonnes','Count','Dozen'],
             required: true
         },
 

@@ -67,6 +67,7 @@ module.exports.routes = {
   'put /user/:id' :{ model: 'users', blueprint: 'update' },
   'delete /user/:id' :{ model: 'users', blueprint: 'destroy' },
   'post /user' : 'UsersController.index',
+  'post /forgotpassword' : 'UsersController.forgotPassword',
 
   //Crops Routes
   'get /crops': 'CropsController.getAllCrops',

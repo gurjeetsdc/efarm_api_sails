@@ -2,7 +2,7 @@
   * #DESC:  In this class/files EndUser related functions
   * #Author: Rishabh Gupta
   */
-/*var nodemailer = require('nodemailer');
+var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 var transport = nodemailer.createTransport(smtpTransport({
                     host: sails.config.appSMTP.host,
@@ -21,7 +21,7 @@ emailGeneratedCode = function (options) { //email generated code
 
     message = 'Hello!';
     message += '<br/>';
-    message += 'Your account has been created please login with following credentials.';
+    message += 'Your new password has been created successfully';
     message += '<br/><br/>';
     message += 'Email Id : ' + email;
     message += '<br/>';
@@ -30,14 +30,17 @@ emailGeneratedCode = function (options) { //email generated code
     transport.sendMail({
         from: sails.config.appSMTP.auth.user,
         to: email,
-        subject: 'eFarmX registration',
+        subject: 'eFarmX password reset',
         html: message
     }, function (err, info) {
-
+        
     });
 
     return {
-        url: url
+        success: true,
+        data: {
+            "message": "Password has been sent to Email"
+        }
     }
 };
 
@@ -54,19 +57,31 @@ generatePassword = function () { // action are perform to generate random passwo
 module.exports = {
     emailGeneratedCode: emailGeneratedCode, //emailgeneratecode()
     generatePassword: generatePassword,   //generatepassword()
-    
-    save: function (data, context) {  
-        var date = new Date();
-        data["password"] = generatePassword();
-        return API.Model(EndUser).create(data)
-        .then(function (enduser) {
-            return emailGeneratedCode({
-                email: data.email,
-                password: data.password,
-                verifyURL: sails.config.security.server.url + "/users/verify/" + data.email + "?code=" + data.password,
-            });
-
-        });
+    forgotPassword: function (data, context) {
+        return Users.findOne({email: data.email})
+            .then(function(data){
+                if(data===undefined){
+                    return {
+                        success: false,
+                        error: {
+                            "code": 404,
+                            "message": "No such user exist"
+                        }
+                    }
+                }
+                else{
+                    var password = generatePassword()
+                    return Users.update({email: data.email},{encryptedPassword:password})
+                            .then(function(data){
+                                return emailGeneratedCode({
+                                    email: data[0].email,
+                                    password: data[0].password,
+                                    verifyURL: sails.config.security.server.url + "/users/verify/" + data[0].email + "?code=" + data[0].password,
+                                })
+                            })
+                    }
+                
+            })
     }
 
-}; */// End Crops service class
+}; /// End Crops service class
