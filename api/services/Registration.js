@@ -1,46 +1,55 @@
 var Promise = require('bluebird'),
-    promisify = Promise.promisify,
-    mailer = require('nodemailer'),
-    emailGeneratedCode,
-    transporter;
+    promisify = Promise.promisify;
+var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
+var bcrypt    = require('bcrypt-nodejs');
+
+var transport = nodemailer.createTransport(smtpTransport({
+                host: sails.config.appSMTP.host,
+                port: sails.config.appSMTP.port,
+                debug: sails.config.appSMTP.debug,
+                auth: {
+                        user: sails.config.appSMTP.auth.user, //access using /congig/appSMTP.js
+                        pass: sails.config.appSMTP.auth.pass
+                    }
+            }));
 
 
-transporter = mailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: sails.config.security.admin.email.address,
-        pass: sails.config.security.admin.email.password
-    }
-});
-
-emailGeneratedCode = function (options) {
+emailGeneratedCode = function (options) { //email generated code 
     var url = options.verifyURL,
-        email = options.email;
-
+        email = options.username,
+        password = options.password;
 
     message = 'Hello!';
     message += '<br/>';
-    message += 'Please visit the verification link to complete the registration process.';
+    message += 'Your account has been created please login with following credentials.';
     message += '<br/><br/>';
-    message += 'Account with ' + options.type + " : " + options.id;
-    message += '<br/><br/>';
-    message += '<a href="';
-    message += url;
-    message += '">Verification Link</a>';
+    message += 'Email Id : ' + email;
     message += '<br/>';
+    message += 'Password : ' + password;
 
-    transporter.sendMail({
-        from: sails.config.security.admin.email.address,
+    transport.sendMail({
+        from: sails.config.appSMTP.auth.user,
         to: email,
-        subject: 'Canadian Tire App Account Registration',
+        subject: 'eFarmX registration',
         html: message
     }, function (err, info) {
-        console.log("Email Response:", info);
+        console.log("errro is ",err, info);
     });
 
     return {
         url: url
     }
+};
+generatePassword = function () { // action are perform to generate random password for user 
+    var length = 8,
+    charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?",
+    retVal = "";
+    
+    for (var i = 0, n = charset.length; i < length; ++i) {
+        retVal += charset.charAt(Math.floor(Math.random() * n));
+    }
+    return retVal;
 };
 
 module.exports = {
@@ -49,15 +58,32 @@ module.exports = {
       return context.identity;
     },
     registerUser: function (data, context) {
-        var date = new Date();
-        return API.Model(Users).create({
-            username: data.username,
-            email: data.email,
-            password: data.password,
-            date_registered: date
-        }).then(function (user) {
+         var date = new Date();
+        
+        if((!data.firstName) || typeof data.firstName == undefined){ 
+            return {"status":402,"error":"Firstname is required"};
+        }
+        if((!data.lastName) || typeof data.lastName == undefined){ 
+            return {"status":402,"error":"Lastname is required"};
+        }
+        if((!data.username) || typeof data.username == undefined){ 
+            return {"status":402,"error":"Username is required"};
+        }
+
+        if(data.roles == 'SA' || data.roles == 'A'){
+            data['roles'] = data.roles;
+        } else {
+            data['roles'] = 'U';
+            if(!data['password']){
+                data['password'] = generatePassword();
+            }
+        }
+
+        data['date_registered'] = date;
+        return API.Model(Users).create(data).then(function (user) {       
+        
             context.id = user.username;
-            context.type = 'Username';
+            context.type = 'Email';
             return Tokens.generateToken({
                 user_id: user.id,
                 client_id: Tokens.generateTokenString()
@@ -66,18 +92,83 @@ module.exports = {
             return emailGeneratedCode({
                 id: context.id,
                 type: context.type,
-                verifyURL: sails.config.security.server.url + "/users/verify/" + data.email + "?code=" + token.code,
-                email: data.email
+                username: data.username,
+                password: data.password,
+                verifyURL: sails.config.security.server.url + "/user/verify/" + data.username + "?code=" + token.code
             });
         });
 
     },
+    signupUser: function (data, context) {
+       
+            data['roles'] = 'U';
+            if(!data.password){
+
+                data['password'] = generatePassword();
+
+            }
+                if( (!data.username) ){
+                    //return res.status(400).json({"error": "Fields required."});
+                  return {"success": false, "error": {"code": 404,"message": "Fields required"} };
+
+                }
+            
+            return Users.findOne({username:data.username}).then(function (err, user) {
+
+                if( user != undefined ){
+
+                    return {"success": false, "error": {"code": 301,"message": "This email/username already exist. please try with another email"} };                
+
+                }else{
+                    var date = new Date();
+                    data['date_registered'] = date;
+                    data['date_verified'] = date;
+                    var OTP = Math.floor(100001 + Math.random() * 900001);
+                    data['otp'] = OTP;
+                    
+                   // console.log("sign up ");
+                        return API.Model(Users).create(data).then(function (user) {
+
+                            return {success: true, code:200, message: "Signed up", data: user};
+
+                        });
+                }
+            });
+                
+
+    },
+    signinUser: function (data, context) {
+        //console.log(data);
+        let username = data.username;
+         return Users.findOne({username:username}).then(function (user) {
+            //console.log(user);
+          if( user == undefined ){
+              return {"success": false, "error": {"code": 404,"message": "Username Wrong! Please try Again"} };
+          }
+            if( !bcrypt.compareSync(data.password, user.password) ){
+                return {"success": false, "error": {"code": 404,"message": "Password Is Wrong!"} };
+            }else{
+                return Tokens.generateToken({
+                    client_id: data.client_id,
+                    user_id: user.id
+                }).then(function (token) {
+                    //console.log(token);
+                    return {access_token:token.access_token, 
+                            refresh_token: token.refresh_token,
+                            expires_in: token.calc_expires_in(),
+                            token_type: "Bearer"};
+                });
+            }
+
+        });
+    },
 
     verifyUser: function (data, context) {
+        console.log("in verify user",data);
         return Tokens.authenticate({
             code: data.code,
             type: 'verification',
-            email: data.email
+            username: data.username
         }).then(function (info) {
             var date = new Date();
             if (!info) return Promise.reject('Unauthorized');
@@ -93,7 +184,7 @@ module.exports = {
 
             return {
                 verified: true,
-                email: info.identity.email
+                username: info.identity.username
             }
         });
     },
@@ -102,7 +193,7 @@ module.exports = {
         return API.Model(Clients).create({
             client_id: Tokens.generateTokenString(),
             client_secret: Tokens.generateTokenString(),
-            email: data.email
+            username: data.username
         }).then(function (client) {
             context.id = client.client_id;
             context.type = 'Client ID';
@@ -114,8 +205,8 @@ module.exports = {
             return emailGeneratedCode({
                 id: context.id,
                 type: context.type,
-                verifyURL: sails.config.security.server.url + "/clients/verify/" + data.email + "?code=" + token.code,
-                email: data.email
+                verifyURL: sails.config.security.server.url + "/clients/verify/" + data.username + "?code=" + token.code,
+                username: data.username
             });
         });
     },
@@ -125,7 +216,7 @@ module.exports = {
         return Tokens.authenticate({
             type: 'verification',
             code: data.code,
-            email: data.email
+            username: data.username
         }).then(function (info) {
             var date = new Date();
             if (!info) return Promise.reject('Unauthorized');
@@ -141,8 +232,8 @@ module.exports = {
 
             return {
                 verified: true,
-                email: info.identity.email
+                username: info.identity.username
             };
         });
-    }
+    }    
 };

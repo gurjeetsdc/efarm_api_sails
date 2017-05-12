@@ -10,4 +10,3 @@ module.exports = {
 	  API(ManufacturerService.deleteManufacturer,req,res);
     }
 };
-

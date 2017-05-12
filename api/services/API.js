@@ -95,8 +95,9 @@ Model.prototype = {
     find: function () {
         return promisify(this.model.find);
     },
-
-
+    findWithQuery: function ( criteria) {
+        return promisify(this.model.find)(criteria);
+    },
     findOne: function (criteria) {
         return promisify(this.model.findOne)(criteria);
     },

@@ -10,52 +10,75 @@ module.exports = {
     autoUpdatedAt: true,
   attributes: {
   		
-  		user:{
-	      model:'users'
-	    },
+  		name: {
+            type: 'string',
+            required: true
+        },
 
-        manufacturer:{
-         model:'manufacturer'
+        user:{
+          model:'users'
         },
 
         category:{
          model:'category'
         },
 
-  		name: {
-            type: 'string',
-            required: true
-        },     
-        variety: {
-            type: 'string',
-            required: true
+        manufacturer:{
+         model:'manufacturer'
         },
+
         units: {
             type: 'string',
             required: true
         },
 
-        price: {
+        variety: {
             type: 'string',
+            required: true
+        },
+
+        price: {
+            type: 'integer',
             required: true
         },
 
         quantity: {
             type: 'integer'
         },
-        purchase_status:
-        {
-            type:'string',
-            enum: ['rent', 'sell']
+
+        additionalInformation: {
+            type: 'string'
         },
-        tearm_and_conditions: {
-            type: 'text'
+
+        tearms: {
+            type: 'string'
         },
-        status: {
-			type: 'string',
-			enum: ['Active', 'Deactive'],
-            defaultsTo: 'Active',
-		},
+
+        address: {
+            type: 'string',
+            required: true
+        },
+
+        city: {
+            type: 'string',
+            required: true
+        },
+
+        district: {
+            type: 'string',
+            required: true
+        },
+
+        state: {
+            type: 'string',
+            required: true
+        },
+        
+        pincode: {
+            type: 'integer',
+            required: true
+        },   
+
 		isDeleted: {
 			type: 'boolean',
             defaultsTo: false,

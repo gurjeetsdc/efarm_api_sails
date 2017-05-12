@@ -29,74 +29,65 @@ module.exports = {
             type: 'string'
         },
 
+        quantity: {
+            type: 'integer',
+            required: true
+        },
 
-        price: {
+        quantityUnit: {
+            type: 'string',
+            enum: ['Kg', 'Quintal','Tonnes'],
+            required: true
+        },
+
+        price : {
             type: 'integer',
             required: true
         },
 
         grade: {
-            type: 'string'
-        },
-
-        color: {
             type: 'string',
-            required: true
+             enum: ['A+', 'A', 'B', 'C', 'D'],
         },
 
-        size: {
+        availableFrom: {
+            type: 'json'
+        },
+
+        availablePeriod: {
+            type: 'integer'
+        },
+
+        availableUnit: {
             type: 'string',
+            enum: ['Days', 'Month','Year'],
             required: true
         },
 
-        availibility: {
+        supplyAbility: {
             type: 'string',
+            enum: ['Yes', 'No'],
             required: true
         },
 
-        packaging: {
+        supplyArea: {
             type: 'string',
-            required: true
+            enum: ['withinstate', 'anywhere']
         },
 
-        supply_ablity: {
+        supplyRange: {
+            type: 'integer'
+        },
+
+        paymentPreference: {
             type: 'string',
+            enum: ['COD', 'Cheque', 'Net Banking'],
             required: true
         },
 
-        pack_size: {
+        verified: {
             type: 'string',
-            required: true
-        },
-
-        quantity_per_pack: {
-            type: 'integer',
-            required: true
-        },
-
-        unit : {
-            type: 'string',
-            enum: ['Kg', 'Tonnes','Quintal'],
-            required: true
-        },
-
-        label: {
-            type: 'string',
-            required: true
-        },
-
-        payment_method: {
-            type: 'string',
-            required: true
-        },
-
-        average_lead_time: {
-            type: 'integer',
-            required: true
-        },
-
-        additional_info: {
-            type: 'string',
+            enum: ['Yes', 'No'],
             required: true
         },
 
@@ -119,58 +110,37 @@ module.exports = {
             type: 'string',
             enum: ['Active', 'Deactive']
         },
+
+        address: {
+            type: 'string',
+            required: true
+        },
+
+        city: {
+            type: 'string',
+            required: true
+        },
+
+        district: {
+            type: 'string',
+            required: true
+        },
+
+        state: {
+            type: 'string',
+            required: true
+        },
+        
+        pincode: {
+            type: 'integer',
+            required: true
+        },
+
         isDeleted: {
             type: 'boolean',
             defaultsTo:false
         }
-
-        // service_fee: {
-        //     type: 'integer'
-        // },
-
-        // service_fee_type: {
-        //     type: 'string'
-        // },
-
-        // discount_type: {
-        //     type: 'string'
-        // },
-
-        // discount_value: {
-        //     type: 'integer'
-        // },
         
-        // currency_cd: {
-        //     type: 'string',
-        // },
-        
-        // timezone: {
-        //     type: 'string'
-        // },
-        
-        // address_line1: {
-        //     type: 'text'
-        // },
-
-        // address_line2: {
-        //     type: 'text'
-        // },
-
-        // city: {
-        //     type: 'string'
-        // },
-
-        // state: {
-        //     type: 'string'
-        // },
-
-        // postal_code: {
-        //     type: 'string'
-        // },
-
-        // country: {
-        //     type: 'string'
-        // },
   }
 };
 

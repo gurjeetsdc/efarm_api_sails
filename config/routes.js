@@ -36,8 +36,6 @@ module.exports.routes = {
     view: 'homepage'
   },*/
 
-  'get /category/getcategory/:categorytype': 'CategoryController.getCategoryList'
-
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
@@ -47,5 +45,32 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
+  //Authorisation Routes
+  'post /authorisation': 'OAuthController.token',
+  'get /user/verify/:username' :'UsersController.verify/:username',
 
+  //Equipments Routes
+  'get /land': 'LandController.getAllLands',
+  'get /land/list': 'LandController.getAllLands',
+
+  //Category Routes
+  'get /category/list/:categorytype': 'CategoryController.getCategoryList',
+  
+  //Equipments Routes
+  'get /equipment': 'EquipmentController.getAllEquipments',
+  'get /equipment/list': 'EquipmentController.getAllEquipments',
+  'post /equipment/upload' : 'EquipmentController.uploadImages',
+
+  //User Routes
+  'get /user' : 'UsersController.getAllUsers', 
+  'get /user/:id' :{ model: 'users', blueprint: 'find'},
+  'put /user/:id' :{ model: 'users', blueprint: 'update' },
+  'delete /user/:id' :{ model: 'users', blueprint: 'destroy' },
+  'post /user' : 'UsersController.index',
+
+  //Crops Routes
+  'get /crops': 'CropsController.getAllCrops',
+
+    //Inputs Routes
+  'get /inputs': 'InputsController.getAllInputs'
 };

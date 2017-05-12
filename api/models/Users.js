@@ -9,48 +9,85 @@ var promisify = require('bluebird').promisify;
 var bcrypt    = require('bcrypt-nodejs');
 
 module.exports = {
-
+    autoCreatedAt: true,
+    autoUpdatedAt: true,
 
     attributes: {
-
-
-        username: {
+        firstName: {
             type: 'string',
-            unique: true,
             required: true
         },
+        
+        lastName: {
+            type: 'string',
+            required: true
+        },     
 
-        email: {
+        username: {
             type: 'email',
             unique: true,
             required: true
         },
 
+        mobile: {
+            type: 'integer',
+            maxLength: 18
+            //required: true
+        },
+
+        address: {
+            type: 'string',
+        },
+
+        city: {
+            type: 'string',
+            //required: true
+        },
+
+        pincode: {
+            type: 'integer',
+            //required: true
+        },
+
+        state: {
+            type: 'string',
+            //required: true
+        },
+
+        district: {
+            type: 'string',
+            //required: true
+        },
+
+        lat: {
+            type: 'float'
+        },
+
+        lng: {
+            type: 'float'
+        },
+
         password: {
             type: 'string',
             required: true,
-            columnName: 'encrypted_password',
+            columnName: 'encryptedPassword',
             minLength: 8
-        },
-
-        first_name: {
-            type: 'string'
-        },
-
-        last_name: {
-            type: 'string'
-        },
-
-        location: {
-            type: 'string'
-        },
-
-        date_registered: {
-            type: 'date'
         },
 
         date_verified: {
             type : 'date'
+        },
+
+        roles: {
+            type: 'string',
+            enum: ['SA', 'A','U'],
+            defaultsTo: 'U'
+            // required: true
+        },
+
+        isDeleted : {
+            type: 'Boolean',
+            defaultsTo: false
         },
 
         comparePassword: function(password) {
@@ -88,9 +125,13 @@ module.exports = {
     },
 
     authenticate: function (username, password) {
-        return API.Model(Users).findOne({username: username}).then(function(user){
+        var query = {};
+        query.username = username;
+        query.$or = [{roles:["SA","A"]}];
+  
+        return API.Model(Users).findOne(query).then(function(user){
             return (user && user.date_verified && user.comparePassword(password))? user : null;
         });
-    }
+    },
 
 };

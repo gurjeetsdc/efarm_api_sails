@@ -11,46 +11,54 @@ module.exports = {
     autoUpdatedAt: true,
   attributes: 
   	{
-    user_id:{
+    user:{
       model:'users'
-      },
+    },
 
-  	name: {
-      type:'string',
-      required: true
-      },
+    category:{
+      model:'category'
+    },
+
     location:{
       type:'string',
       required: true
-      },
+    },
+
+    avail_date: {
+      type:'json',
+    },
+
+    periods:{
+      type:'string',
+    },
 
     description: {
       type:'text',
       required: true
-      },
+    },
 
     area:{
       type:'string',
       required: true
-      },
+    },
 
     khasra_no:{
       type:'integer',
       required: true
-      },
+    },
 
     expected_price:{
       type:'integer',
       required: true
-      },
+    },
 
     term_condition:{
       type:'text'
-      },
+    },
 
     isDeleted:{
       type:'boolean',
       defaultsTo: false
-      }
+    }
 	}
 };

@@ -24,8 +24,17 @@ module.exports = function notFound (data, options) {
   var res = this.res;
   var sails = req._sails;
 
+  var response = {
+      success: false,
+      error: {
+        code: 404,
+        message: 'Not Found'
+        
+      },
+  }
+  return res.send(response);
   // Set status code
-  res.status(404);
+  // res.status(404);
 
   // Log error to console
   if (data !== undefined) {
