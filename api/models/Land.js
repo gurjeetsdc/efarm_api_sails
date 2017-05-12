@@ -33,8 +33,7 @@ module.exports = {
     },
 
     description: {
-      type:'text',
-      required: true
+      type:'text'
     },
 
     area:{
