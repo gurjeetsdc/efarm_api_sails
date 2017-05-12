@@ -32,6 +32,9 @@ module.exports.policies = {
     '*' :  'OAuthValidateAccessToken',
     token: 'OAuthPublicClient'
   },
+  StatesController: {
+   '*' : true,
+  },
   UsersController: {
    '*' : 'OAuthValidateAccessToken',
    'index' : true,
