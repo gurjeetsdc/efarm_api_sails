@@ -3,6 +3,7 @@ var Promise = require('bluebird'),
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 var bcrypt    = require('bcrypt-nodejs');
+var constantObj = sails.config.constants;
 
 var transport = nodemailer.createTransport(smtpTransport({
                 host: sails.config.appSMTP.host,
@@ -58,45 +59,75 @@ module.exports = {
       return context.identity;
     },
     registerUser: function (data, context) {
+        console.log("daa is",data);
          var date = new Date();
         
         if((!data.firstName) || typeof data.firstName == undefined){ 
-            return {"status":402,"error":"Firstname is required"};
+            return {"success": false, "error": {"code": 404,"message": constantObj.messages.FIRSTNAME_REQUIRED} };
         }
         if((!data.lastName) || typeof data.lastName == undefined){ 
-            return {"status":402,"error":"Lastname is required"};
+            return {"success": false, "error": {"code": 404,"message": constantObj.messages.LASTNAME_REQUIRED} };
         }
         if((!data.username) || typeof data.username == undefined){ 
-            return {"status":402,"error":"Username is required"};
+            return {"success": false, "error": {"code": 404,"message": constantObj.messages.USERNAME_REQUIRED} };
+        }
+        if((!data.mobile) || typeof data.mobile == undefined){ 
+            return {"success": false, "error": {"code": 404,"message": constantObj.messages.MOBILE_REQUIRED} };
         }
 
-        if(data.roles == 'SA' || data.roles == 'A'){
-            data['roles'] = data.roles;
-        } else {
-            data['roles'] = 'U';
-            if(!data['password']){
-                data['password'] = generatePassword();
+        return Users.findOne({username:data.username}).then(function (user) {
+            
+            if (user !== undefined) {
+                return {"success": false, "error": {"code": 301,"message": constantObj.messages.USER_EXIST} };                   
+            } else {
+                if(data.roles == 'SA' || data.roles == 'A'){
+                    data['roles'] = data.roles;
+                    if((!data.password) || typeof data.password == undefined){ 
+                        return {"success": false, "error": {"code": 404,"message": constantObj.messages.PASSWORD_REQUIRED} };
+                    }
+
+                } else {
+                    data['roles'] = 'U';
+                    if(!data['password']){
+                        data['password'] = generatePassword();
+                    }
+                }
+
+                data['date_registered'] = date;
+
+                if(data.mobile){
+                    var phExpression = /^\d+$/;
+                        if(data.mobile.match(phExpression)) {
+                            if(data.mobile.length>10 || data.mobile.length<10){
+                                return {"success": false, "error": {"code": 412,"message": constantObj.messages.PHONE_NUMBER} };
+                            }
+
+                            data['mobile'] = data.mobile;
+                            
+                        } else {
+                            return {"success": false, "error": {"code": 412,"message": constantObj.messages.PHONE_INVALID} };                
+                        }                      
+                }
+                return API.Model(Users).create(data).then(function (user) {       
+                
+                    context.id = user.username;
+                    context.type = 'Email';
+                    return Tokens.generateToken({
+                        user_id: user.id,
+                        client_id: Tokens.generateTokenString()
+                    });
+                }).then(function (token) {
+                    return emailGeneratedCode({
+                        id: context.id,
+                        type: context.type,
+                        username: data.username,
+                        password: data.password,
+                        verifyURL: sails.config.security.server.url + "/user/verify/" + data.username + "?code=" + token.code
+                    });
+                });
+                
             }
-        }
-
-        data['date_registered'] = date;
-        return API.Model(Users).create(data).then(function (user) {       
-        
-            context.id = user.username;
-            context.type = 'Email';
-            return Tokens.generateToken({
-                user_id: user.id,
-                client_id: Tokens.generateTokenString()
-            });
-        }).then(function (token) {
-            return emailGeneratedCode({
-                id: context.id,
-                type: context.type,
-                username: data.username,
-                password: data.password,
-                verifyURL: sails.config.security.server.url + "/user/verify/" + data.username + "?code=" + token.code
-            });
-        });
+        })
 
     },
     signupUser: function (data, context) {
@@ -109,7 +140,7 @@ module.exports = {
             }
                 if( (!data.username) ){
                     //return res.status(400).json({"error": "Fields required."});
-                  return {"success": false, "error": {"code": 404,"message": "Fields required"} };
+                  return {"success": false, "error": {"code": 404,"message": constantObj.messages.REQUIRED_FIELD} };
 
                 }
             
@@ -117,7 +148,7 @@ module.exports = {
 
                 if( user != undefined ){
 
-                    return {"success": false, "error": {"code": 301,"message": "This email/username already exist. please try with another email"} };                
+                    return {"success": false, "error": {"code": 301,"message": constantObj.messages.USER_EXIST} };                
 
                 }else{
                     var date = new Date();
@@ -129,7 +160,7 @@ module.exports = {
                    // console.log("sign up ");
                         return API.Model(Users).create(data).then(function (user) {
 
-                            return {success: true, code:200, message: "Signed up", data: user};
+                            return {success: true, code:200, message: constantObj.messages.SUCCESSFULLY_REGISTERED, data: user};
 
                         });
                 }
@@ -143,10 +174,10 @@ module.exports = {
          return Users.findOne({username:username}).then(function (user) {
             //console.log(user);
           if( user == undefined ){
-              return {"success": false, "error": {"code": 404,"message": "Username Wrong! Please try Again"} };
+              return {"success": false, "error": {"code": 404,"message": constantObj.messages.WRONG_USERNAME} };
           }
             if( !bcrypt.compareSync(data.password, user.password) ){
-                return {"success": false, "error": {"code": 404,"message": "Password Is Wrong!"} };
+                return {"success": false, "error": {"code": 404,"message": constantObj.messages.WRONG_PASSWORD} };
             }else{
                 return Tokens.generateToken({
                     client_id: data.client_id,
@@ -235,5 +266,5 @@ module.exports = {
                 username: info.identity.username
             };
         });
-    }    
+    }
 };
