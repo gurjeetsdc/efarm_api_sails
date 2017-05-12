@@ -165,8 +165,6 @@ module.exports = {
                         });
                 }
             });
-                
-
     },
     signinUser: function (data, context) {
         //console.log(data);
@@ -193,7 +191,6 @@ module.exports = {
 
         });
     },
-
     verifyUser: function (data, context) {
         console.log("in verify user",data);
         return Tokens.authenticate({
@@ -219,7 +216,6 @@ module.exports = {
             }
         });
     },
-
     registerClient: function (data, context) {
         return API.Model(Clients).create({
             client_id: Tokens.generateTokenString(),
@@ -241,8 +237,6 @@ module.exports = {
             });
         });
     },
-
-
     verifyClient: function (data, context) {
         return Tokens.authenticate({
             type: 'verification',
