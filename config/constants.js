@@ -8,7 +8,7 @@ messages : {
     "PASSWORD_REQUIRED": "Password is required",
     "USER_EXIST":"This email/username already exist. please try with another email",
     "PHONE_NUMBER":"Phone number should not be greater or less than 10 digit",
-    "PHONE_INVALID";"Not a valid number",
+    "PHONE_INVALID":"Not a valid number",
     "REQUIRED_FIELD":"Fields required",
     "SUCCESSFULLY_REGISTERED":"Successfully Registered",
     "WRONG_USERNAME":"Wrong Username! Please try Again",
