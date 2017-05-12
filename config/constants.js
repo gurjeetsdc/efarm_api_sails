@@ -11,7 +11,8 @@ messages : {
     "PHONE_INVALID";"Not a valid number",
     "REQUIRED_FIELD":"Fields required",
     "SUCCESSFULLY_REGISTERED":"Successfully Registered",
-    "WRONG_USERNAME":"Wrong Username! Please try Again"
+    "WRONG_USERNAME":"Wrong Username! Please try Again",
+    "WRONG_PASSWORD":"Password Is Wrong!"
 
 }
 /*const gmailSMTPCredentials : {
