@@ -4,6 +4,7 @@
   */
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
+var bcrypt    = require('bcrypt-nodejs');
 var transport = nodemailer.createTransport(smtpTransport({
                     host: sails.config.appSMTP.host,
                     port: sails.config.appSMTP.port,
@@ -71,11 +72,13 @@ module.exports = {
                 }
                 else{
                     var password = generatePassword()
-                    return Users.update({email: data.email},{encryptedPassword:password})
+                    var encryptedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+                    console.log("pwwwwwwww",encryptedPassword);
+                    return Users.update({email: data.email},{encryptedPassword:encryptedPassword})
                             .then(function(data){
                                 return emailGeneratedCode({
                                     email: data[0].email,
-                                    password: data[0].password,
+                                    password: password,
                                     verifyURL: sails.config.security.server.url + "/users/verify/" + data[0].email + "?code=" + data[0].password,
                                 })
                             })
