@@ -42,7 +42,7 @@ module.exports = {
 		            }
 		        },
 		        {
-		            khasra_no: {
+		            district: {
 		                'like': '%' + search + '%'
 		            }
 		        },
