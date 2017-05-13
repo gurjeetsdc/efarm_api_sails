@@ -73,7 +73,6 @@ module.exports = {
                 else{
                     var password = generatePassword()
                     var encryptedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-                    console.log("pwwwwwwww",encryptedPassword);
                     return Users.update({email: data.email},{encryptedPassword:encryptedPassword})
                             .then(function(data){
                                 return emailGeneratedCode({
