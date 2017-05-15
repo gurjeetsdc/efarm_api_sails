@@ -75,6 +75,11 @@ module.exports = {
                     }
                 },
                 {
+                    fullName: {
+                        'like': '%' + search + '%'
+                    }
+                },
+                {
                     email: {
                         'like': '%' + search + '%'
                     }
@@ -103,6 +108,9 @@ module.exports = {
                     state: {
                         'like': '%' + search + '%'
                     }
+                },
+                {
+                    mobile: parseInt(search)
                 }
                 
            ]

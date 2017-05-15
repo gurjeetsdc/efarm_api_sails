@@ -59,8 +59,7 @@ module.exports = {
       return context.identity;
     },
     registerUser: function (data, context) {
-        console.log("daa is",data);
-         var date = new Date();
+        var date = new Date();
         
         if((!data.firstName) || typeof data.firstName == undefined){ 
             return {"success": false, "error": {"code": 404,"message": constantObj.messages.FIRSTNAME_REQUIRED} };
@@ -94,6 +93,7 @@ module.exports = {
                 }
 
                 data['date_registered'] = date;
+                data["fullName"] = data.firstName + ' ' + data.lastName;
                 return API.Model(Users).create(data).then(function (user) {       
                 
                     context.id = user.username;

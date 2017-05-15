@@ -21,6 +21,11 @@ module.exports = {
         lastName: {
             type: 'string',
             required: true
+        }, 
+
+        fullName: {
+            type: 'string',
+            required: true
         },     
 
         username: {
@@ -105,6 +110,10 @@ module.exports = {
     },
 
     beforeCreate: function(user, next) {
+        if(user.firstName && user.lastName) {
+            user.fullName = user.firstName + ' ' + user.lastName;
+        }
+
         if (user.hasOwnProperty('password')) {
             user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
             next(false, user);
@@ -116,6 +125,10 @@ module.exports = {
 
 
     beforeUpdate: function(user, next) {
+        if(user.firstName && user.lastName) {
+            user.fullName = user.firstName + ' ' + user.lastName;
+        }
+
         if (user.hasOwnProperty('password')) {
             user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
             next(false, user);
