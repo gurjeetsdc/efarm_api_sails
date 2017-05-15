@@ -113,7 +113,7 @@ module.exports = {
         if(user.firstName && user.lastName) {
             user.fullName = user.firstName + ' ' + user.lastName;
         }
-        
+
         if (user.hasOwnProperty('password')) {
             user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
             next(false, user);
