@@ -75,8 +75,7 @@ module.exports = {
 		           error: err
 		       });
 		   } else {
-		       console.log("total*******", total);
-		       Equipment.find(query).populate('category').populate('user').sort(sortBy).skip(skipNo).limit(count).exec(function(err, equipments) {
+		       Equipment.find(query).populate('category').populate('user').populate('companyManufacturer').sort(sortBy).skip(skipNo).limit(count).exec(function(err, equipments) {
 		            if (err) {
 		                return res.status(400).jsonx({
 		                   success: false,

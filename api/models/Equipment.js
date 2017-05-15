@@ -21,6 +21,10 @@ module.exports = {
             /*required: true*/
         },
 
+        companyManufacturer:{
+         model:'manufacturer'
+        },
+
         category:{
             model:"Category",
             required: true
