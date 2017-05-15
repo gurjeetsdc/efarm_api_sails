@@ -72,7 +72,7 @@ module.exports = {
 
         supplyArea: {
             type: 'string',
-            enum: ['withinstate', 'anywhere']
+            enum: ['Within State', 'Anywhere']
         },
 
         supplyRange: {
