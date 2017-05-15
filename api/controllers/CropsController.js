@@ -61,6 +61,12 @@ module.exports = {
                     verified: {
                         'like': '%' + search + '%'
                     }
+                }, {
+                    district: {
+                        'like': '%' + search + '%'
+                    }
+                }, {
+                    price: parseInt(search)
                 }
 
             ]
