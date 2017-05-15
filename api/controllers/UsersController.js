@@ -108,6 +108,9 @@ module.exports = {
                     state: {
                         'like': '%' + search + '%'
                     }
+                },
+                {
+                    mobile: parseInt(search)
                 }
                 
            ]
