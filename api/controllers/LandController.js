@@ -47,7 +47,7 @@ module.exports = {
 		            }
 		        },
 		        {
-		            location: {
+		            area: {
 		                'like': '%' + search + '%'
 		            }
 		        },
