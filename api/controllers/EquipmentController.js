@@ -63,6 +63,11 @@ module.exports = {
 		            quantity: {
 		                'like': '%' + search + '%'
 		            }
+		        },
+		        {
+		            district: {
+		                'like': '%' + search + '%'
+		            }
 		        }
 		        
 		   ]
