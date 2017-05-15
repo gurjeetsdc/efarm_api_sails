@@ -136,6 +136,10 @@ module.exports = {
             required: true
         },
 
+        description : {
+            type:'string'
+        },
+        
         isDeleted: {
             type: 'boolean',
             defaultsTo:false
