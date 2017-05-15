@@ -31,6 +31,10 @@ module.exports = {
             required: true
         }, 
 
+        quantity:{
+            type:'integer'
+        }, 
+
   		name: {
             type: 'string',
             required: true

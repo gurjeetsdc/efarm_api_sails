@@ -58,6 +58,11 @@ module.exports = {
 		            rentSell: {
 		                'like': '%' + search + '%'
 		            }
+		        },
+		        {
+		            quantity: {
+		                'like': '%' + search + '%'
+		            }
 		        }
 		        
 		   ]

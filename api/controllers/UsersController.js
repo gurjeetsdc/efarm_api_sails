@@ -75,6 +75,11 @@ module.exports = {
                     }
                 },
                 {
+                    fullName: {
+                        'like': '%' + search + '%'
+                    }
+                },
+                {
                     email: {
                         'like': '%' + search + '%'
                     }
