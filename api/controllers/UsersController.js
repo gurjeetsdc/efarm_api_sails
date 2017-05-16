@@ -31,6 +31,15 @@ module.exports = {
     signin: function(req,res){
       API(Registration.signinUser,req,res);
     },
+    /****
+    * @Desc : Method use for Verify user OTP
+    * @Params: OTP
+    * @return  :  Success and data (json ARRAY)
+    * @Author: Rohitk.kumar
+    ***/
+    'otp/:number': function(req,res){
+        API(Registration.checkOtpUser,req,res);
+    },
 
     'verify/:username': function(req,res){
         API(Registration.verifyUser,req,res);

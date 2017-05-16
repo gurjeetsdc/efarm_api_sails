@@ -65,11 +65,11 @@ module.exports = {
         },
 
         lat: {
-            type: 'float'
+            type: 'string'
         },
 
         lng: {
-            type: 'float'
+            type: 'string'
         },
 
         password: {
@@ -82,7 +82,11 @@ module.exports = {
         date_verified: {
             type : 'date'
         },
-
+        otpVerified: {
+            type: 'string',
+            enum: ['Y','N'],
+            defaultsTo: 'N'
+        },
         roles: {
             type: 'string',
             enum: ['SA', 'A','U'],

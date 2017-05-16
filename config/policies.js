@@ -42,7 +42,8 @@ module.exports.policies = {
    'signup': true,
    'signin':true,
    'register' : true,
-   'verify/:username' : true
+   'verify/:username' : true,
+   'otp/:number' : true
   },
   ClientsController: {
     '*' : 'OAuthValidateAccessToken',

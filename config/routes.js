@@ -48,6 +48,7 @@ module.exports.routes = {
   //Authorisation Routes
   'post /authorisation': 'OAuthController.token',
   'get /user/verify/:username' :'UsersController.verify/:username',
+  'get /user/otp/:number' :'UsersController.otp/:number',
 
   //Equipments Routes
   'get /land': 'LandController.getAllLands',
