@@ -3,7 +3,11 @@ var Promise = require('bluebird'),
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 var bcrypt    = require('bcrypt-nodejs');
+
 var constantObj = sails.config.constants;
+
+// Create authenticated  Twilio API clients
+const twilioClient = require('twilio')(config.accountSid, config.authToken);
 
 var transport = nodemailer.createTransport(smtpTransport({
                 host: sails.config.appSMTP.host,
@@ -150,7 +154,6 @@ module.exports = {
             }
             
                 if( (!data.username) ){
-                    //return res.status(400).json({"error": "Fields required."});
                   return {"success": false, "error": {"code": 404,"message": constantObj.messages.REQUIRED_FIELD} };
 
                 }

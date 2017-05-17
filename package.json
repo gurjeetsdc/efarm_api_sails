@@ -24,7 +24,8 @@
     "sails": "~0.12.13",
     "sails-disk": "~0.10.9",
     "sails-mongo": "^0.12.2",
-    "skipper-s3": "^0.5.9"
+    "skipper-s3": "^0.5.9",
+    "twilio": "^3.0.0"
   },
   "scripts": {
     "debug": "node debug app.js",
