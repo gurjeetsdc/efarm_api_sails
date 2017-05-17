@@ -56,14 +56,10 @@ module.exports.routes = {
 
   //Equipments Routes
   'get /land': 'LandController.getAllLands',
-  'get /land/list': 'LandController.getAllLands',
-
-  //Category Routes
-  'get /category/list/:categorytype': 'CategoryController.getCategoryList',
   
+    
   //Equipments Routes
   'get /equipment': 'EquipmentController.getAllEquipments',
-  'get /equipment/list': 'EquipmentController.getAllEquipments',
   'post /equipment/upload' : 'EquipmentController.uploadImages',
 
   //User Routes
@@ -77,6 +73,6 @@ module.exports.routes = {
   //Crops Routes
   'get /crops': 'CropsController.getAllCrops',
 
-    //Inputs Routes
+  //Inputs Routes
   'get /inputs': 'InputsController.getAllInputs'
 };

@@ -49,6 +49,14 @@ module.exports.policies = {
     '*' : 'OAuthValidateAccessToken',
     'register' : true,
     'verify/:email' : true
+  },
+  CropsController: {
+    '*' : 'OAuthValidateAccessToken',
+    'getAllCrops' : true
+  },
+  EquipmentController: {
+    '*' : 'OAuthValidateAccessToken',
+    'getAllEquipments' : true
   }
   /***************************************************************************
   *                                                                          *

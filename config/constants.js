@@ -15,8 +15,15 @@ messages : {
     "WRONG_USERNAME":"User invaild! Please try Again",
     "WRONG_PASSWORD":"Password Is Wrong!",
     "WRONG_OTP":"Wrong OTP! Please try Again",
+},
 
+twillio: {
+    outboundPhoneNumber: "+12566661424",
+    accountSid: "ACefb2bf05866977cae7e07f16e6ddd3d5",
+    authToken: "7f138c15dff9a255b26a1277a5d39baf",
 }
+
+
 /*const gmailSMTPCredentials : {
     "service": "gmail",
     "host": "smtp.gmail.com",
