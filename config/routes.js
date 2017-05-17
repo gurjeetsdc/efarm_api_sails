@@ -49,6 +49,10 @@ module.exports.routes = {
   'post /authorisation': 'OAuthController.token',
   'get /user/verify/:username' :'UsersController.verify/:username',
 
+  //Routes for common functions which will use for every module.
+  'get /common': 'CommonController.getdetails',
+  'get /assets': 'CommonController.getAssets',
+
   //Equipments Routes
   'get /land': 'LandController.getAllLands',
   'get /land/list': 'LandController.getAllLands',

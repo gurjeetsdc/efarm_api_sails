@@ -96,7 +96,9 @@ module.exports = {
                 data['date_registered'] = date;
 
                 if(data.mobile){
-                    var phExpression = /^\d+$/;
+                    console.log("type is",typeof data.mobile);
+                    if(typeof data.mobile == 'string'){
+                        var phExpression = /^\d+$/;
                         if(data.mobile.match(phExpression)) {
                             if(data.mobile.length>10 || data.mobile.length<10){
                                 return {"success": false, "error": {"code": 412,"message": constantObj.messages.PHONE_NUMBER} };
@@ -106,7 +108,15 @@ module.exports = {
                             
                         } else {
                             return {"success": false, "error": {"code": 412,"message": constantObj.messages.PHONE_INVALID} };                
-                        }                      
+                        } 
+                    } else {
+                        var mobile = data.mobile.toString();
+                            if(mobile.length>10 || mobile.length<10){
+                                return {"success": false, "error": {"code": 412,"message": constantObj.messages.PHONE_NUMBER} };
+                            } else {
+                                data['mobile'] = data.mobile;
+                            }
+                    }                      
                 }
                 return API.Model(Users).create(data).then(function (user) {       
                 
