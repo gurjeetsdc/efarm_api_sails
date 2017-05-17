@@ -7,7 +7,7 @@ var bcrypt    = require('bcrypt-nodejs');
 var constantObj = sails.config.constants;
 
 // Create authenticated  Twilio API clients
-const twilioClient = require('twilio')(config.accountSid, config.authToken);
+const twilioClient = require('twilio')(constantObj.twillio.accountSid, constantObj.twillio.authToken);
 
 var transport = nodemailer.createTransport(smtpTransport({
                 host: sails.config.appSMTP.host,
@@ -56,6 +56,52 @@ generatePassword = function () { // action are perform to generate random passwo
     }
     return retVal;
 };
+    saveUser = function(data){
+
+            data["fullName"] = data.firstName + ' ' + data.lastName;
+            data["email"] = data.username
+            delete data['client_id'];
+            if(data.mobile && data.domain == "mobile"){
+
+            var OTP = Math.floor(100001 + Math.random() * 900001);
+            data['otp'] = OTP;           
+            var message = "This is your OTP password : "+OTP+"You can sign in with verified OTP. Regards, eFarmx";
+
+                 twilioClient.messages.create({
+                              to: data.mobile,
+                              from: constantObj.twillio.outboundPhoneNumber,
+                              body: message,
+                        }); 
+            }
+
+       // console.log("sign up ");
+            return API.Model(Users).create(data).then(function (user) {
+
+                return user;
+
+            });
+
+    };
+
+    socialUserAccess = function(client_id,user){
+
+            if(client_id){
+                return Tokens.generateToken({
+                            client_id: client_id,
+                            user_id: user.id
+                        }).then(function (token) {
+                            user.access_token = token.access_token;
+                            user.refresh_token = token.refresh_token;
+                            return {success: true, code:200, message: constantObj.messages.SOCIAL_USER_EXIST, data: user};
+                        });
+                
+            }else{
+                return {success: true, code:401, message: "Client Id is missing"};
+            }
+
+
+        
+    }
 
 module.exports = {
     emailGeneratedCode: emailGeneratedCode,
@@ -148,39 +194,68 @@ module.exports = {
        
             data['roles'] = 'U';
             if(!data.password){
-
                 data['password'] = generatePassword();
-
             }
-            
-                if( (!data.username) ){
-                  return {"success": false, "error": {"code": 404,"message": constantObj.messages.REQUIRED_FIELD} };
+                var date = new Date();
+                data['date_registered'] = date;
+                data['date_verified'] = date;
+                var cId = data.client_id;
+           if(data.fbId && data.providers == "facebook"){
+                var query = {"fbId":data.fbId};
+                        return API.Model(Users).findOne(query).then(function (user) {
+                        //console.log("user fb ",user);
+                if( user != undefined ) {
+                        //console.log("Already");
+                        //return {success: true,code:200,message: "Third party login User Already Exist"} ;
+                        return socialUserAccess(cId,user);
 
-                }
-            
-            return Users.findOne({username:data.username}).then(function (user) {
+                }else{        
+                        data['firstName'] = "efarmx";
+                        data['lastName'] = "facebook user"
+                        return saveUser(data).then(function(res){
+                            /*console.log(cId);
+                            console.log(res);*/
+
+                            return socialUserAccess(cId,res);
+
+                        });   
+                    }
+                });
+            } else if(data.gId && data.providers == "google"){
+                // User save information in this methods
+                var query = {"gId":data.gId};
+                        return API.Model(Users).findOne(query).then(function (user) {
                 if( user != undefined ){
+                       
+                        return socialUserAccess(data.client_id,user);
+                    
+                }else{  
+                        data['firstName'] = "efarmx";
+                        data['lastName'] = "google user"
+                       return saveUser(data).then(function(res){
+                            /*console.log(cId);
+                            console.log(res);*/
 
-                    return {"success": false, "error": {"code": 301,"message": constantObj.messages.USER_EXIST} };                
+                            return socialUserAccess(cId,res);
 
-                }else{
-                    var date = new Date();
-                    data['date_registered'] = date;
-                    data['date_verified'] = date;
-                    data["fullName"] = data.firstName + ' ' + data.lastName;
-                    data["email"] = data.username
-                    var OTP = Math.floor(100001 + Math.random() * 900001);
-                    data['otp'] = OTP;
+                        });      
+                    }
+                });
+            }else{
+                    if( (!data.username && !data.mobile) ){
+                      return {"success": false, "error": {"code": 404,"message": constantObj.messages.REQUIRED_FIELD} };
+                    }
 
-                   // console.log("sign up ");
-                        return API.Model(Users).create(data).then(function (user) {
-
-                            return {success: true, code:200, message: constantObj.messages.SUCCESSFULLY_REGISTERED, data: user};
-
-                        });
-                }
-            });
+                    return Users.findOne({username:data.username}).then(function (user) {
+                        if( user != undefined ){
+                            return {"success": false, "error": {"code": 301,"message": constantObj.messages.USER_EXIST} };                
+                        }else{
+                            return saveUser(data);                 
+                        }
+                    });
+            }
     },
+
     signinUser: function (data, context) {
         //console.log(data);
         let username = data.username;

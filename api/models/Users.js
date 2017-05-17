@@ -21,7 +21,16 @@ module.exports = {
         lastName: {
             type: 'string',
             required: true
-        }, 
+        },
+        fbId: {
+            type: 'string',
+            maxLength: 100
+        },
+
+        gId: {
+            type: 'string',
+            maxLength: 100
+        },
 
         fullName: {
             type: 'string',
@@ -37,7 +46,7 @@ module.exports = {
         mobile: {
             type: 'integer',
             maxLength: 18,
-            required: true
+            //required: true
         },
 
         address: {
@@ -65,11 +74,13 @@ module.exports = {
         },
 
         lat: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: "0",
         },
 
         lng: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: "0",
         },
 
         password: {
@@ -92,6 +103,17 @@ module.exports = {
             enum: ['SA', 'A','U'],
             defaultsTo: 'U'
             // required: true
+        },
+        domain: {
+            type: 'string',
+            enum: ['web', 'mobile']
+        },
+
+        deviceToken: {
+            type: 'string',
+        },
+        otp: {
+            type: 'integer',
         },
 
         isDeleted : {
