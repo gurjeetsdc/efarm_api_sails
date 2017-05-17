@@ -51,8 +51,6 @@ module.exports = {
 		
 		CategoryQuery.isDeleted = 'false';
 		CategoryQuery.type 		= req.param('type');
-
-		CategoryQuery. 		= req.param('type');
 		
 		Promise.all([
 
