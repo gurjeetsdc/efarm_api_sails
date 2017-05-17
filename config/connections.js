@@ -61,7 +61,7 @@ module.exports.connections = {
     host: 'ds155130.mlab.com',
     port: 55130,
     user: 'admin', //optional
-    password: 'admin', //optional
+    password: 'admin1', //optional
     database: 'efarm_sails' //optional
   },
 

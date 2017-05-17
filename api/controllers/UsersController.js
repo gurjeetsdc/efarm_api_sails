@@ -31,6 +31,15 @@ module.exports = {
     signin: function(req,res){
       API(Registration.signinUser,req,res);
     },
+    /****
+    * @Desc : Method use for Verify user OTP
+    * @Params: OTP
+    * @return  :  Success and data (json ARRAY)
+    * @Author: Rohitk.kumar
+    ***/
+    'otp/:number': function(req,res){
+        API(Registration.checkOtpUser,req,res);
+    },
 
     'verify/:username': function(req,res){
         API(Registration.verifyUser,req,res);
@@ -40,6 +49,10 @@ module.exports = {
     },
     add: function(req,res){
         API(UserService.save,req,res);
+    },
+
+    forgotPassword: function(req,res){
+        API(UserService.forgotPassword,req,res);
     },
 
     getAllUsers: function(req, res, next) {
@@ -67,6 +80,11 @@ module.exports = {
                 },
                 {
                     lastName: {
+                        'like': '%' + search + '%'
+                    }
+                },
+                {
+                    fullName: {
                         'like': '%' + search + '%'
                     }
                 },
@@ -99,6 +117,9 @@ module.exports = {
                     state: {
                         'like': '%' + search + '%'
                     }
+                },
+                {
+                    mobile: parseInt(search)
                 }
                 
            ]

@@ -59,8 +59,7 @@ module.exports = {
       return context.identity;
     },
     registerUser: function (data, context) {
-        console.log("daa is",data);
-         var date = new Date();
+        var date = new Date();
         
         if((!data.firstName) || typeof data.firstName == undefined){ 
             return {"success": false, "error": {"code": 404,"message": constantObj.messages.FIRSTNAME_REQUIRED} };
@@ -118,6 +117,7 @@ module.exports = {
                             }
                     }                      
                 }
+                data["fullName"] = data.firstName + ' ' + data.lastName;
                 return API.Model(Users).create(data).then(function (user) {       
                 
                     context.id = user.username;
@@ -148,14 +148,14 @@ module.exports = {
                 data['password'] = generatePassword();
 
             }
+            
                 if( (!data.username) ){
                     //return res.status(400).json({"error": "Fields required."});
                   return {"success": false, "error": {"code": 404,"message": constantObj.messages.REQUIRED_FIELD} };
 
                 }
             
-            return Users.findOne({username:data.username}).then(function (err, user) {
-
+            return Users.findOne({username:data.username}).then(function (user) {
                 if( user != undefined ){
 
                     return {"success": false, "error": {"code": 301,"message": constantObj.messages.USER_EXIST} };                
@@ -164,9 +164,11 @@ module.exports = {
                     var date = new Date();
                     data['date_registered'] = date;
                     data['date_verified'] = date;
+                    data["fullName"] = data.firstName + ' ' + data.lastName;
+                    data["email"] = data.username
                     var OTP = Math.floor(100001 + Math.random() * 900001);
                     data['otp'] = OTP;
-                    
+
                    // console.log("sign up ");
                         return API.Model(Users).create(data).then(function (user) {
 
@@ -179,8 +181,8 @@ module.exports = {
     signinUser: function (data, context) {
         //console.log(data);
         let username = data.username;
-         return Users.findOne({username:username}).then(function (user) {
-            //console.log(user);
+         return Users.findOne({username:username,otpVerified:'Y'}).then(function (user) {
+            
           if( user == undefined ){
               return {"success": false, "error": {"code": 404,"message": constantObj.messages.WRONG_USERNAME} };
           }
@@ -192,13 +194,38 @@ module.exports = {
                     user_id: user.id
                 }).then(function (token) {
                     //console.log(token);
-                    return {access_token:token.access_token, 
-                            refresh_token: token.refresh_token,
-                            expires_in: token.calc_expires_in(),
-                            token_type: "Bearer"};
+                    return { user_id: user.id,
+                             name: user.fullName,
+                             access_token:token.access_token, 
+                             refresh_token: token.refresh_token,
+                             expires_in: token.calc_expires_in(),
+                             token_type: "Bearer"};
                 });
             }
 
+        });
+    },
+    checkOtpUser: function (data, context) {
+            let userOtp = parseInt(data.number);
+        return Users.findOne({otp:userOtp}).then(function (user) {
+            
+          if( user == undefined ){
+              return {"success": false, "error": {"code": 404,"message": constantObj.messages.WRONG_OTP} };
+          }
+            API.Model(Users).update(
+                {
+                    id:user.id
+                },
+                {
+                    otpVerified: 'Y'
+                }
+            );
+
+            return {
+                userVerifiedByOtp: true,
+                username: user.username,
+                username: user.id
+            }
         });
     },
     verifyUser: function (data, context) {

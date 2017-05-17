@@ -36,7 +36,7 @@ module.exports = {
 
         quantityUnit: {
             type: 'string',
-            enum: ['Kg', 'Quintal','Tonnes'],
+            enum: ['Kg', 'Quintal','Tonnes','Count','Dozen'],
             required: true
         },
 
@@ -72,7 +72,7 @@ module.exports = {
 
         supplyArea: {
             type: 'string',
-            enum: ['withinstate', 'anywhere']
+            enum: ['Within State', 'Anywhere']
         },
 
         supplyRange: {
@@ -136,6 +136,10 @@ module.exports = {
             required: true
         },
 
+        description : {
+            type:'string'
+        },
+        
         isDeleted: {
             type: 'boolean',
             defaultsTo:false

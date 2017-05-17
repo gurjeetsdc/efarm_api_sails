@@ -42,12 +42,12 @@ module.exports = {
 		            }
 		        },
 		        {
-		            khasra_no: {
+		            district: {
 		                'like': '%' + search + '%'
 		            }
 		        },
 		        {
-		            location: {
+		            area: {
 		                'like': '%' + search + '%'
 		            }
 		        },

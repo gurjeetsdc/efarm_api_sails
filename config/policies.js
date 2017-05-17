@@ -38,10 +38,12 @@ module.exports.policies = {
   UsersController: {
    '*' : 'OAuthValidateAccessToken',
    'index' : true,
+   'forgotPassword':true,
    'signup': true,
    'signin':true,
    'register' : true,
-   'verify/:username' : true
+   'verify/:username' : true,
+   'otp/:number' : true
   },
   ClientsController: {
     '*' : 'OAuthValidateAccessToken',

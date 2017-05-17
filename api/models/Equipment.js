@@ -21,6 +21,10 @@ module.exports = {
             /*required: true*/
         },
 
+        companyManufacturer:{
+         model:'manufacturer'
+        },
+
         category:{
             model:"Category",
             required: true
@@ -29,6 +33,10 @@ module.exports = {
         category_id:{
             type:'string',
             required: true
+        }, 
+
+        quantity:{
+            type:'integer'
         }, 
 
   		name: {

@@ -48,6 +48,7 @@ module.exports.routes = {
   //Authorisation Routes
   'post /authorisation': 'OAuthController.token',
   'get /user/verify/:username' :'UsersController.verify/:username',
+  'get /user/otp/:number' :'UsersController.otp/:number',
 
   //Routes for common functions which will use for every module.
   'get /common': 'CommonController.getdetails',
@@ -71,6 +72,7 @@ module.exports.routes = {
   'put /user/:id' :{ model: 'users', blueprint: 'update' },
   'delete /user/:id' :{ model: 'users', blueprint: 'destroy' },
   'post /user' : 'UsersController.index',
+  'post /forgotpassword' : 'UsersController.forgotPassword',
 
   //Crops Routes
   'get /crops': 'CropsController.getAllCrops',
