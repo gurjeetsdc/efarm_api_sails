@@ -17,6 +17,7 @@
     "passport": "^0.3.2",
     "passport-http-bearer": "^1.0.1",
     "passport-oauth2-public-client": "^0.1.0",
+    "q": "^1.5.0",
     "rand-token": "^0.3.0",
     "rc": "1.0.1",
     "s3": "^4.4.0",
