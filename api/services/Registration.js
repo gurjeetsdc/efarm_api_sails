@@ -193,13 +193,19 @@ module.exports = {
                     client_id: data.client_id,
                     user_id: user.id
                 }).then(function (token) {
+
                     //console.log(token);
-                    return { user_id: user.id,
+                    user.access_token = token.access_token;
+                    user.refresh_token = token.refresh_token;
+
+                    return {success: true, code:200, message: constantObj.messages.SUCCESSFULLY_LOGGEDIN, data: user};
+
+                    /*{ user_id: user.id,
                              name: user.fullName,
                              access_token:token.access_token, 
                              refresh_token: token.refresh_token,
                              expires_in: token.calc_expires_in(),
-                             token_type: "Bearer"};
+                             token_type: "Bearer"};*/
                 });
             }
 
