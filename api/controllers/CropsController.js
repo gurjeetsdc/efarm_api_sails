@@ -34,13 +34,11 @@ module.exports = {
         var skipNo = (page - 1) * count;
         var query = {};
 
-        sortBy = sortBy.toString();
         if (sortBy) {
             sortBy = sortBy.toString();
         } else {
             sortBy = 'createdAt desc';
         }
-
 
         query.isDeleted = 'false';
 

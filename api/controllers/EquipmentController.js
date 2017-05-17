@@ -33,7 +33,12 @@ module.exports = {
 		var query       = {};
 
 		var sortBy    	= req.param('sortBy');
-		sortBy = sortBy.toString();
+		
+		if (sortBy) {
+            sortBy = sortBy.toString();
+        } else {
+            sortBy = 'createdAt desc';
+        }
 		
 		query.isDeleted = 'false';
 
