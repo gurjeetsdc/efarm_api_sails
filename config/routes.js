@@ -74,5 +74,10 @@ module.exports.routes = {
   'get /crops': 'CropsController.getAllCrops',
 
   //Inputs Routes
-  'get /inputs': 'InputsController.getAllInputs'
+  'get /inputs': 'InputsController.getAllInputs',
+
+  //Roles & Permission routes
+  'post /permission' : { model: 'roles', blueprint: 'add'},
+  'get /permission/:id' : { model: 'roles', blueprint: 'find'},
+  'put /permission/:id' : { model: 'roles', blueprint: 'update'}
 };
