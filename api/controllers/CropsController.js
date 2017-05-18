@@ -29,6 +29,7 @@ module.exports = {
 
         var search = req.param('search');
         var sortBy = req.param('sortBy');
+        var seller = req.param('seller');
         var page = req.param('page');
         var count = req.param('count');
         var skipNo = (page - 1) * count;
@@ -68,6 +69,9 @@ module.exports = {
                 }
 
             ]
+        }
+        if(seller){
+            query = {seller:seller};
         }
 
         Crops.count(query).exec(function(err, total) {

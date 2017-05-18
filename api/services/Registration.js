@@ -61,7 +61,11 @@ generatePassword = function () { // action are perform to generate random passwo
             data["fullName"] = data.firstName + ' ' + data.lastName;
             data["email"] = data.username
             delete data['client_id'];
-            if(data.mobile && data.domain == "mobile"){
+
+
+
+
+            /*if(data.mobile && data.domain == "mobile"){
 
             var OTP = Math.floor(100001 + Math.random() * 900001);
             data['otp'] = OTP;           
@@ -72,7 +76,7 @@ generatePassword = function () { // action are perform to generate random passwo
                               from: constantObj.twillio.outboundPhoneNumber,
                               body: message,
                         }); 
-            }
+            }*/
 
        // console.log("sign up ");
             return API.Model(Users).create(data).then(function (user) {
@@ -253,7 +257,7 @@ module.exports = {
                             return {"success": false, "error": {"code": 301,"message": constantObj.messages.USER_EXIST} };                
                         }else{
                              return saveUser(data).then(function(res){
-                            
+                                
                                 return {success: true, code:200, message: constantObj.messages.SUCCESSFULLY_REGISTERED, data: res};
 
                             });                   
@@ -265,7 +269,7 @@ module.exports = {
     signinUser: function (data, context) {
         //console.log(data);
         let username = data.username;
-         return Users.findOne({username:username,otpVerified:'Y'}).then(function (user) {
+         return Users.findOne({username:username}).then(function (user) {
             
           if( user == undefined ){
               return {"success": false, "error": {"code": 404,"message": constantObj.messages.WRONG_USERNAME} };
