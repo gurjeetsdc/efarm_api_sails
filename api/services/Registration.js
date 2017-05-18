@@ -209,15 +209,15 @@ module.exports = {
                         //return {success: true,code:200,message: "Third party login User Already Exist"} ;
                         return socialUserAccess(cId,user);
 
-                }else{        
-                        data['firstName'] = "efarmx";
-                        data['lastName'] = "facebook user"
+                }else{  
+
+                        if(!data['firstName'] && !data['lastName']){
+                            data['firstName'] = "efarmx";
+                            data['lastName'] = "facebook user";
+                        }      
                         return saveUser(data).then(function(res){
-                            /*console.log(cId);
-                            console.log(res);*/
-
+                            
                             return socialUserAccess(cId,res);
-
                         });   
                     }
                 });
@@ -230,8 +230,10 @@ module.exports = {
                         return socialUserAccess(data.client_id,user);
                     
                 }else{  
-                        data['firstName'] = "efarmx";
-                        data['lastName'] = "google user"
+                        if(!data['firstName'] && !data['lastName']){
+                            data['firstName'] = "efarmx";
+                            data['lastName'] = "facebook user";
+                        }      
                        return saveUser(data).then(function(res){
                             /*console.log(cId);
                             console.log(res);*/
@@ -250,7 +252,11 @@ module.exports = {
                         if( user != undefined ){
                             return {"success": false, "error": {"code": 301,"message": constantObj.messages.USER_EXIST} };                
                         }else{
-                            return saveUser(data);                 
+                             return saveUser(data).then(function(res){
+                            
+                                return {success: true, code:200, message: constantObj.messages.SUCCESSFULLY_REGISTERED, data: res};
+
+                            });                   
                         }
                     });
             }
