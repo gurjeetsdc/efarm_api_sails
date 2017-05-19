@@ -71,7 +71,7 @@ module.exports = {
             ]
         }
         if(seller){
-            query = {seller:seller};
+            query.seller = seller;
         }
 
         Crops.count(query).exec(function(err, total) {

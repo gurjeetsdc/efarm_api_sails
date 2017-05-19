@@ -40,6 +40,9 @@ module.exports = {
     'otp/:number': function(req,res){
         API(Registration.checkOtpUser,req,res);
     },
+    'verification/:code': function(req,res){
+        API(Registration.verificationUser,req,res);
+    },
 
     'verify/:username': function(req,res){
         API(Registration.verifyUser,req,res);
