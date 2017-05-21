@@ -115,7 +115,9 @@ module.exports = {
         otp: {
             type: 'integer',
         },
-
+        role_id: {
+            model: 'roles',
+        },
         isDeleted : {
             type: 'Boolean',
             defaultsTo: false

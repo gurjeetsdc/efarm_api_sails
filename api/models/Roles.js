@@ -13,10 +13,7 @@ module.exports = {
         name: {
             type: 'string',
             unique: true,
-            required: 'Please enter the role name.'
-        },
-        description: {
-            type: 'text'
+            //required: 'Please enter the role name.'
         },
         permission:{
             type:'array',

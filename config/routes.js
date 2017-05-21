@@ -78,6 +78,7 @@ module.exports.routes = {
 
   //Roles & Permission routes
   'post /permission' : { model: 'roles', blueprint: 'add'},
+  'get /permission' : 'RolesController.getAllRoles',
   'get /permission/:id' : { model: 'roles', blueprint: 'find'},
   'put /permission/:id' : { model: 'roles', blueprint: 'update'}
 };
