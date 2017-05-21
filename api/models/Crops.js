@@ -37,6 +37,7 @@ module.exports = {
         quantityUnit: {
             type: 'string',
             enum: ['Kg', 'Quintal','Tonnes','Count','Dozen'],
+            defaultsTo:'Kg',
             required: true
         },
 
@@ -48,6 +49,7 @@ module.exports = {
         grade: {
             type: 'string',
              enum: ['A+', 'A', 'B', 'C', 'D'],
+              defaultsTo:'A'
         },
 
         availableFrom: {
@@ -61,18 +63,20 @@ module.exports = {
         availableUnit: {
             type: 'string',
             enum: ['Days', 'Month','Year'],
-            required: true
+            required: true,
+            defaultsTo:'Days'
         },
 
         supplyAbility: {
             type: 'string',
             enum: ['Yes', 'No'],
-            required: true
+            required: true,
+            defaultsTo:'No'
         },
 
         supplyArea: {
             type: 'string',
-            enum: ['Within State', 'Anywhere']
+            defaultsTo:'Anywhere'
         },
 
         supplyRange: {
@@ -82,13 +86,15 @@ module.exports = {
         paymentPreference: {
             type: 'string',
             enum: ['COD', 'Cheque', 'Net Banking'],
-            required: true
+            required: true,
+            defaultsTo:'COD'
         },
 
         verified: {
             type: 'string',
             enum: ['Yes', 'No'],
-            required: true
+            required: true,
+            defaultsTo:'NO'
         },
 
         terms: {

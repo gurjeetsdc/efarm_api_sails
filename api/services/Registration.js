@@ -46,6 +46,30 @@ emailGeneratedCode = function (options) { //email generated code
         url: url
     }
 };
+emailVerifyLink = function (options) { //email generated code 
+    var url = options.verifyURL,
+        email = options.username;
+
+    message = 'Hello!';
+    message += '<br/>';
+    message += 'Thanks for sign up on eFarnmx. Your account has been registered successfullly. Please click on link for verify your account that link as below :';
+    message += '<br/><br/>';
+    message += '<a href="'+options.verifyURL+'" target="_blankh" >Click and Verify</a>';
+    message += '<br/><br/>';
+    message += 'Regards, eFarmx Support Team';
+
+
+    transport.sendMail({
+        from: sails.config.appSMTP.auth.user,
+        to: email,
+        subject: 'eFarmX Registration',
+        html: message
+    }, function (err, info) {
+        console.log("errro is ",err, info);
+    });
+
+    return true;
+};
 generatePassword = function () { // action are perform to generate random password for user 
     var length = 8,
     charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?",
@@ -218,17 +242,23 @@ module.exports = {
                         if(!data['firstName'] && !data['lastName']){
                             data['firstName'] = "efarmx";
                             data['lastName'] = "facebook user";
-                        }      
-                        return saveUser(data).then(function(res){
-                            
-                            return socialUserAccess(cId,res);
-                        });   
+                        }  
+                    return Users.findOne({username:data.username}).then(function (user) {
+                        if( user != undefined ){
+                            return {"success": false, "error": {"code": 301,"message": constantObj.messages.USER_EXIST} };                
+                        }else{
+                            return saveUser(data).then(function(res){
+                                return socialUserAccess(cId,res);
+                            });                     
+                        }
+                    });
+
                     }
                 });
             } else if(data.gId && data.providers == "google"){
                 // User save information in this methods
                 var query = {"gId":data.gId};
-                        return API.Model(Users).findOne(query).then(function (user) {
+               return API.Model(Users).findOne(query).then(function (user) {
                 if( user != undefined ){
                        
                         return socialUserAccess(data.client_id,user);
@@ -237,16 +267,21 @@ module.exports = {
                         if(!data['firstName'] && !data['lastName']){
                             data['firstName'] = "efarmx";
                             data['lastName'] = "facebook user";
-                        }      
-                       return saveUser(data).then(function(res){
-                            /*console.log(cId);
-                            console.log(res);*/
+                        }     
 
-                            return socialUserAccess(cId,res);
+                    return Users.findOne({username:data.username}).then(function (user) {
+                        if( user != undefined ){
+                            return {"success": false, "error": {"code": 301,"message": constantObj.messages.USER_EXIST} };                
+                        }else{
+                            return saveUser(data).then(function(res){
+                                return socialUserAccess(cId,res);
+                            });                     
+                        }
+                    });
 
-                        });      
-                    }
-                });
+                          
+                }
+               });
             }else{
                     if( (!data.username && !data.mobile) ){
                       return {"success": false, "error": {"code": 404,"message": constantObj.messages.REQUIRED_FIELD} };
@@ -257,6 +292,13 @@ module.exports = {
                             return {"success": false, "error": {"code": 301,"message": constantObj.messages.USER_EXIST} };                
                         }else{
                              return saveUser(data).then(function(res){
+                        var code = Math.floor(100000001 + Math.random() * 900000001);
+                    emailVerifyLink({
+                        id: res.id,
+                        type: "Email",
+                        username: res.username,
+                        verifyURL: sails.config.security.server.url + "/user/verification/" + code 
+                    });
                                 
                                 return {success: true, code:200, message: constantObj.messages.SUCCESSFULLY_REGISTERED, data: res};
 
@@ -321,6 +363,30 @@ module.exports = {
                 username: user.id
             }
         });
+    },
+    verificationUser: function (data, context) {
+         let verifyCode = parseInt(data.code);
+         console.log(verifyCode);
+       /* return Users.findOne({otp:userOtp}).then(function (user) {
+            
+          if( user == undefined ){
+              return {"success": false, "error": {"code": 404,"message": constantObj.messages.WRONG_OTP} };
+          }
+            API.Model(Users).update(
+                {
+                    id:user.id
+                },
+                {
+                    otpVerified: 'Y'
+                }
+            );
+
+            return {
+                userVerifiedByOtp: true,
+                username: user.username,
+                username: user.id
+            }
+        });*/
     },
     verifyUser: function (data, context) {
         console.log("in verify user",data);

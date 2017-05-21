@@ -93,7 +93,7 @@ module.exports = {
         date_verified: {
             type : 'date'
         },
-        otpVerified: {
+        isVerified: {
             type: 'string',
             enum: ['Y','N'],
             defaultsTo: 'N'
