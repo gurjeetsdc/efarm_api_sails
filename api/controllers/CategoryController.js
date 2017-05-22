@@ -10,33 +10,70 @@ module.exports = {
 	  API(CategoryService.delete,req,res);
     },
 
-    getCategoryList: function(req,res,next){
-    	//console.log("issyue",req);
-    	var categorytype = req.query.categorytype;
-        console.log("issue",categorytype);
+    getAllCategory: function(req, res, next) {
 
-        var categorytype = typeof req.query.categorytyped !== 'undefined' ? req.query.categorytype : null;
-        if (categorytype === null) {
-            res.status(400).jsonx({
-                success: false,
-                error: 'Invalid type of category.'
-            });
+        var search = req.param('search');
+        var sortBy = req.param('sortBy');
+        var seller = req.param('seller');
+        var page = req.param('page');
+        var count = req.param('count');
+        var skipNo = (page - 1) * count;
+        var query = {};
+
+        if (sortBy) {
+            sortBy = sortBy.toString();
+        } else {
+            sortBy = 'createdAt desc';
         }
 
-        Category.findOne({
-            categorytype: categorytype
-        }).exec(function(err, category) {
-            if (err || !category) {
-                res.status(400).jsonx({
+        query.isDeleted = 'false';
+
+        if (search) {
+            query.$or = [{
+                    name: {
+                        'like': '%' + search + '%'
+                    }
+                }, {
+                    description: {
+                        'like': '%' + search + '%'
+                    }
+                }, {
+                    type: {
+                        'like': '%' + search + '%'
+                    }
+                }
+
+            ]
+        }
+        if(seller){
+            query.seller = seller;
+        }
+
+        Category.count(query).exec(function(err, total) {
+            if (err) {
+                return res.status(400).jsonx({
                     success: false,
                     error: err
                 });
             } else {
-                
-
+                Category.find(query).sort(sortBy).skip(skipNo).limit(count).exec(function(err, category) {
+                    if (err) {
+                        return res.status(400).jsonx({
+                            success: false,
+                            error: err
+                        });
+                    } else {
+                        return res.jsonx({
+                            success: true,
+                            data: {
+                                category: category,
+                                total: total
+                            },
+                        });
+                    }
+                })
             }
         })
-        
     }
 };
 

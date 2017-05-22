@@ -29,15 +29,25 @@ module.exports = {
 		query.isDeleted = 'false';
 
 		if (search) {
-		   query.$or = [
-		       {
-		            name: {
-		                'like': '%' + search + '%'
-		            }
-		        }
-		    ]
-		}
+            query.$or = [{
+                    name: {
+                        'like': '%' + search + '%'
+                    }
+                }, {
+                    email: {
+                        'like': '%' + search + '%'
+                    }
+                }, {
+                    description: {
+                        'like': '%' + search + '%'
+                    }
+                }, {
+                    mobile: parseInt(search)
+                }
 
+            ]
+        }
+        
 		Manufacturer.count(query).exec(function(err, total) {
 		    if (err) {
 		       return res.status(400).jsonx({

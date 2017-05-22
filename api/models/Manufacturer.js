@@ -6,30 +6,27 @@
  */
 
 module.exports = {
-  autoCreatedAt: true,
-  autoUpdatedAt: true,
+     autoCreatedAt: true,
+     autoUpdatedAt: true,
 	attributes: {
-	name: {
-            type: 'string',
-            required: true
-        },     
-        description: {
+	     name: {
+               type: 'string',
+               required: true
+          },     
+          description: {
             type: 'text',
-        },
-        email: {
+          },
+          email: {
             type: 'email',
             unique: true
-            
-        },
-        mobile: {
+          },
+          mobile: {
             type: 'integer',
             maxLength: 10
-           
-        },
-        isDeleted: {
+          },
+          isDeleted: {
             type: 'Boolean',
             defaultsTo: false
-        }
+          }
   	}
 };
-
