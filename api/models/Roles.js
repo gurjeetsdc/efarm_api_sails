@@ -15,17 +15,20 @@ module.exports = {
             unique: true,
             //required: 'Please enter the role name.'
         },
-        permission:{
-            type:'array',
-            defaultsTo:[]
-        },
         isDeleted: {
             type: 'boolean',
-            default: false
+            defaultsTo: false
+        },
+        
+        permission:{
+            type:'json',
+            defaultsTo:{}
+        },
+        
+        isDeleted: {
+            type: 'boolean',
+            defaultsTo: false
         } 
-
-
-  		
     }
 };
 

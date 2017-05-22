@@ -83,9 +83,10 @@ module.exports.routes = {
   'get /allcategory' : 'CategoryController.getAllCategory',
 
   //Roles & Permission routes
-  //'post /permission' : { model: 'roles', blueprint: 'create'},
-  'post /permission' : 'RolesController.postdata',
+  'post /permission' : { model: 'roles', blueprint: 'create'},
   'get /permission' : 'RolesController.getAllRoles',
   'get /permission/:id' : { model: 'roles', blueprint: 'find'},
-  'put /permission/:id' : { model: 'roles', blueprint: 'update'}
+  'put /permission/:id' : { model: 'roles', blueprint: 'update'},
+  'delete /permission/:id' :{ model: 'roles', blueprint: 'destroy'}
+
 };
