@@ -6,8 +6,8 @@
  */
 
 module.exports = {
-  	autoCreatedAt: true,
-  	autoUpdatedAt: true,
+  autoCreatedAt: true,
+  autoUpdatedAt: true,
 	attributes: {
 	name: {
             type: 'string',
@@ -15,6 +15,16 @@ module.exports = {
         },     
         description: {
             type: 'text',
+        },
+        email: {
+            type: 'email',
+            unique: true
+            
+        },
+        mobile: {
+            type: 'integer',
+            maxLength: 10
+           
         },
         isDeleted: {
             type: 'Boolean',

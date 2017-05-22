@@ -1,4 +1,3 @@
-
 /**
  * RolesController
  *
@@ -27,14 +26,13 @@ module.exports = {
 		query.isDeleted = 'false';
 
 		if (search) {
-		   query.$or = [
+		    query.$or = [
 		       {
 		            name: {
 		                'like': '%' + search + '%'
 		            }
 		        }
-		        
-		   ]
+		    ]
 		}
 
 		Roles.count(query).exec(function(err, total) {
@@ -54,7 +52,7 @@ module.exports = {
 		            	var query ={}
 
 		            	async.each(roles, function(role, callback) {
-		            		query.role_id = role.id;
+		            		query.roleId = role.id;
 	        				query.isDeleted = false;
 
 	        				Users.count(query)
@@ -85,4 +83,5 @@ module.exports = {
 		    }
 		})
 	}
+
 };

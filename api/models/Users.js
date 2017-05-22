@@ -45,7 +45,7 @@ module.exports = {
 
         mobile: {
             type: 'integer',
-            maxLength: 18,
+            maxLength: 10,
             //required: true
         },
 
@@ -115,7 +115,7 @@ module.exports = {
         otp: {
             type: 'integer',
         },
-        role_id: {
+        roleId: {
             model: 'roles',
         },
         isDeleted : {
