@@ -6,15 +6,14 @@
  */
 
 module.exports = {
-	delete: function(req,res){
-	  API(CategoryService.delete,req,res);
+    delete: function(req, res) {
+        API(CategoryService.delete, req, res);
     },
 
     getAllCategory: function(req, res, next) {
 
         var search = req.param('search');
         var sortBy = req.param('sortBy');
-        var seller = req.param('seller');
         var page = req.param('page');
         var count = req.param('count');
         var skipNo = (page - 1) * count;
@@ -34,10 +33,6 @@ module.exports = {
                         'like': '%' + search + '%'
                     }
                 }, {
-                    description: {
-                        'like': '%' + search + '%'
-                    }
-                }, {
                     type: {
                         'like': '%' + search + '%'
                     }
@@ -45,9 +40,7 @@ module.exports = {
 
             ]
         }
-        if(seller){
-            query.seller = seller;
-        }
+       
 
         Category.count(query).exec(function(err, total) {
             if (err) {

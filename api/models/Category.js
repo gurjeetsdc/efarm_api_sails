@@ -13,12 +13,12 @@ module.exports = {
             type: 'string',
             required: true,
             unique:true
-        },     
-        description: {
-            type: 'text',
         },
         type: {
           type: 'string',
+        },
+        variety:{
+            type: 'array',
         },
         isDeleted: {
             type: 'Boolean',

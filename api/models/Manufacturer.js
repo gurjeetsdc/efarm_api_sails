@@ -17,8 +17,7 @@ module.exports = {
             type: 'text',
           },
           email: {
-            type: 'email',
-            unique: true
+            type: 'email'
           },
           mobile: {
             type: 'integer',

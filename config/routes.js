@@ -75,7 +75,7 @@ module.exports.routes = {
 
   //Inputs Routes
   'get /inputs': 'InputsController.getAllInputs',
-
+  
   //Manufacturer Routes
   'get /manufacturer' : 'ManufacturerController.getAllManufacturer',
 
