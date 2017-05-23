@@ -169,8 +169,9 @@ module.exports = {
         var query = {};
         query.username = username;
         query.$or = [{roles:["SA","A"]}];
-  
-        return API.Model(Users).findOne(query).then(function(user){
+
+        return Users.findOne(query).populate('roleId').then(function(user){ 
+        //return API.Model(Users).findOne(query).then(function(user){
             return (user && user.date_verified && user.comparePassword(password))? user : null;
         });
     },
