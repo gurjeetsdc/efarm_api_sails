@@ -159,21 +159,18 @@ module.exports = {
             } else {
                 if(data.roles == 'SA' || data.roles == 'A'){
                     data['roles'] = data.roles;
-                    if((!data.password) || typeof data.password == undefined){ 
-                        return {"success": false, "error": {"code": 404,"message": constantObj.messages.PASSWORD_REQUIRED} };
-                    }
 
                 } else {
                     data['roles'] = 'U';
-                    if(!data['password']){
-                        data['password'] = generatePassword();
-                    }
+                }
+
+                if(!data['password']){
+                    data['password'] = generatePassword();
                 }
 
                 data['date_registered'] = date;
 
                 if(data.mobile){
-                    console.log("type is",typeof data.mobile);
                     if(typeof data.mobile == 'string'){
                         var phExpression = /^\d+$/;
                         if(data.mobile.match(phExpression)) {
