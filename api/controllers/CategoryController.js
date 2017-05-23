@@ -12,8 +12,8 @@ module.exports = {
 
     getAllCategory: function(req, res, next) {
 
-        var sortBy = req.param('sortBy');
         var search = req.param('search');
+        var sortBy = req.param('sortBy');
         var page = req.param('page');
         var count = req.param('count');
         var skipNo = (page - 1) * count;
@@ -28,18 +28,19 @@ module.exports = {
         query.isDeleted = 'false';
 
         if (search) {
-            query.$or = [
-                {
+            query.$or = [{
                     name: {
                         'like': '%' + search + '%'
-                    },
-                },{   
+                    }
+                }, {
                     type: {
                         'like': '%' + search + '%'
                     }
                 }
+
             ]
         }
+       
 
         Category.count(query).exec(function(err, total) {
             if (err) {

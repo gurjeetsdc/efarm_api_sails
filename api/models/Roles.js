@@ -13,22 +13,22 @@ module.exports = {
         name: {
             type: 'string',
             unique: true,
-            required: 'Please enter the role name.'
-        },
-        description: {
-            type: 'text'
-        },
-        permission:{
-            type:'array',
-            defaultsTo:[]
+            //required: 'Please enter the role name.'
         },
         isDeleted: {
             type: 'boolean',
-            default: false
+            defaultsTo: false
+        },
+        
+        permission:{
+            type:'json',
+            defaultsTo:{}
+        },
+        
+        isDeleted: {
+            type: 'boolean',
+            defaultsTo: false
         } 
-
-
-  		
     }
 };
 

@@ -75,12 +75,18 @@ module.exports.routes = {
 
   //Inputs Routes
   'get /inputs': 'InputsController.getAllInputs',
+  
+  //Manufacturer Routes
+  'get /manufacturer' : 'ManufacturerController.getAllManufacturer',
 
   //Category Routes
-  'get /category': 'CategoryController.getAllCategory',
+  'get /allcategory' : 'CategoryController.getAllCategory',
 
   //Roles & Permission routes
-  'post /permission' : { model: 'roles', blueprint: 'add'},
+  'post /permission' : { model: 'roles', blueprint: 'create'},
+  'get /permission' : 'RolesController.getAllRoles',
   'get /permission/:id' : { model: 'roles', blueprint: 'find'},
-  'put /permission/:id' : { model: 'roles', blueprint: 'update'}
+  'put /permission/:id' : { model: 'roles', blueprint: 'update'},
+  'delete /permission/:id' :{ model: 'roles', blueprint: 'destroy'}
+
 };
