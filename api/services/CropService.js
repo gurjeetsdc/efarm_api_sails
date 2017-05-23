@@ -20,7 +20,7 @@ module.exports = {
                 result = {
                             "Status": true,
                             "Code": 200,
-                            "Message": "Crop saved sucessfully",
+                            "Message": constantObj.crops.ADDED_CROP,
                             "data": crop,
                         }
                 

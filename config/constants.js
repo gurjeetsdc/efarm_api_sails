@@ -25,7 +25,7 @@ twillio: {
 },
 
 crops: {
-    "ADDED_CROP" : "Crop saved sucessfully"
+    "ADDED_CROP" : "Crop saved successfully"
 }
 
 
