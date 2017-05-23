@@ -7,6 +7,7 @@
 
 var Promise = require('bluebird'),
     promisify = Promise.promisify;
+var constantObj = sails.config.constants;
 
 module.exports = {
 
@@ -14,24 +15,24 @@ module.exports = {
         var date = new Date();
         return API.Model(Crops).create(data)
         .then(function (crop) {
-            var Report;
+            var result;
             if(crop){
-                Report = {"sucess": {
+                result = {
+                            "Status": true,
                             "Code": 200,
-                            "Message": "OK"
-                            }}
+                            "Message": "Crop saved sucessfully",
+                            "data": crop,
+                        }
+                
             }else{
-                Report = {"error": {
-                            "Code": 301,
-                            "Message": "Faild"
-                            }}
+                result = {
+                           "Status": false,
+                           "Code": 301,
+                           "Message": "Faild"
+                           }
             }
 
-            return {
-                    "Status": true,
-                    "Data": crop,
-                     Report
-                };
+            return result;
 
         });
     },
@@ -39,16 +40,23 @@ module.exports = {
         
         return Crops.find({"isDeleted":false}).populate('user').populate('category')
         .then(function (crops) {
-            var Report;
-                Report = {"sucess": {
+            var result;
+            if(crop){
+                result = {
+                            "Status": true,
                             "Code": 200,
-                            "Message": "OK"
-                            }}
-            return {
-                    "Status": true,
-                    "Data": crops,
-                     Report
-                };
+                            "Message": "OK",
+                            "data": crop,
+                        }
+                
+            }else{
+                result = {
+                           "Status": false,
+                           "Code": 301,
+                           "Message": "Faild"
+                           }
+            }
+            return result;
 
         });
     },
