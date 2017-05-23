@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-	delete: function(req,res){
+	delete: function(req,res){ 
 	  API(CategoryService.delete,req,res);
     },
 
