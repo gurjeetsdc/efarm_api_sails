@@ -76,6 +76,9 @@ module.exports.routes = {
   //Inputs Routes
   'get /inputs': 'InputsController.getAllInputs',
 
+  //Category Routes
+  'get /category': 'CategoryController.getAllCategory',
+
   //Roles & Permission routes
   'post /permission' : { model: 'roles', blueprint: 'add'},
   'get /permission/:id' : { model: 'roles', blueprint: 'find'},
