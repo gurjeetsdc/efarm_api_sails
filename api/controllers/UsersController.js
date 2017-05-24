@@ -135,7 +135,7 @@ module.exports = {
                    error: err
                });
            } else {
-               Users.find(query).sort(sortBy).skip(skipNo).limit(count).exec(function(err, users) {
+               Users.find(query).populate('roleId').sort(sortBy).skip(skipNo).limit(count).exec(function(err, users) {
                     if (err) {
                         return res.status(400).jsonx({
                            success: false,
