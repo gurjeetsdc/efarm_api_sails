@@ -63,6 +63,7 @@ module.exports.routes = {
   'post /equipment/upload' : 'EquipmentController.uploadImages',
 
   //User Routes
+  'post /changepassword/:id' : 'UsersController.changePassword/:id', 
   'get /user' : 'UsersController.getAllUsers', 
   'get /user/:id' :{ model: 'users', blueprint: 'find'},
   'put /user/:id' :{ model: 'users', blueprint: 'update' },

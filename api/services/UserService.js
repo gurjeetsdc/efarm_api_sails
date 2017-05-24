@@ -2,6 +2,7 @@
   * #DESC:  In this class/files EndUser related functions
   * #Author: Rishabh Gupta
   */
+
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 var bcrypt    = require('bcrypt-nodejs');
@@ -84,6 +85,38 @@ module.exports = {
                     }
                 
             })
+    },
+    changePassword: function(data, context){
+       
+        let password = data.password;
+ 
+        let newPassword = data.newPassword;
+        let confirmPassword = data.confirmPassword;
+        if(newPassword != confirmPassword)
+        {
+             return {
+                        error: {
+                            "code": 404,
+                            "message": "new password and confirmPassword does not match "
+                        }
+                    }
+        }    
+
+        return Users.findOne({id: data.id})
+        .then(function(user){
+            
+           
+            if( !bcrypt.compareSync(data.password, user.password) ){
+                return {"success": false, "error": {"code": 404,"message": "Wrong Old Password "} };
+            }
+            else
+            {
+               var encryptedPassword = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10));
+               return Users.update({id: data.id},{encryptedPassword:encryptedPassword})
+
+            }
+        })
     }
 
-}; /// End Crops service class
+}; 
+
