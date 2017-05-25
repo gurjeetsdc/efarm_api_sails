@@ -113,7 +113,30 @@ module.exports = {
             {
                var encryptedPassword = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10));
                return Users.update({id: data.id},{encryptedPassword:encryptedPassword})
+                .then(function (user) {
+                    console.log(user);
+                return {"success": true, "code":200, "message": "Password has been changed"};
 
+                /*var Report;
+                if(user){
+                    Report = {"sucess": {
+                                "Code": 200,
+                                "Message": "OK"
+                                }}
+                }else{
+                    Report = {"error": {
+                                "Code": 301,
+                                "Message": "Faild"
+                                }}
+                }
+
+                return {
+                        "Status": true,
+                        "Data": user,
+                         Report
+                    };*/
+
+            });
             }
         })
     }
