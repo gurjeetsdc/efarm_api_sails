@@ -308,7 +308,7 @@ module.exports = {
     signinUser: function (data, context) {
         //console.log(data);
         let username = data.username;
-         return Users.findOne({username:username}).then(function (user) {
+         return Users.findOne({username:username,roles:'U'}).then(function (user) {
             
           if( user == undefined ){
               return {"success": false, "error": {"code": 404,"message": constantObj.messages.WRONG_USERNAME} };
@@ -327,12 +327,6 @@ module.exports = {
 
                     return {success: true, code:200, message: constantObj.messages.SUCCESSFULLY_LOGGEDIN, data: user};
 
-                    /*{ user_id: user.id,
-                             name: user.fullName,
-                             access_token:token.access_token, 
-                             refresh_token: token.refresh_token,
-                             expires_in: token.calc_expires_in(),
-                             token_type: "Bearer"};*/
                 });
             }
 
