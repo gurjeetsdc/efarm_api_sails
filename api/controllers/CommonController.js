@@ -90,7 +90,9 @@ module.exports = {
 		var randomStr = uuid.v4();
 		var date = new Date();
 		var currentDate = date.valueOf();
-		var modelName = "crops";
+		
+		var modelName = req.body.type;
+		
 		var Model = sails.models[modelName];
 		var name = randomStr + "-" + currentDate;
 
@@ -108,8 +110,8 @@ module.exports = {
 
 			var fullPath = name + '.'+ fileExt ;
 			
-			var uploadLocation = 'assets/images/crops/' + name + '.' + fileExt ;
-            var tempLocation = '.tmp/public/images/crops/' + name + '.' + fileExt ;
+			var uploadLocation = 'assets/images/' + modelName + '/' + name + '.' + fileExt ;
+            var tempLocation = '.tmp/public/images/'+ modelName + '/' + name + '.' + fileExt ;
 
 			fs.writeFile('assets/images/crops/'+ name + '.'+ fileExt, imageBuffer.data, function(imgerr, img) {
 				if (imgerr) {
