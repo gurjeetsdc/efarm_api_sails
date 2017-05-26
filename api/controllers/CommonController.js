@@ -81,6 +81,81 @@ module.exports = {
         	//res.jsonx(err);
         	console.log("error in common controller",err);
         });
-	}
+	},
 
+	uploadImages: function(req, res) {
+		var fs = require('fs');
+		//var path = require('path');
+		var uuid = require('uuid');
+		var randomStr = uuid.v4();
+		var date = new Date();
+		var currentDate = date.valueOf();
+		var modelName = "crops";
+		var Model = sails.models[modelName];
+		var name = randomStr + "-" + currentDate;
+
+		var imagedata = req.body.data;
+		imageBuffer = this.decodeBase64Image(imagedata);
+
+		var imageType = imageBuffer.type;
+		var typeArr = new Array();
+		typeArr = imageType.split("/");
+		var fileExt = typeArr[1];
+		
+		
+		if((fileExt === 'jpeg') || (fileExt === 'JPEG') || (fileExt === 'JPG') || (fileExt === 'jpg') || (fileExt === 'PNG') || (fileExt === 'png')) {
+			if (imageBuffer.error) return imageBuffer.error;
+
+			var fullPath = name + '.'+ fileExt ;
+			
+			var uploadLocation = 'assets/images/crops/' + name + '.' + fileExt ;
+            var tempLocation = '.tmp/public/images/crops/' + name + '.' + fileExt ;
+
+			fs.writeFile('assets/images/crops/'+ name + '.'+ fileExt, imageBuffer.data, function(imgerr, img) {
+				if (imgerr) {
+					res.status(400).json({
+						"status_code": 400,
+						"message": imgerr
+					});
+				} else {
+            		fs.createReadStream(uploadLocation).pipe(fs.createWriteStream(tempLocation));
+					//console.log("fullPath",fullPath);
+					return res.jsonx({
+	                    success: true,
+	                    data: {
+	                        fullPath : fullPath
+	                    },
+	                });
+				}
+
+			});
+		
+		} else {
+			console.log("error");
+			res.status(400).json({
+				"status_code": 400,
+				"message": "Invalid type of image"
+			});
+		}
+   	},
+
+	/*function to decode base64 image*/
+	decodeBase64Image: function(dataString) {
+		var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+			response = {};
+		if (matches) {
+
+			if (matches.length !== 3) {
+				return new Error('Invalid input string');
+			}
+
+			response.type = matches[1];
+			response.data = new Buffer(matches[2], 'base64');
+		} else {
+			response.error = "invalid image ";
+		}
+
+		return response;
+	}
 };
+

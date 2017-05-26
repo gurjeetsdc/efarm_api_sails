@@ -9,6 +9,7 @@
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.5.0",
     "formidable": "^1.1.1",
+    "fs": "0.0.1-security",
     "include-all": "^1.0.0",
     "nodemailer": "^3.1.8",
     "nodemailer-smtp-transport": "2.7.4",
@@ -25,7 +26,8 @@
     "sails-disk": "~0.10.9",
     "sails-mongo": "^0.12.2",
     "skipper-s3": "^0.5.9",
-    "twilio": "^3.0.0"
+    "twilio": "^3.0.0",
+    "uuid": "^3.0.1"
   },
   "scripts": {
     "debug": "node debug app.js",
