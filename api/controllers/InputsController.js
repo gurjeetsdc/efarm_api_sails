@@ -34,7 +34,15 @@ module.exports = {
                     'like': '%' + search + '%'
                 }
             }, {
-                units: {
+                district: {
+                    'like': '%' + search + '%'
+                }
+            }, {
+                city: {
+                    'like': '%' + search + '%'
+                }
+            }, {
+                variety: {
                     'like': '%' + search + '%'
                 }
             }, {

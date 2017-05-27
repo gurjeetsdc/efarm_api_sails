@@ -20,21 +20,16 @@ module.exports = {
         },
 
         category:{
-         model:'category'
+          model:'category',
+          required: true
+        },
+
+        variety: {
+            type: 'string'
         },
 
         manufacturer:{
          model:'manufacturer'
-        },
-
-        units: {
-            type: 'string',
-            required: true
-        },
-
-        variety: {
-            type: 'string',
-            required: true
         },
 
         price: {
@@ -42,16 +37,13 @@ module.exports = {
             required: true
         },
 
+        priceUnit: {
+            type: 'string',
+            required: true
+        },
+
         quantity: {
             type: 'integer'
-        },
-
-        additionalInformation: {
-            type: 'string'
-        },
-
-        tearms: {
-            type: 'string'
         },
 
         address: {
@@ -77,11 +69,19 @@ module.exports = {
         pincode: {
             type: 'integer',
             required: true
-        },   
+        }, 
+
+        additionalInformation: {
+            type: 'string'
+        },
+
+        tearms: {
+            type: 'string'
+        },
 
 		isDeleted: {
 			type: 'boolean',
-            defaultsTo: false,
+            defaultsTo: false
 		}
     }
 };

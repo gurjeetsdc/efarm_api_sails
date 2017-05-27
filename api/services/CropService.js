@@ -64,23 +64,25 @@ module.exports = {
        
         return API.Model(Crops).update(data.id,data)
         .then(function (crop) {
-            var Report;
+
+             var result;
             if(crop){
-                Report = {"sucess": {
-                            "Code": 200,
-                            "Message": "OK"
-                            }}
+                result = {
+                            "status": true,
+                            "code": 200,
+                            "data": crop,
+                        }
+                
             }else{
-                Report = {"error": {
-                            "Code": 301,
-                            "Message": "Faild"
-                            }}
+                result = {
+                           "status": false,
+                           "code": 301,
+                           "message": "Faild"
+                           }
             }
-            return {
-                    "Status": true,
-                    "Data": crop,
-                     Report
-                };
+
+            return result;
+
         });
     },
     delete: function (data, context) {

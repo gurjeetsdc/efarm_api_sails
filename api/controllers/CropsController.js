@@ -12,7 +12,7 @@ module.exports = {
     listing: function(req, res) {
         API(CropService.list, req, res);
     },
-    update: function(req, res) {
+    edit: function(req, res) {
         API(CropService.update, req, res);
     },
     show: function(req, res) {
