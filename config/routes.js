@@ -52,6 +52,7 @@ module.exports.routes = {
 
   //Routes for common functions which will use for every module.
   'get /common': 'CommonController.getdetails',
+  'post /upload': 'CommonController.uploadImages',
   'get /assets': 'CommonController.getAssets',
 
   //Equipments Routes
