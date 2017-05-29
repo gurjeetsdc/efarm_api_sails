@@ -54,6 +54,10 @@ module.exports.policies = {
     '*' : 'OAuthValidateAccessToken',
     'getAllCrops' : true
   },
+  InputsController: {
+    '*' : 'OAuthValidateAccessToken',
+    'getAllInputs' : true
+  },
   EquipmentController: {
     '*' : 'OAuthValidateAccessToken',
     'getAllEquipments' : true
