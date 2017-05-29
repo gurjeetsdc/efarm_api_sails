@@ -11,10 +11,10 @@ messages : {
     "PHONE_NUMBER":"Phone number should contain 10 digit",
     "PHONE_INVALID":"Not a valid number",
     "REQUIRED_FIELD":"Fields required",
-    "SUCCESSFULLY_REGISTERED":"Successfully Registered",
-    "SUCCESSFULLY_LOGGEDIN":"Successfully Logged in",
+    "SUCCESSFULLY_REGISTERED":"Successfully registered",
+    "SUCCESSFULLY_LOGGEDIN":"Successfully logged in",
     "WRONG_USERNAME":"User invaild! Please try Again",
-    "WRONG_PASSWORD":"Password Is Wrong!",
+    "WRONG_PASSWORD":"Password is wrong!",
     "WRONG_OTP":"Wrong OTP! Please try Again",
 },
 

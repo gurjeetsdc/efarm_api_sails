@@ -91,7 +91,9 @@ module.exports = {
 		var date = new Date();
 		var currentDate = date.valueOf();
 		
+		console.log("req is ", req.body.type);
 		var modelName = req.body.type;
+		//var modelName = 'crops';
 		
 		var Model = sails.models[modelName];
 		var name = randomStr + "-" + currentDate;
@@ -113,7 +115,7 @@ module.exports = {
 			var uploadLocation = 'assets/images/' + modelName + '/' + name + '.' + fileExt ;
             var tempLocation = '.tmp/public/images/'+ modelName + '/' + name + '.' + fileExt ;
 
-			fs.writeFile('assets/images/crops/'+ name + '.'+ fileExt, imageBuffer.data, function(imgerr, img) {
+			fs.writeFile('assets/images/'+modelName + '/'+ name + '.'+ fileExt, imageBuffer.data, function(imgerr, img) {
 				if (imgerr) {
 					res.status(400).json({
 						"status_code": 400,

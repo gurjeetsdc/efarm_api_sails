@@ -78,7 +78,9 @@ module.exports = {
         tearms: {
             type: 'string'
         },
-
+        image: {
+            type: 'string'
+        },
 		isDeleted: {
 			type: 'boolean',
             defaultsTo: false

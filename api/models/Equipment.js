@@ -72,6 +72,10 @@ module.exports = {
         	enum: ['rent', 'sell']
         },
 
+        image: {
+            type: 'string'
+        },
+        
         description: {
             type: 'text'
         },

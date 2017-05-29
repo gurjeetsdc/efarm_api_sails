@@ -54,7 +54,9 @@ module.exports = {
     term_condition:{
       type:'text'
     },
-
+    image: {
+      type: 'string'
+    },
     isDeleted:{
       type:'boolean',
       defaultsTo: false
