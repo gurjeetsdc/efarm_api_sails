@@ -54,7 +54,7 @@ module.exports.routes = {
   'get /common': 'CommonController.getdetails',
   'post /upload': 'CommonController.uploadImages',
   'get /assets': 'CommonController.getAssets',
-
+ 
   //Equipments Routes
   'get /land': 'LandController.getAllLands',
   
@@ -83,6 +83,9 @@ module.exports.routes = {
 
   //Category Routes
   'get /allcategory' : 'CategoryController.getAllCategory',
+
+  //Bide Routs
+  'post /bid' : 'BidController.saveBid',
 
   //Roles & Permission routes
   'post /permission' : { model: 'roles', blueprint: 'create'},

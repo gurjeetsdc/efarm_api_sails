@@ -25,9 +25,17 @@ twillio: {
 },
 
 crops: {
-    "ADDED_CROP" : "Crop saved successfully"
-}
+    "ADDED_CROP" : "Crop saved successfully",
+},
+user:{
+     "PASSWORD_DOESNOT_MATCH": "new password and confirmPassword does not match ",
+     "WRONG_PASSWORD":"Wrong Old Password ",
+     "PASSWORD_CHANGE":"Password has been changed"
 
+},
+bid:{
+    "ADDED_BID": "Bid save Successfully"
+}
 
 /*const gmailSMTPCredentials : {
     "service": "gmail",

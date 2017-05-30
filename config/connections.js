@@ -71,7 +71,7 @@ module.exports.connections = {
     port: 27017,
     user: '', //optional
     password: '', //optional
-    database: 'efarm_sails' //optional
+    database: 'efarm_sails_1' //optional
   },
 
 

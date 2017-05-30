@@ -2,6 +2,7 @@
   * #DESC:  In this class/files EndUser related functions
   * #Author: Rishabh Gupta
   */
+ var constantObj = sails.config.constants;
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 var bcrypt    = require('bcrypt-nodejs');
@@ -19,7 +20,7 @@ emailGeneratedCode = function (options) { //email generated code
     var url = options.verifyURL,
         email = options.email,
         password = options.password;
-
+uthServic
     message = 'Hello!';
     message += '<br/>';
     message += 'Your new password has been created successfully';
@@ -58,6 +59,7 @@ generatePassword = function () { // action are perform to generate random passwo
 module.exports = {
     emailGeneratedCode: emailGeneratedCode, //emailgeneratecode()
     generatePassword: generatePassword,   //generatepassword()
+    
     forgotPassword: function (data, context) {
         return Users.findOne({email: data.email})
             .then(function(data){
@@ -85,37 +87,45 @@ module.exports = {
                 
             })
     },
-       changePassword: function(data, context){
-       
+    
+    //api for change password
+    changePassword: function(data, context){      
         let password = data.password; 
         let newPassword = data.newPassword;
         let confirmPassword = data.confirmPassword;
-        if(newPassword != confirmPassword)
+        if(newPassword != confirmPassword)  
         {
-             return {
+                return {
                         error: {
                             "code": 404,
-                            "message": "new password and confirmPassword does not match "
+                            "message": constantObj.user.PASSWORD_DOESNOT_MATCH
                         }
                     }
         }    
-
         return Users.findOne({id: data.id})
         .then(function(user){
-            
-           
-            if( !bcrypt.compareSync(data.password, user.password) ){
-                return {"success": false, "error": {"code": 404,"message": "Wrong Old Password "} };
+        if( !bcrypt.compareSync(data.password, user.password) ) 
+            {
+            return {"success": false, "error": {"code": 404,"message": constantObj.user.WRONG_PASSWORD} };
             }
-            else
+        else
             {
                var encryptedPassword = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10));
-               return Users.update({id: data.id},{encryptedPassword:encryptedPassword})
-                .then(function (user) {
-                    console.log(user);
-                return {"success": true, "code":200, "message": "Password has been changed"};
+                return Users.update({id: data.id},{encryptedPassword:encryptedPassword})
+                .then(function (user) 
+                {
+                if(user)
+                {
+                return {"success": true, "code":200, "message": constantObj.user.PASSWORD_CHANGE};
+                }
+                else
+                {
+                throw new Error('That User does not exist.');   
+                }
 
-            });
+                }).fail(function (err) {
+                  console.log(err);
+                });
             }
         })
     }

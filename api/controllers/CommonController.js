@@ -84,6 +84,8 @@ module.exports = {
 	},
 
 	uploadImages: function(req, res) {
+
+		console.log("hello");
 		var fs = require('fs');
 		//var path = require('path');
 		var uuid = require('uuid');
@@ -91,7 +93,8 @@ module.exports = {
 		var date = new Date();
 		var currentDate = date.valueOf();
 		
-		var modelName = req.body.type;
+		//var modelName = req.body.type;
+		var modelName = 'crops';
 		
 		var Model = sails.models[modelName];
 		var name = randomStr + "-" + currentDate;
@@ -104,7 +107,6 @@ module.exports = {
 		typeArr = imageType.split("/");
 		var fileExt = typeArr[1];
 		
-		
 		if((fileExt === 'jpeg') || (fileExt === 'JPEG') || (fileExt === 'JPG') || (fileExt === 'jpg') || (fileExt === 'PNG') || (fileExt === 'png')) {
 			if (imageBuffer.error) return imageBuffer.error;
 
@@ -113,7 +115,7 @@ module.exports = {
 			var uploadLocation = 'assets/images/' + modelName + '/' + name + '.' + fileExt ;
             var tempLocation = '.tmp/public/images/'+ modelName + '/' + name + '.' + fileExt ;
 
-			fs.writeFile('assets/images/crops/'+ name + '.'+ fileExt, imageBuffer.data, function(imgerr, img) {
+			fs.writeFile('assets/images/crops/'+ name + '.'+ fileExt, imageBuffer.data, function(imgerr, img) {		
 				if (imgerr) {
 					res.status(400).json({
 						"status_code": 400,
@@ -140,7 +142,7 @@ module.exports = {
 			});
 		}
    	},
-
+   	
 	/*function to decode base64 image*/
 	decodeBase64Image: function(dataString) {
 		var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
