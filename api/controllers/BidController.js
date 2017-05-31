@@ -10,6 +10,7 @@ module.exports = {
 	saveBid : function(req ,res)
 	{
 		console.log("hello");
+		//return res.ok();
 		API(BidService.bid, req ,res);
 	}
 };

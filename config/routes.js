@@ -87,6 +87,9 @@ module.exports.routes = {
   //Bide Routs
   'post /bid' : 'BidController.saveBid',
 
+  //
+  'get /states' : 'StatesController.state',
+
   //Roles & Permission routes
   'post /permission' : { model: 'roles', blueprint: 'create'},
   'get /permission' : 'RolesController.getAllRoles',

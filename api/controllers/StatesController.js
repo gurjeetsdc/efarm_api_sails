@@ -6,6 +6,15 @@
  */
 
 module.exports = {
-	
+	state: function(req, res) {
+        States.find({},function(err,data){        	
+            if(data){
+               res.send(data)                
+            }
+            else{
+            	res.json({"error":"message"})
+            }
+        })
+    },
 };
 
