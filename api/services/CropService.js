@@ -9,6 +9,15 @@ var Promise = require('bluebird'),
     promisify = Promise.promisify;
 var constantObj = sails.config.constants;
 
+
+  getCrop = function(Id){
+         return API.Model(Crops).findOne(Id)
+        .then(function (crop) {
+            return crop;
+        });
+  }
+
+
 module.exports = {
 
     save: function (data, context) {
@@ -127,6 +136,28 @@ module.exports = {
                     "Status": true,
                      Report
                 };
+        });
+    },
+    buyerAccepted: function (data, context) {
+  
+        return getCrop(data.crop).then(function(cropData){
+           let bidsData = [];
+        cropData.bids.forEach(function(bid){
+            if(data.buyer == bid.user_id.toString()){
+                  bid.status = "Accepted";
+            }
+          bidsData.push(bid);    
+        });
+                API.Model(Crops).update(
+                    {id:cropData.id},
+                    {bids:bidsData}
+                    )
+                    .then(
+                        function (crop) {
+                        
+                        return crop;
+                });
+
         });
     },
     get: function (data, context) {

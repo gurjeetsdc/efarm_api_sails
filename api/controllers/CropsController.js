@@ -24,6 +24,9 @@ module.exports = {
     changestatus: function(req, res) {
         API(CropService.changeStatus, req, res);
     },
+    accept: function(req, res) {
+        API(CropService.buyerAccepted, req, res);
+    },
 
     getAllCrops: function(req, res, next) {
 
