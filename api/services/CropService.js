@@ -139,23 +139,34 @@ module.exports = {
         });
     },
     buyerAccepted: function (data, context) {
-  
+        
         return getCrop(data.crop).then(function(cropData){
            let bidsData = [];
+           let i = 0;
         cropData.bids.forEach(function(bid){
-            if(data.buyer == bid.user_id.toString()){
+
+            if(data.buyer == bid.user_id.toString() && bid.status == "Pending"){
                   bid.status = "Accepted";
+            }else{
+                bid.status = "Pending";
             }
-          bidsData.push(bid);    
+
+          bidsData.push(bid);
+          
         });
-                API.Model(Crops).update(
+                return Crops.update(
                     {id:cropData.id},
                     {bids:bidsData}
                     )
-                    .then(
-                        function (crop) {
+                    .then(function (crop) {
                         
-                        return crop;
+                        return crop[0];
+                }).fail(function(err){
+                    return {
+                       Code:400,
+                       success: false,
+                       error: "There is some problem to accept the bid."
+                    };
                 });
 
         });
