@@ -73,6 +73,7 @@ module.exports.routes = {
 
   //Crops Routes
   'get /crops': 'CropsController.getAllCrops',
+  'put /bids' : 'CropsController.updateBids',
 
   //Inputs Routes
   'get /inputs': 'InputsController.getAllInputs',

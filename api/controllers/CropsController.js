@@ -102,5 +102,97 @@ module.exports = {
                 })
             }
         })
+    },
+
+    updateBids: function(req, res) {
+        
+        let cropId = req.body.crop_id; 
+        let userId = req.body.user_id;
+        let bidAmount = req.body.bid_amount;
+        let bidTime = req.body.bid_time;
+        let status = req.body.status;
+        let cropJson = {};
+        let userJson = {};
+
+        cropJson = {
+            'user_id' : userId,
+            'bid_amount' : bidAmount,
+            'bid_time' : bidTime,
+            'status' : status
+        };
+
+        userJson = {
+            'crop_id' : userId,
+            'bid_amount' : bidAmount,
+            'bid_time' : bidTime,
+            'status' : status
+        };
+
+
+        if(req.body.description){
+            let description = req.body.description;
+            cropJson.description = description;
+        }
+
+
+        let query = {};
+        query.id = cropId;
+        query.isExpired = false;
+
+        console.log("query is ",query);
+
+        Crops.findOne(query).then(function(crop){ 
+            
+            if(!crop.bids){
+                console.log("tes");
+                crop.bids = [];
+            }
+
+            crop.bids.push(cropJson);
+            cropData = crop;
+
+            Crops.update({id:crop.id},cropData).then(function(cropinfo){
+                if(cropinfo){
+                    Users.findOne({id:userId}).then(function(userInfo){
+                        if(userInfo){
+                            if(!userInfo.mybids){
+                                userInfo.mybids = [];
+                            }
+                            userInfo.mybids.push(userJson);
+                            userData = userInfo;
+
+                            Users.update({id:userId},userData).then(function(cropinfo){
+                                return res.jsonx({
+                                    success: true,
+                                    data: "Your bid has been successfully placed"
+                                });
+                            })
+                        } else {
+                            return res.status(400).jsonx({
+                               success: false,
+                               error: "User not found"
+                            });
+                        }
+                    }) 
+                } else {
+                    return res.status(400).jsonx({
+                       success: false,
+                       error: "There is some problem to bid on this crop."
+                    });
+                }
+            })
+            .fail(function(err){
+                return res.status(400).jsonx({
+                   success: false,
+                   error: "There is some problem to bid on this crop."
+                });
+            })
+        })
+        .fail(function(err){
+            return res.status(400).jsonx({
+               success: false,
+               error: "There is some problem to bid on this crop."
+            });
+        })
     }
 };
