@@ -22,12 +22,21 @@ module.exports = {
 		query.code = langCode;
 
 		console.log("language is",langCode);
-		Languages.findOne(query).then(function(language){
+		
+		Languages.findOne(query)
 
-			console.log("language is",language);
-
+		.then(function(language){
+			if(language === undefined){
+				return res.status(400).jsonx({
+                   success: false,
+                   error: constantObj.languages.LANGUAGE_NOT_FOUND
+                });
+			} else {
+				return res.jsonx({
+                    success: true,
+                    data: language
+                });
+			}
 		})
-
-
 	}
 };

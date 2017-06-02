@@ -29,7 +29,12 @@ crops: {
     "ADDED_CROP" : "Crop saved successfully",
     "SUCCESSFULLY_BID" : "Your bid has been successfully placed",
     "USER_NOT_FOUND" : "User not found",
-    "ISSUE_ON_BID" : "There is some problem to bid on this crop."
+    "ISSUE_ON_BID" : "There is some problem to bid on this crop.",
+},
+
+languages: {
+    "LANGUAGE_NOT_FOUND" : "Language not found",
+    "ISSUE_ON_LANGUAGE" : "There is some problem on language selection.",
 }
 
 
