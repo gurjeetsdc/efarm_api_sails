@@ -171,7 +171,7 @@ module.exports = {
                             Users.update({id:userId},userData).then(function(cropSuceess){
                                 return res.jsonx({
                                     success: true,
-                                    data: data: constantObj.crops.SUCCESSFULLY_BID
+                                    data: constantObj.crops.SUCCESSFULLY_BID
                                 });
                             })
                             .fail(function(err){
