@@ -5,6 +5,7 @@ var constantObj = sails.config.constants;
  * @description :: Server-side logic for managing crops
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+
 module.exports = {
 
     add: function(req, res) {
@@ -119,14 +120,16 @@ module.exports = {
             'user_id' : userId,
             'bid_amount' : bidAmount,
             'bid_time' : bidTime,
-            'status' : status
+            'status' : status,
+            'user' : {}
         };
 
         userJson = {
-            'crop_id' : userId,
+            'crop_id' : cropId,
             'bid_amount' : bidAmount,
             'bid_time' : bidTime,
-            'status' : status
+            'status' : status,
+            'crop' : {}
         };
 
 
@@ -139,61 +142,62 @@ module.exports = {
         let query = {};
         query.id = cropId;
         query.isExpired = false;
-
+        
         console.log("query is ",query);
-
+     Users.findOne({id:userId}).then(function(userInfo){
+     let userRcd = userInfo;   
         Crops.findOne(query).then(function(crop){ 
-            
+            let cropRcd = crop;
             if(!crop.bids){
                 console.log("tes");
                 crop.bids = [];
             }
 
+            cropJson.user = userRcd;
             crop.bids.push(cropJson);
             cropData = crop;
 
             Crops.update({id:crop.id},cropData).then(function(cropinfo){
-                if(cropinfo){
-                    Users.findOne({id:userId}).then(function(userInfo){
-                        if(userInfo){
-                            if(!userInfo.mybids){
-                                userInfo.mybids = [];
-                            }
-                            userInfo.mybids.push(userJson);
-                            userData = userInfo;
 
-                            Users.update({id:userId},userData).then(function(cropinfo){
+                            if(!userRcd.mybids){
+                                userRcd.mybids = [];
+                            }
+                            
+                            delete cropRcd.bids;
+                            userJson.crop = cropRcd;
+                            userRcd.mybids.push(userJson);
+                            userData = userRcd;
+
+                            Users.update({id:userId},userData).then(function(cropSuceess){
                                 return res.jsonx({
                                     success: true,
                                     data: constantObj.crops.SUCCESSFULLY_BID
                                 });
                             })
-                        } else {
-                            return res.status(400).jsonx({
-                               success: false,
-                               error: constantObj.crops.USER_NOT_FOUND
+                            .fail(function(err){
+                                return res.status(400).jsonx({
+                                   success: false,
+                                   error: err
+                                });
                             });
-                        }
-                    }) 
-                } else {
-                    return res.status(400).jsonx({
-                       success: false,
-                       error: constantObj.crops.ISSUE_ON_BID
-                    });
-                }
+ 
             })
             .fail(function(err){
                 return res.status(400).jsonx({
                    success: false,
-                   error: constantObj.crops.ISSUE_ON_BID
+                   error: err
                 });
             })
         })
         .fail(function(err){
             return res.status(400).jsonx({
                success: false,
-               error: constantObj.crops.ISSUE_ON_BID
+               error: err
             });
-        })
+        });
+
+      })   
     }
+
+
 };
