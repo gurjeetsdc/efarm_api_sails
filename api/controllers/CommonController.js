@@ -1,4 +1,5 @@
 var Promise = require('q');
+var constantObj = sails.config.constants;
 /**
  * CommonController
  *
@@ -91,7 +92,9 @@ module.exports = {
 		var date = new Date();
 		var currentDate = date.valueOf();
 		
-		console.log("req is ", req.body.type);
+
+
+		console.log("req is ", req.body.type, req);
 		var modelName = req.body.type;
 		//var modelName = 'crops';
 		
@@ -138,7 +141,7 @@ module.exports = {
 			console.log("error");
 			res.status(400).json({
 				"status_code": 400,
-				"message": "Invalid type of image"
+				"message": constantObj.messages.INVALID_IMAGE
 			});
 		}
    	},
@@ -156,7 +159,7 @@ module.exports = {
 			response.type = matches[1];
 			response.data = new Buffer(matches[2], 'base64');
 		} else {
-			response.error = "invalid image ";
+			response.error = constantObj.messages.INVALID_IMAGE;
 		}
 
 		return response;

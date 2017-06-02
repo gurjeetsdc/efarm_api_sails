@@ -1,3 +1,4 @@
+var constantObj = sails.config.constants;
 /**
  * CropsController
  *
@@ -164,34 +165,34 @@ module.exports = {
                             Users.update({id:userId},userData).then(function(cropinfo){
                                 return res.jsonx({
                                     success: true,
-                                    data: SUCCESSFULLY_BID
+                                    data: constantObj.crops.SUCCESSFULLY_BID
                                 });
                             })
                         } else {
                             return res.status(400).jsonx({
                                success: false,
-                               error: USER_NOT_FOUND
+                               error: constantObj.crops.USER_NOT_FOUND
                             });
                         }
                     }) 
                 } else {
                     return res.status(400).jsonx({
                        success: false,
-                       error: ISSUE_ON_BID
+                       error: constantObj.crops.ISSUE_ON_BID
                     });
                 }
             })
             .fail(function(err){
                 return res.status(400).jsonx({
                    success: false,
-                   error: ISSUE_ON_BID
+                   error: constantObj.crops.ISSUE_ON_BID
                 });
             })
         })
         .fail(function(err){
             return res.status(400).jsonx({
                success: false,
-               error: ISSUE_ON_BID
+               error: constantObj.crops.ISSUE_ON_BID
             });
         })
     }
