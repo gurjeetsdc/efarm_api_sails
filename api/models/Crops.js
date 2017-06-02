@@ -151,7 +151,7 @@ module.exports = {
         isExpired: {
             type: 'boolean',
             defaultsTo:false
-        }
+        },
 
         isDeleted: {
             type: 'boolean',
