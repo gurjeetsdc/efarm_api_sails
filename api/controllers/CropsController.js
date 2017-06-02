@@ -144,59 +144,64 @@ module.exports = {
         query.isExpired = false;
         
         console.log("query is ",query);
-     Users.findOne({id:userId}).then(function(userInfo){
-     let userRcd = userInfo;   
-        Crops.findOne(query).then(function(crop){ 
-            let cropRcd = crop;
-            if(!crop.bids){
-                console.log("tes");
-                crop.bids = [];
-            }
+        
+        Users.findOne({id:userId}).then(function(userInfo){
+        
+            let userRcd = userInfo;   
+        
+            Crops.findOne(query).populate('category').then(function(crop){ 
+                let cropRcd = crop;
+                if(!crop.bids){
+                    console.log("tes");
+                    crop.bids = [];
+                }
 
-            cropJson.user = userRcd;
-            crop.bids.push(cropJson);
-            cropData = crop;
+                cropJson.user = userRcd;
+                crop.bids.push(cropJson);
+                cropData = crop;
 
-            Crops.update({id:crop.id},cropData).then(function(cropinfo){
+                Crops.update({id:crop.id},cropData).then(function(cropinfo){
 
-                            if(!userRcd.mybids){
-                                userRcd.mybids = [];
+                    if(!userRcd.mybids){
+                        userRcd.mybids = [];
+                    }
+                    
+                    delete cropRcd.bids;
+                    userJson.crop = cropRcd;
+                    userRcd.mybids.push(userJson);
+                    userData = userRcd;
+
+                    Users.update({id:userId},userData).then(function(cropSuceess){
+                        return res.jsonx({
+                            success: true,
+                            data: {
+                                message: constantObj.crops.SUCCESSFULLY_BID
                             }
-                            
-                            delete cropRcd.bids;
-                            userJson.crop = cropRcd;
-                            userRcd.mybids.push(userJson);
-                            userData = userRcd;
-
-                            Users.update({id:userId},userData).then(function(cropSuceess){
-                                return res.jsonx({
-                                    success: true,
-                                    data: constantObj.crops.SUCCESSFULLY_BID
-                                });
-                            })
-                            .fail(function(err){
-                                return res.status(400).jsonx({
-                                   success: false,
-                                   error: err
-                                });
-                            });
- 
+                        });
+                    })
+                    .fail(function(err){
+                        return res.status(400).jsonx({
+                           success: false,
+                           error: err
+                        });
+                    });
+     
+                })
+                .fail(function(err){
+                    return res.status(400).jsonx({
+                       success: false,
+                       error: err
+                    });
+                })
             })
             .fail(function(err){
                 return res.status(400).jsonx({
                    success: false,
                    error: err
                 });
-            })
-        })
-        .fail(function(err){
-            return res.status(400).jsonx({
-               success: false,
-               error: err
             });
-        });
 
-      })   
+        })   
     }
 
 

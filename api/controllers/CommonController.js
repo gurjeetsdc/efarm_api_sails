@@ -114,6 +114,8 @@ module.exports = {
 			if (imageBuffer.error) return imageBuffer.error;
 
 			var fullPath = name + '.'+ fileExt ;
+
+			var imagePath = '/images/' + modelName + '/' + name + '.' + fileExt;
 			
 			var uploadLocation = 'assets/images/' + modelName + '/' + name + '.' + fileExt ;
             var tempLocation = '.tmp/public/images/'+ modelName + '/' + name + '.' + fileExt ;
@@ -130,7 +132,8 @@ module.exports = {
 					return res.jsonx({
 	                    success: true,
 	                    data: {
-	                        fullPath : fullPath
+	                        fullPath : fullPath,
+	                        imagePath : imagePath
 	                    },
 	                });
 				}
