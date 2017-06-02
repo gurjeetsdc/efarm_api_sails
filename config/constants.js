@@ -16,6 +16,7 @@ messages : {
     "WRONG_USERNAME":"User invaild! Please try Again",
     "WRONG_PASSWORD":"Password is wrong!",
     "WRONG_OTP":"Wrong OTP! Please try Again",
+    "INVALID_IMAGE" : "Invalid type of Image",
 },
 
 twillio: {

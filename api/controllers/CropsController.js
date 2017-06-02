@@ -1,20 +1,10 @@
+var constantObj = sails.config.constants;
 /**
  * CropsController
  *
  * @description :: Server-side logic for managing crops
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-
-  getUser = function(Id){
-         return API.Model(Users).findOne(Id)
-        .then(function (user) {
-            //this.userInfo = user
-            console.log(user);
-
-            return user;
-        });
-  }
-
 
 module.exports = {
 
@@ -181,7 +171,7 @@ module.exports = {
                             Users.update({id:userId},userData).then(function(cropSuceess){
                                 return res.jsonx({
                                     success: true,
-                                    data: "SUCCESSFULLY_BID"
+                                    data: data: constantObj.crops.SUCCESSFULLY_BID
                                 });
                             })
                             .fail(function(err){
@@ -208,4 +198,6 @@ module.exports = {
 
       })   
     }
+
+
 };
