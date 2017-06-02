@@ -164,34 +164,34 @@ module.exports = {
                             Users.update({id:userId},userData).then(function(cropinfo){
                                 return res.jsonx({
                                     success: true,
-                                    data: "Your bid has been successfully placed"
+                                    data: SUCCESSFULLY_BID
                                 });
                             })
                         } else {
                             return res.status(400).jsonx({
                                success: false,
-                               error: "User not found"
+                               error: USER_NOT_FOUND
                             });
                         }
                     }) 
                 } else {
                     return res.status(400).jsonx({
                        success: false,
-                       error: "There is some problem to bid on this crop."
+                       error: ISSUE_ON_BID
                     });
                 }
             })
             .fail(function(err){
                 return res.status(400).jsonx({
                    success: false,
-                   error: "There is some problem to bid on this crop."
+                   error: ISSUE_ON_BID
                 });
             })
         })
         .fail(function(err){
             return res.status(400).jsonx({
                success: false,
-               error: "There is some problem to bid on this crop."
+               error: ISSUE_ON_BID
             });
         })
     }

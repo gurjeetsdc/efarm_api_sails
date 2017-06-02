@@ -25,7 +25,10 @@ twillio: {
 },
 
 crops: {
-    "ADDED_CROP" : "Crop saved successfully"
+    "ADDED_CROP" : "Crop saved successfully",
+    "SUCCESSFULLY_BID" : "Your bid has been successfully placed",
+    "USER_NOT_FOUND" : "User not found",
+    "ISSUE_ON_BID" : "There is some problem to bid on this crop."
 }
 
 

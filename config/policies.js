@@ -52,7 +52,8 @@ module.exports.policies = {
   },
   CropsController: {
     '*' : 'OAuthValidateAccessToken',
-    'getAllCrops' : true
+    'getAllCrops' : true,
+    'crops/:id' : true
   },
   InputsController: {
     '*' : 'OAuthValidateAccessToken',

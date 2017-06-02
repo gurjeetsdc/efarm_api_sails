@@ -73,6 +73,7 @@ module.exports.routes = {
 
   //Crops Routes
   'get /crops': 'CropsController.getAllCrops',
+  'get /crops/:id' : { model: 'Crop', blueprint: 'find'},
   'put /bids' : 'CropsController.updateBids',
 
   //Inputs Routes
