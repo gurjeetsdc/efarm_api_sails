@@ -149,7 +149,7 @@ module.exports = {
         
             let userRcd = userInfo;   
         
-            Crops.findOne(query).populate('category').then(function(crop){ 
+            Crops.findOne(query).then(function(crop){ 
                 let cropRcd = crop;
                 if(!crop.bids){
                     console.log("tes");
