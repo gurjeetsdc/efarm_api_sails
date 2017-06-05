@@ -170,10 +170,10 @@ module.exports = {
                     userJson.crop = cropRcd;
                     userRcd.mybids.push(userJson);
                     userData = userRcd;
-                    
-                    let userBids = userRcd.mybids;
 
-                    Users.update({id:userId},userBids).then(function(cropSuceess){
+                    let userBids = {'mybids': userRcd.mybids};
+
+                    Users.update({id:userId}, userBids).then(function(cropSuceess){
                         return res.jsonx({
                             success: true,
                             data: {
