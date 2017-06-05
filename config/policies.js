@@ -62,6 +62,10 @@ module.exports.policies = {
   EquipmentController: {
     '*' : 'OAuthValidateAccessToken',
     'getAllEquipments' : true
+  },
+  LanguagesController: {
+    '*' : 'OAuthValidateAccessToken',
+    'getLanguage' : true
   }
   /***************************************************************************
   *                                                                          *
