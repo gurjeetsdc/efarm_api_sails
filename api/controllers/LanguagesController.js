@@ -34,7 +34,9 @@ module.exports = {
 			} else {
 				return res.jsonx({
                     success: true,
-                    data: language
+                    data: {
+                    	language:language
+                    }
                 });
 			}
 		})
