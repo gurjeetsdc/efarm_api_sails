@@ -149,7 +149,7 @@ module.exports = {
         
             let userRcd = userInfo;   
         
-            Crops.findOne(query).populate('category').then(function(crop){ 
+            Crops.findOne(query).then(function(crop){ 
                 let cropRcd = crop;
                 if(!crop.bids){
                     console.log("tes");
@@ -171,7 +171,9 @@ module.exports = {
                     userRcd.mybids.push(userJson);
                     userData = userRcd;
 
-                    Users.update({id:userId},userData).then(function(cropSuceess){
+                    let userBids = {'mybids': userRcd.mybids};
+
+                    Users.update({id:userId}, userBids).then(function(cropSuceess){
                         return res.jsonx({
                             success: true,
                             data: {
