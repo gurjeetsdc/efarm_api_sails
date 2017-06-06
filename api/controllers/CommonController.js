@@ -1,5 +1,6 @@
 var Promise = require('q');
 var constantObj = sails.config.constants;
+var gm = require('gm');
 /**
  * CommonController
  *
@@ -94,7 +95,7 @@ module.exports = {
 		
 
 
-		console.log("req is ", req.body.type, req);
+		//console.log("req is ", req.body.type, req);
 		var modelName = req.body.type;
 		//var modelName = 'crops';
 		
@@ -104,9 +105,12 @@ module.exports = {
 		var imagedata = req.body.data;
 		imageBuffer = this.decodeBase64Image(imagedata);
 
+
 		var imageType = imageBuffer.type;
+		
 		var typeArr = new Array();
 		typeArr = imageType.split("/");
+		
 		var fileExt = typeArr[1];
 		
 		
@@ -116,9 +120,16 @@ module.exports = {
 			var fullPath = name + '.'+ fileExt ;
 
 			var imagePath = '/images/' + modelName + '/' + name + '.' + fileExt;
+			var thumbpath = '/images/' + modelName + '/thumb/' + name + '.' + fileExt;
 			
 			var uploadLocation = 'assets/images/' + modelName + '/' + name + '.' + fileExt ;
             var tempLocation = '.tmp/public/images/'+ modelName + '/' + name + '.' + fileExt ;
+
+			/*gm(imageBuffer).thumb(110, 65, thumbpath, function(thumbdata){
+				if(thumbdata){
+					console.log("thumbdata",thumbdata);
+				}
+			})*/
 
 			fs.writeFile('assets/images/'+modelName + '/'+ name + '.'+ fileExt, imageBuffer.data, function(imgerr, img) {
 				if (imgerr) {
