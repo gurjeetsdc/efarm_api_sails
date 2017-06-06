@@ -16,6 +16,7 @@ messages : {
     "WRONG_USERNAME":"User invaild! Please try Again",
     "WRONG_PASSWORD":"Password is wrong!",
     "WRONG_OTP":"Wrong OTP! Please try Again",
+    "INVALID_IMAGE" : "Invalid type of Image",
 },
 
 twillio: {
@@ -30,11 +31,24 @@ crops: {
 user:{
      "PASSWORD_DOESNOT_MATCH": "new password and confirmPassword does not match ",
      "WRONG_PASSWORD":"Wrong Old Password ",
-     "PASSWORD_CHANGE":"Password has been changed"
-
+     "PASSWORD_CHANGE":"Password has been changed",
+    "SUCCESSFULLY_BID" : "Your bid has been successfully placed",
+    "USER_NOT_FOUND" : "User not found",
+    "ISSUE_ON_BID" : "There is some problem to bid on this crop.",
 },
+
+languages: {
+    "LANGUAGE_NOT_FOUND" : "Language not found",
+    "ISSUE_ON_LANGUAGE" : "There is some problem on language selection.",
+},
+
 bid:{
-    "ADDED_BID": "Bid save Successfully"
+    "ADDED_BID": "Bid save Successfully",
+},
+common:{
+    "SUCCESS":"Successfully loaded",
+    "SIZE":"size should be under 10 mb",
+    "INVALID_IMAGE":"invaild Image"
 }
 
 /*const gmailSMTPCredentials : {

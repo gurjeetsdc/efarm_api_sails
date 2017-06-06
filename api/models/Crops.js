@@ -148,6 +148,11 @@ module.exports = {
             type:'string'
         },
         
+        isExpired: {
+            type: 'boolean',
+            defaultsTo:false
+        },
+
         isDeleted: {
             type: 'boolean',
             defaultsTo:false

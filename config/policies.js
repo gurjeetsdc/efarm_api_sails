@@ -52,7 +52,8 @@ module.exports.policies = {
   },
   CropsController: {
     '*' : 'OAuthValidateAccessToken',
-    'getAllCrops' : true
+    'getAllCrops' : true,
+    'crops/:id' : true
   },
   InputsController: {
     '*' : 'OAuthValidateAccessToken',
@@ -61,6 +62,10 @@ module.exports.policies = {
   EquipmentController: {
     '*' : 'OAuthValidateAccessToken',
     'getAllEquipments' : true
+  },
+  LanguagesController: {
+    '*' : 'OAuthValidateAccessToken',
+    'getLanguage' : true
   }
   /***************************************************************************
   *                                                                          *

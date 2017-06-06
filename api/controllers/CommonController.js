@@ -1,4 +1,5 @@
 var Promise = require('q');
+var constantObj = sails.config.constants;
 /**
  * CommonController
  *
@@ -91,7 +92,9 @@ module.exports = {
 		var date = new Date();
 		var currentDate = date.valueOf();
 		
-		console.log("req is ", req.body.type);
+
+
+		//console.log("req is ", req.body.type, req);
 		var modelName = req.body.type;
 		//var modelName = 'crops';
 		
@@ -105,40 +108,60 @@ module.exports = {
 		var typeArr = new Array();
 		typeArr = imageType.split("/");
 		var fileExt = typeArr[1];
-		
-		
-		if((fileExt === 'jpeg') || (fileExt === 'JPEG') || (fileExt === 'JPG') || (fileExt === 'jpg') || (fileExt === 'PNG') || (fileExt === 'png')) {
-			if (imageBuffer.error) return imageBuffer.error;
 
-			var fullPath = name + '.'+ fileExt ;
+
+		var size = Buffer.byteLength(imagedata,"base64");			
+		var i = parseInt(Math.floor(Math.log(size) / Math.log(1024)));
+	    var test = Math.round(size / Math.pow(1024, i),2);
+		console.log("tt",test,size);
+		
+		
+		if((size <= 1024) || (size <= 1048576) || (size <= 10737418)){
+			console.log("accepted images");
+			if((fileExt === 'jpeg') || (fileExt === 'JPEG') || (fileExt === 'JPG') || (fileExt === 'jpg') || (fileExt === 'PNG') || (fileExt === 'png')) {
+				if (imageBuffer.error) return imageBuffer.error;
+
+				var fullPath = name + '.'+ fileExt ;
+
+				var imagePath = '/images/' + modelName + '/' + name + '.' + fileExt;
+				
+				var uploadLocation = 'assets/images/' + modelName + '/' + name + '.' + fileExt ;
+	            var tempLocation = '.tmp/public/images/'+ modelName + '/' + name + '.' + fileExt ;
+
+				fs.writeFile('assets/images/'+modelName + '/'+ name + '.'+ fileExt, imageBuffer.data, function(imgerr, img) {
+					if (imgerr) {
+						res.status(400).json({
+							"status_code": 400,
+							"message": imgerr
+						});
+					} else {
+	            		fs.createReadStream(uploadLocation).pipe(fs.createWriteStream(tempLocation));
+						//console.log("fullPath",fullPath);
+						return res.jsonx({
+		                    success: true,
+		                    data: {
+		                        fullPath : fullPath,
+		                        imagePath : imagePath,
+		                        "message":constantObj.messages.SUCCESS
+		                    },
+		                });
+					}
+
+				});
 			
-			var uploadLocation = 'assets/images/' + modelName + '/' + name + '.' + fileExt ;
-            var tempLocation = '.tmp/public/images/'+ modelName + '/' + name + '.' + fileExt ;
+			} else {
+			
+				res.status(400).json({
+					"status_code": 400,
+					"message": constantObj.messages.INVALID_IMAGE
+				});
+			}
 
-			fs.writeFile('assets/images/'+modelName + '/'+ name + '.'+ fileExt, imageBuffer.data, function(imgerr, img) {
-				if (imgerr) {
-					res.status(400).json({
-						"status_code": 400,
-						"message": imgerr
-					});
-				} else {
-            		fs.createReadStream(uploadLocation).pipe(fs.createWriteStream(tempLocation));
-					//console.log("fullPath",fullPath);
-					return res.jsonx({
-	                    success: true,
-	                    data: {
-	                        fullPath : fullPath
-	                    },
-	                });
-				}
-
-			});
-		
 		} else {
-			console.log("error");
+				console.log("more then 10 mb reject");
 			res.status(400).json({
 				"status_code": 400,
-				"message": "Invalid type of image"
+				"message": constantObj.messages.SIZE
 			});
 		}
 	},
@@ -156,7 +179,7 @@ module.exports = {
 			response.type = matches[1];
 			response.data = new Buffer(matches[2], 'base64');
 		} else {
-			response.error = "invalid image ";
+			response.error = constantObj.messages.INVALID_IMAGE;
 		}
 
 		return response;
