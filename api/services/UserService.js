@@ -87,6 +87,37 @@ module.exports = {
                 
             })
     },
+     list: function (data, context) {
+        
+        return Users.find({ })
+        .then(function (user) {
+            console.log(user.rating);
+            var i,sum, count;
+          /*  for(i=0;i<=user.)
+            {
+
+            }*/
+           /* var result;
+            
+            if(user){
+                result = {
+                            "Status": true,
+                            "Code": 200,
+                            "Message": "OK",
+                            "data": user,
+                        }
+                
+            }else{
+                result = {
+                           "Status": false,
+                           "Code": 301,
+                           "Message": "Faild"
+                           }
+            }
+            return result;
+*/
+        });
+    },
     
     //api for change password
     changePassword: function(data, context){      

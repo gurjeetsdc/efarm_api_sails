@@ -136,7 +136,9 @@ module.exports = {
             type: 'string',
             required: true
         },
-        
+        bids:{
+            type: 'json'
+        },
         pincode: {
             type: 'integer',
             required: true

@@ -71,6 +71,7 @@ module.exports.routes = {
   'delete /user/:id' :{ model: 'users', blueprint: 'destroy' },
   'post /user' : 'UsersController.index',
   'post /forgotpassword' : 'UsersController.forgotPassword',
+  'get /list' : 'UsersController.listing',
 
   //Crops Routes
   'get /crops': 'CropsController.getAllCrops',
@@ -87,8 +88,11 @@ module.exports.routes = {
   //Bide Routs
   'post /bid' : 'BidController.saveBid',
 
-  //
+  //state Routes
   'get /states' : 'StatesController.state',
+
+  //multilanguage
+  'post /multilanguage': 'MultilanguageController.multilanguages',
 
   //Roles & Permission routes
   'post /permission' : { model: 'roles', blueprint: 'create'},

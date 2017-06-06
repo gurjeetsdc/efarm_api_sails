@@ -60,6 +60,9 @@ module.exports = {
      'changePassword/:id': function(req,res){
         API(UserService.changePassword,req,res); 
     },
+    listing: function(req, res) {
+        API(UserService.list, req, res);
+    },
     getAllUsers: function(req, res, next) {
 
         var search      = req.param('search');
