@@ -54,6 +54,7 @@ module.exports.routes = {
   'get /common': 'CommonController.getdetails',
   'post /upload': 'CommonController.uploadImages',
   'get /assets': 'CommonController.getAssets',
+  'post /imgdelete':'CommonController.deleteimg',
  
   //Equipments Routes
   'get /land': 'LandController.getAllLands',

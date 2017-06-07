@@ -158,7 +158,7 @@ module.exports = {
 			}
 
 		} else {
-				console.log("more then 10 mb reject");
+				console.log("more then 10 mb");
 			res.status(400).json({
 				"status_code": 400,
 				"message": constantObj.messages.SIZE
@@ -183,6 +183,51 @@ module.exports = {
 		}
 
 		return response;
-	}
-};
+	},
 
+	deleteimg : function(req , res)
+	{
+		var fs = require('fs');
+		//var uuid = require('uuid');
+		var modelName = req.body.type;
+		var Model = sails.models[modelName];
+		var img = req.body.images;
+		model.findOne({images:img}, function(err,data){
+			if(err)
+			{
+				console.log('file not found');
+			}
+			else
+			{	
+				console.log(data);
+				model.remove({images:data},function(err,image){
+					if(err)
+					{
+						console.log('err');
+					}
+					else
+					{
+						fs.readFile('assets/images/'+modelName + '/'+ image,"base64", function(err, images) {
+						if (err) {
+							res.status(400).json({
+								"status_code": 400,
+								"message": err
+							});
+						} 				
+			      	    fs.unlink(images, function(err){
+			            if (err) throw err;
+			            console.log(images + " deleted");
+			            });
+    				
+
+					});
+					}
+				})
+
+			}
+		})
+		
+
+	}
+
+}
