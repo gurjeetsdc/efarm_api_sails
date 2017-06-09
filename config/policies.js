@@ -26,7 +26,7 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  '*': 'OAuthValidateAccessToken',
+ /* '*': 'OAuthValidateAccessToken',
 
   OAuthController: {
     '*' :  'OAuthValidateAccessToken',
@@ -66,7 +66,7 @@ module.exports.policies = {
   LanguagesController: {
     '*' : 'OAuthValidateAccessToken',
     'getLanguage' : true
-  }
+  }*/
   /***************************************************************************
   *                                                                          *
   * Here's an example of mapping some policies to run before a controller    *

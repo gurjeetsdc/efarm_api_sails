@@ -185,48 +185,68 @@ module.exports = {
 		return response;
 	},
 
-	deleteimg : function(req , res)
-	{
+	deleteimg : function(req,res) {
 		var fs = require('fs');
-		//var uuid = require('uuid');
-		var modelName = req.body.type;
+		var modelName = req.body.modelname;
 		var Model = sails.models[modelName];
-		var img = req.body.images;
-		model.findOne({images:img}, function(err,data){
-			if(err)
-			{
-				console.log('file not found');
-			}
-			else
-			{	
-				console.log(data);
-				model.remove({images:data},function(err,image){
+		var name = req.body.image;
+		var itemId = req.body.id;
+
+		let query = {};
+		query.id = itemId;
+		let reqImage = req.body.image;
+
+		var uploadLocation = 'assets/images/' + modelName + '/' + name ;
+	    var tempLocation = '.tmp/public/images/'+ modelName + '/' + name ;
+
+		var newImg = [];
+		Model.find(query).exec(function(err, data) {
+		data.forEach(function(element) {
+    		if(data) {
+				async.each(element.images, function(image, callback) {
+            		
+            		if(reqImage != image)
+            		{
+            				
+            			newImg.push(image);
+            		}
+				Model.update({id:itemId},{images:newImg},function(err,imager){
 					if(err)
 					{
-						console.log('err');
+						return res.status(400).jsonx({
+		                    success: false,
+		                    error: err
+		                });
 					}
 					else
 					{
-						fs.readFile('assets/images/'+modelName + '/'+ image,"base64", function(err, images) {
-						if (err) {
-							res.status(400).json({
-								"status_code": 400,
-								"message": err
-							});
-						} 				
-			      	    fs.unlink(images, function(err){
-			            if (err) throw err;
-			            console.log(images + " deleted");
-			            });
-    				
+						fs.unlink(uploadLocation, (err) => {
+				        if (err) {
+				            	console.log("failed to delete local image:"+err);
+				        } else {
+								fs.unlink(tempLocation, (error) => {
+				        		if(error){
+				        			console.log("failed to delete local image:" +error);	
+				        		} else {
+				            		console.log('successfully deleted local image');                                
+				        		}
+								});
 
-					});
+				        	}
+						});
+						return res.status(200).jsonx({
+	                   		success: true,
+	                   		message:"Image delete successfully"
+	               		 });
 					}
-				})
-
+    				
+    			});
+				});
 			}
-		})
-		
+
+			});
+			
+		});
 
 	}
 
