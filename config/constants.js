@@ -48,7 +48,9 @@ bid:{
 common:{
     "SUCCESS":"Successfully loaded",
     "SIZE":"size should be under 10 mb",
-    "INVALID_IMAGE":"invaild Image"
+    "INVALID_IMAGE":"invaild Image",
+    "DELETE":"Successfully deleted",
+    "FAILED":"Failed",
 }
 
 /*const gmailSMTPCredentials : {

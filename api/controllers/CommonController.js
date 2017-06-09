@@ -184,7 +184,7 @@ module.exports = {
 
 		return response;
 	},
-
+// delete image
 	deleteimg : function(req,res) {
 		var fs = require('fs');
 		var modelName = req.body.modelname;
@@ -248,6 +248,46 @@ module.exports = {
 			
 		});
 
+	},
+
+	// soft delete
+		delete: function (req, res) {			
+        var modelName = req.body.modelname;
+		var Model = sails.models[modelName];
+		var itemId = req.body.id;
+		let query = {};
+		query.id = itemId;
+		Model.find(query).exec(function(err, data) {
+			if(err)
+			{
+				console.log(err);
+			}
+			else
+			{
+
+				Model.update({id:itemId},{isDeleted:true},function(err,data){
+					if(data)
+					{
+						return res.status(200).jsonx({
+			                success: true,
+			                data:{
+			                	data:data,
+			                	message: constantObj.messages.DELETE
+			                }
+			            });
+					}
+					else
+					{
+						return res.status(301).jsonx({
+							success:false,
+							message:constantObj.messages.FAILED
+						});
+					}
+		     
+		    	});
+			}
+		    
+		})
 	}
 
 }
